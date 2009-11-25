@@ -12,8 +12,10 @@
 	<meta name="generator" content="Kohanut" />
 	<!-- Kohanut::stylesheet() includes: -->
 <?php Kohanut::stylesheet_render(); ?>
+
 	<!-- Kohanut::javascript() includes: -->
 <?php Kohanut::javascript_render(); ?>
+
 </head>
 <body>
 <!-- Begin Page Layout Code -->

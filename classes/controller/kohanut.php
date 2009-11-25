@@ -3,7 +3,7 @@
 /**
  * This is the Kohanut controller, it's responsible for rendering pages
  * 
- * @author     Michael Peters
+ * @author	Michael Peters
  */
 class Controller_Kohanut extends Controller
 {
@@ -24,7 +24,6 @@ class Controller_Kohanut extends Controller
 		// Try to find what to do on this url
 		try
 		{
-			
 			// Make sure the url is clean. See http://www.faqs.org/rfcs/rfc2396.html see section 2.3
 			// TODO - this needs to be better
 			if (preg_match("/[^\/A-Za-z0-9-_\.!~\*\(\)]/",$url)) {
@@ -45,7 +44,7 @@ class Controller_Kohanut extends Controller
 				Kohana::$log->add('INFO', "Kohanut - Could not find '$url' (404)"); 
 				throw new Kohanut_Exception("Could not find '$page->url'",array(),404);
 			}
-			$page->render();
+			$this->request->response = $page->render();
 			
 		}
 		catch (Kohanut_Exception $e)

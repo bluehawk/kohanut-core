@@ -88,18 +88,19 @@ class Model_Page extends Sprig_MPTT {
 		{
 			throw new Kohanut_Exception("Page render failed because page was not loaded.",array(),404);
 		}
-			
-		echo $this->layout->name;
-			
-		$xhtml = new View('kohanut/xhtml');
-		// start building the xhtml for the page
-		$xhtml = new View('kohanut/xhtml');
-		$xhtml->id       = $this->id;
-		$xhtml->title    = $this->title;
-		$xhtml->metakw   = $this->metakw;
-		$xhtml->metadesc = $this->metadesc;
 		
-		return $xhtml;
+		Kohanut::$page = $this;
+		
+
+		// Build the view
+		return new View('kohanut/xhtml', array(
+			'id'         => $this->id,
+			'title'      => $this->title,
+			'metakw'     => $this->metakw,
+			'metadesc'   => $this->metadesc,
+			'layoutcode' => $this->layout->render(),
+		));
+		
 	}
 	
 	/**

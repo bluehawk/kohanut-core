@@ -20,7 +20,6 @@ class Model_Layout extends Sprig {
 		);
 	}
 	
-	
 	/**
 	 * Find a layout with the specified id, returns that layout, or false if not found
 	 *
@@ -39,6 +38,43 @@ class Model_Layout extends Sprig {
 			return false;
 		}
 		return $layout;
+	}
+	
+	public function render()
+	{
+		// Ensure the layout is loaded
+		$this->load();
+		
+		if ( ! $this->loaded())
+		{
+			return "Layout Failed to render because it wasn't loaded.";
+		}
+		
+		/**
+		 * eval() the layout code to a buffer
+		 * The 'Kohanut::layout_area()' functions inside the layout code will
+		 * pull all the needed contents.
+		 * Note: the space after the <?php tag in essential, as it somehow
+		 * fixes an "unexpected $end in eval()'d code" error.
+		 */
+		try {
+			// Create the output buffer
+			ob_start();
+			
+			// Eval the layout code, save, and delete the buffer
+			eval('?>' . $this->code . '<?php ');
+			$layoutcode = ob_get_contents();
+			ob_end_clean();
+		}
+		catch (Exception $e)
+		{
+			ob_end_clean();
+			$layoutcode = "<h1>There was an error processing the layout code.</h1><p>" . $e . "</p>";
+		}
+		
+		
+		// And return the output
+		return $layoutcode;
 	}
 
 }
