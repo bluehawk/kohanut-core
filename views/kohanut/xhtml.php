@@ -10,11 +10,10 @@
 	<meta name="keywords" content="<?php echo $metakw ?>" />
 <?php endif; ?>
 	<meta name="generator" content="Kohanut" />
-	<!-- Kohanut::stylesheet() includes: -->
+	<!-- Begin Kohanut includes: -->
 <?php Kohanut::stylesheet_render(); ?>
-
-	<!-- Kohanut::javascript() includes: -->
 <?php Kohanut::javascript_render(); ?>
+<?php Kohanut::meta_render(); ?>
 
 </head>
 <body>

@@ -54,7 +54,8 @@ class Kohanut {
 			return;
 		}
 		
-		echo self::$page->parent()->render_descendants('mainnav',true,'ASC',$maxdepth);
+		//echo self::$page->render_descendants('mainnav',true,'ASC',$maxdepth);
+		echo "secondary nav isn't written yet";
 	} 
 	
 	/**
@@ -73,74 +74,41 @@ class Kohanut {
 		$parents = self::$page->parents(); //->render_descendants('mainnav',true,'ASC',$maxdepth);
 	
 		echo View::factory('kohanut/breadcrumbs')->set('nodes',$parents)->set('page',self::$page->name)->render();
-		
-		// Get parents, and render
-		//$parents = self::$page->parents()->find_all();
-		//return View::factory('kohanut/breadcrumbs')
-		//	->set('nodes',$parents)
-		//	->set('page',self::$page->name)
-		//	->render();
+
 	}
 	
 	/**
-	 * Draws the content in a layout area
+	 * Draws the content in a content area
 	 *
 	 * @param   int     The id of the area
 	 * @param   string  The name of the area (for admin)
 	 * @return  boolean
 	 */
-	public static function layout_area($id,$name)
+	public static function content_area($id,$name)
 	{
 		// ensure that Kohanut::page has been set and loaded a real page
 		if (!is_object(self::$page) || !self::$page->loaded()) {
 			return "Kohanut Error: layout_area($id) failed. (Kohanut::page was not set)";
 		}
 		
-		// rending the page normally
-		if (!self::$adminmode) {
-			echo "\n<!-- Content Area $id ($name) -->\n";
-			// find all the pagecontents on that page, and in this area, order by order
-			//$contents = ORM::factory('pagecontent')->with('elementtype')->where('page_id',self::$page->id)->where('area_id',$id)->orderby('order','ASC')->find_all();
-			$contents = array();
-			foreach ($contents as $item) {
-				// render the element
-				kohanut::render_element($item->elementtype->name,$item->element_id);
-			}
-			echo "\n<!-- End Content Area $id ($name) -->\n";
+		echo "\n<!-- Content Area $id ($name) -->\n";
+		// Find all the pagecontents for this area
+		$contents = Sprig::factory('pagecontent',array(
+			'page' => self::$page->id,
+			'area' => $id,
+		))->load(NULL,FALSE);
+		
+		foreach ($contents as $item) {
+			
+			echo "i should be rendering an element here";
+			
 		}
-		else
-		{
-			// add a key to the layoutareas array, this will be used in the admin
-			// to build the content editor
-			self::$layoutareas[$id] = $name;
-		}
+		echo "\n<!-- End Content Area $id ($name) -->\n";
 	}
 
 	public static function element($type,$name)
 	{
 		return "Draw $type : $name";
-	}
-	
-	/**
-	 * Draws an element.
-	 *
-	 * Portions of this function are borrowed from Formo (Formo_Core::add())
-	 * 
-	 * @param   string  The name of the elementtype (singular)
-	 * @param   int     Id of the element in its table
-	 * @return  boolean
-	 */
-	public static function render_element($type,$id)
-	{
-		// load the driver for this type
-		self::include_file('driver',$type);
-		
-		// create a new element of this type
-		$file = 'Kohanut_'.$type.'_Driver';
-		$element = new $file($id);
-		
-		// render the element
-		$element->render();
 	}
 	
 	/* CSS control
@@ -161,7 +129,7 @@ class Kohanut {
 	{
 		foreach (self::$stylesheets as $key => $stylesheet)
 		{
-			echo "\t" . html::style($stylesheet);
+			echo "\t" . html::style($stylesheet) . "\n";
 		}
 	}
 	
@@ -192,7 +160,7 @@ class Kohanut {
 	{
 		foreach (self::$javascripts as $key => $javascript)
 		{
-			echo "\t" . html::script($javascript);
+			echo "\t" . html::script($javascript) . "\n";
 		}
 	}
 
@@ -214,7 +182,7 @@ class Kohanut {
 	{
 		foreach (self::$metas as $key => $meta)
 		{
-			echo "\t" . $meta;
+			echo "\t" . $meta . "\n";
 		}
 	}
 
