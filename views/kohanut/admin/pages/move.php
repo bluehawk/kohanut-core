@@ -20,16 +20,27 @@
 	<div class="box">
 		<h2>Move Page</h2>
 		<div class="content">
-			
-			<form action="" method="post" class="standardform" name="formo"> 
-				<div><input type="hidden" name="__formo" value="formo" id="__formo" /></div> 
-				<p>Move "<?php echo $page->name ?>" to <?php echo $form->action ?> <?php echo $form->position ?></p>
-				<?php echo $form->submit ?><a class="cancel" href="/admin/pages">cancel</a>
+			<?php echo Form::open(); ?>
+				<p>Move "<?php echo $page->name ?>" to 
+					<?php
+					echo Form::select('action',array(
+						'before'=>'before',
+						'after'=>'after',
+						'first'=>'first child of',
+						'last'=>'last child of',
+					));
+					echo Form::select('target',$page->select_list('id','name','&nbsp;&nbsp;&nbsp;'));
+					?>
+				</p>
+				
+				<?php echo Form::submit('submit','Submit'); ?>
+				
+	
+				<a class="cancel" href="/admin/pages">cancel</a>
 				<br/>
 				<div class="clear"></div>
 			</form>
-			
 		</div>
 	</div>
-	
+
 </div>

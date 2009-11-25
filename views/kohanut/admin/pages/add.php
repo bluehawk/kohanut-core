@@ -33,18 +33,7 @@
 			
 			<p>Add a subpage to <?php echo $parent->name ?> (url: <?php echo $parent->url?>) </p>
 			
-			<?php
-			if ($errors)
-			{
-				echo "<div class='error'><p>The following errors occured</p>";
-				echo "<ul>";
-				foreach ($errors as $error)
-				{
-					echo "<li>$error</li>";
-				}
-				echo "</ul></div>";
-			}
-			?>
+			<?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
 			
 			<ul class="standardform">
 				<form method="post">
@@ -61,6 +50,16 @@
 				<li>
 					<label for="islink">External Link?</label>
 					<?php echo $newpage->input('islink',array('class'=>'check')) ?>
+				</li>
+				
+				<li>
+					<label for="islink">Show in Navigation?</label>
+					<?php echo $newpage->input('shownav',array('class'=>'check')) ?>
+				</li>
+				
+				<li>
+					<label for="islink">Show in Site Map?</label>
+					<?php echo $newpage->input('showmap',array('class'=>'check')) ?>
 				</li>
 				
 				<li>

@@ -22,9 +22,9 @@ class Model_Page extends Sprig_MPTT {
 			)),
 			
 			// nav info
-			'islink'   => new Sprig_Field_Boolean(array('append_label'=>false)),
-			'shownav'  => new Sprig_Field_Boolean(array('default'=>true)),
-			'showmap'  => new Sprig_Field_Boolean(array('default'=>true)),
+			'islink'   => new Sprig_Field_Boolean(array('append_label'=>false,'default'=>false)),
+			'shownav'  => new Sprig_Field_Boolean(array('append_label'=>false,'default'=>true)),
+			'showmap'  => new Sprig_Field_Boolean(array('append_label'=>false,'default'=>true)),
 			
 			// meta datums
 			'title'    => new Sprig_Field_Char(array('empty'=>true)),
@@ -53,11 +53,27 @@ class Model_Page extends Sprig_MPTT {
 		$id = (int) $id;
 		$page = Sprig::factory('page',array('id'=>$id))->load();
 		
+		
 		if ( ! $page->loaded())
 		{
 			return false;
 		}
 		return $page;
+	}
+	
+	/** overload values to fix checkboxes
+	 *
+	 * @param array values
+	 * @return $this
+	 */
+	public function _values(array $values)
+	{
+		$new = array(
+			'islink'  => 0,
+			'showmap' => 0,
+			'shownav' => 0
+		);
+		return parent::values(array_merge($new,$values));
 	}
 	
 	

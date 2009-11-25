@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- *
+ * Users Controller.  This manages creating, editing, and removing users
  *
  */
 class Controller_Kohanut_Admin_Users extends Controller_Kohanut_Admin {

@@ -5,3 +5,9 @@
 <?php endforeach ?>
 </ul>
 <?php endif ?>
+
+<?php if ( ! empty($success) AND $success != false): ?>
+<div class="success">
+	<?php echo $success ?>	
+</div>
+<?php endif ?>

@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- *
+ * User Controller.  This controller manages logging users in and out
  *
  */
 class Controller_Kohanut_Admin_User extends Controller_Kohanut_Admin {

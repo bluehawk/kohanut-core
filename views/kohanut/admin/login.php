@@ -12,7 +12,6 @@
 	<script type="text/javascript" src="/kohanutres/jquery/jquery.treeview.js"></script>
 	<script type="text/javascript" src="/kohanutres/jquery/jquery.cookie.js"></script>
     
-    
     <style type="text/css">
 
         .logincontainer {
@@ -31,38 +30,9 @@
         .logincontainer .content {
             padding:10px;
         }
-        
-        .standardform p {
-            margin-bottom:3px;
-            float:right;
-            clear:both;
-            width:100%;
-        }
-        
-        .standardform label {
-            width:80px;
-            float:left;
-        }
-        .standardform input {
-            float:left;
-            width:170px;
-        }
-        
-        .standardform .submit {
-            clear:left;
-            float:left;
-            margin:auto;
-            position:relative;
-            float:none;
-            display:block;
-            left:0;
-        }
-        
-        .errorInput {
-            border:1px solid red;
-            background:#FFCCCC;
-        }
+
     </style>
+	
 </head>
 <body>
 
@@ -81,10 +51,10 @@
   
   <?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
   
-  <ol class="loginform">
-   <li><label><span><?php echo 'Username:' ?></span> <?php echo form::input('username', $user->username) ?></label></li>
-   <li><label><span><?php echo 'Password:' ?></span> <?php echo form::password('password') ?></label></li>
-  </ol>
+  <ul class="loginform">
+   <li><label><?php echo 'Username:' ?></label> <?php echo form::input('username', $user->username) ?></li>
+   <li><label><?php echo 'Password:' ?></label> <?php echo form::password('password') ?></li>
+  </ul>
   
   <?php echo form::button(NULL, 'Login', array('type' => 'submit')) ?>
   

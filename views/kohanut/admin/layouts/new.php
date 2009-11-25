@@ -14,7 +14,7 @@
 <div id="main">
 	
 	<div class="box">
-		<h2><img class="headericon" src="/kohanutres/img/fam/layout_edit.png" alt="edit"/>Edit Layout</h2>
+		<h2><img class="headericon" src="/kohanutres/img/fam/layout_edit.png" alt="edit"/>New Layout</h2>
 		<div class="content">
 			
 			<?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>

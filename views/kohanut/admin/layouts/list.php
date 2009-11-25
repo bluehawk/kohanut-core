@@ -1,10 +1,10 @@
 <div id="side">
 	
 	<div class="box">
-		<h2>Help</h2>
+		<h2>Actions</h2>
 		<div class="content">
 			
-			<p>blah</p>
+			<p><a href="/admin/layouts/new/"><img src="/kohanutres/img/fam/layout_add.png" alt="Create new layout" />Create a new Layout</a></p>
 			
 		</div>
 	</div>
@@ -29,7 +29,7 @@
 					<div class="actions">
 						<a href="/admin/layouts/edit/<?php echo $item->id ?>"><img src="/kohanutres/img/fam/layout_edit.png" alt="edit" /><br/><span>edit</span></a>
 						<a href="/admin/layouts/copy/<?php echo $item->id ?>" title="Click to copy"><img src="/kohanutres/img/fam/layout_go.png" alt="copy" /><br/><span>copy</span></a>
-						<a href="/admin/layouts/delete/<?php echo $item->id ?>" onclick="javascript:return confirm('Really delete that layout?')" title="Click to delete"><img src="/kohanutres/img/fam/layout_delete.png" alt="delete" /><br/><span>delete</span></a>
+						<a href="/admin/layouts/delete/<?php echo $item->id ?>" title="Click to delete"><img src="/kohanutres/img/fam/layout_delete.png" alt="delete" /><br/><span>delete</span></a>
 					</div>
 					<a href="/admin/layouts/edit/<?php echo $item->id ?>" ><p>
 						<?php echo $item->name ?>
