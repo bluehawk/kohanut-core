@@ -12,6 +12,7 @@ class Controller_Kohanut extends Controller
 	 */ 
 	public function action_view($url=NULL)
 	{
+		
 		// If no $url is passed, default to the server request uri
 		if ($url === NULL) {
 			$url = $_SERVER['REQUEST_URI'];

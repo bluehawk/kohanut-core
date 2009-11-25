@@ -1,11 +1,10 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-// mainnav -  the root node, it is actually not displayed on the nav and
-// represents "/" or home, and has a parent of null.
+// mainnav -  The root node, it is not displayed on the nav and represents "/" or home, and has a parent of null.
 $mainnav = New Kohanut_Nav($nodes->current()->id,$nodes->current()->name,$nodes->current()->url);
-// pointer - always points to the element created LAST loop
+// pointer - Always points to the element created in the previous loop iteration
 $pointer = &$mainnav;
-// new - the element we created THIS loop, becomes pointer at end of loop
+// new - The element we created THIS loop, becomes pointer at end of loop
 $new = "";
 // level - level of the node that was created LAST loop (pointer)
 $lastlevel = $nodes->current()->{$level_column};
@@ -19,8 +18,7 @@ currentlevel > $lastlevel
     Action: Create a new child of pointer, and call it pointer
 currentlevel < $lastlevel
     Means:  Current is a child of one of pointers ancestors
-    Action: Change pointer to its parent for each generation we went up, then
-            create a new child of pointer, and call it pointer
+    Action: Change pointer to its parent for each generation we went up, then create a new child of pointer, and call it pointer
 else  (currentlevel == $last level)
 	Means:  Current is a sibling of pointer
 	Action: Create a new child of pointer->parent(), and call it pointer
