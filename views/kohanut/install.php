@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-    <title><?php echo (isset($title) ? "Admin - " . $title : "Admin"); ?></title>
+    <title>Install Kohanut</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     
     <link rel="stylesheet" type="text/css" href="/kohanutres/reset.css" />
@@ -14,7 +14,7 @@
     <style type="text/css">
 
         .logincontainer {
-            width:300px;
+            width:500px;
             margin:120px auto 0;
             border:1px solid #888;
             -moz-border-radius: 4px; -webkit-border-radius: 4px;
@@ -43,24 +43,25 @@
         
         <div class="content">
             
+<h1>Install Kohanut</h1>
+
+<p>You should have your database settings put into application/config/database.php or this will fail :)</p>
+
+ <?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
+
+<?php echo form::open(NULL, array('id' => 'login','method'=>'post')) ?>
+
+<label>Set your admin password:</label><br/>
+<?php echo form::password('password') ?><br/>
+<label>Repeat password:</label><br/>
+<?php echo form::password('repeat') ?><br/>
+<?php echo form::button(NULL, 'Install', array('type' => 'submit')) ?>
+
+  
+<?php echo form::close() ?>
 			
-<?php echo form::open(NULL, array('id' => 'login')) ?>
-  
-  <h1><?php echo 'Login' ?></h1>
-  
-  <?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
-  
-  <ul class="loginform">
-   <li><label><?php echo 'Username:' ?></label> <?php echo form::input('username', $user->username) ?></li>
-   <li><label><?php echo 'Password:' ?></label> <?php echo form::password('password') ?></li>
-  </ul>
-  
-  <?php echo form::button(NULL, 'Login', array('type' => 'submit')) ?>
-  
-  <?php echo form::close() ?>
 			
-			
-            <div class="clear"></div>
+            
         </div>
         
     </div>

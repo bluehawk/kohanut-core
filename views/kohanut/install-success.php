@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-    <title><?php echo (isset($title) ? "Admin - " . $title : "Admin"); ?></title>
+    <title>Install Kohanut</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     
     <link rel="stylesheet" type="text/css" href="/kohanutres/reset.css" />
@@ -14,7 +14,7 @@
     <style type="text/css">
 
         .logincontainer {
-            width:300px;
+            width:500px;
             margin:120px auto 0;
             border:1px solid #888;
             -moz-border-radius: 4px; -webkit-border-radius: 4px;
@@ -42,25 +42,12 @@
         </div>
         
         <div class="content">
-            
-			
-<?php echo form::open(NULL, array('id' => 'login')) ?>
-  
-  <h1><?php echo 'Login' ?></h1>
-  
-  <?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
-  
-  <ul class="loginform">
-   <li><label><?php echo 'Username:' ?></label> <?php echo form::input('username', $user->username) ?></li>
-   <li><label><?php echo 'Password:' ?></label> <?php echo form::password('password') ?></li>
-  </ul>
-  
-  <?php echo form::button(NULL, 'Login', array('type' => 'submit')) ?>
-  
-  <?php echo form::close() ?>
-			
-			
-            <div class="clear"></div>
+		
+<h1>Success</h1>
+
+<p>It seems everything went well, be sure to delete/rename/move or otherwise cause harm to the folder <strong>modules/kohanut/classes/kohanut/install</strong></p>
+
+<p>Click <a href="/admin/user/login">here</a> to login.</p>
         </div>
         
     </div>

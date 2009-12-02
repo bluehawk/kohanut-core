@@ -1,10 +1,5 @@
 <?php defined('SYSPATH') or die('No direct script access.');
-/**
- * Kohana user guide and api browser.
- *
- * @package    Kodoc
- * @author     Kohana Team
- */
+
 class Controller_Kohanut_Admin_Pages extends Controller_Kohanut_Admin {
 
 	public function before()
