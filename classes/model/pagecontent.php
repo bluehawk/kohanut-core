@@ -12,17 +12,19 @@ class Model_Pagecontent extends Sprig {
 			
 			'page' => new Sprig_Field_BelongsTo(array(
 				'model' => 'Page',
+				'column' => 'page',
 			)),
 			
-			'area' => new Sprig_Field_Integer(array(
-				'column' => 'area_id',
-			)),
+			'area' => new Sprig_Field_Integer,
 			
 			'order' => new Sprig_Field_Integer,
 			
-			'elementtype_id' => new Sprig_Field_Integer, // yeah this needs to change
+			'elementtype' => new Sprig_Field_BelongsTo(array(
+				'model' => 'Elementtype',
+				'column' => 'elementtype',
+			)),
 			
-			'element_id' => new Sprig_Field_Integer,
+			'element' => new Sprig_Field_Integer,
 			
 		);
 	

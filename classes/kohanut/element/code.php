@@ -2,4 +2,8 @@
 /**
  * 
  */
-class Kohanut extends Kohanut_Core { }
+class Kohanut_Element_Code extends Kohanut_Element {
+
+	
+
+}

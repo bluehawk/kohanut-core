@@ -11,9 +11,9 @@
 <?php endif; ?>
 	<meta name="generator" content="Kohanut" />
 <!-- Begin Kohanut includes -->
-<?php Kohanut::stylesheet_render(); ?>
-<?php Kohanut::javascript_render(); ?>
-<?php Kohanut::meta_render(); ?>
+<?php echo Kohanut::stylesheet_render(); ?>
+<?php echo Kohanut::javascript_render(); ?>
+<?php echo Kohanut::meta_render(); ?>
 <!-- End Kohanut includes -->
 
 </head>
@@ -22,5 +22,6 @@
 <?php echo $layoutcode ?>
 
 <!-- End Page Layout Code -->
+<?php //echo View::factory('profiler/stats'); ?>
 </body>
 </html>
