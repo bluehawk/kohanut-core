@@ -93,13 +93,7 @@ class Model_Page extends Sprig_MPTT {
 		Kohanut::$page = $this;
 		
 		// Build the view
-		return new View('kohanut/xhtml', array(
-			'id'         => $this->id,
-			'title'      => $this->title,
-			'metakw'     => $this->metakw,
-			'metadesc'   => $this->metadesc,
-			'layoutcode' => $this->layout->render(),
-		));
+		return new View('kohanut/xhtml', array('layoutcode' => $this->layout->render()));
 		
 	}
 	

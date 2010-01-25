@@ -32,7 +32,7 @@ class Kohanut_Core {
 			return "Kohanut::main_nav failed because page is not loaded";
 		}
 		
-		return self::$page->root()->render_descendants('mainnav',true,'ASC',$maxdepth);
+		return self::$page->root()->render_descendants('nav',true,'ASC',$maxdepth);
 	}
 	
 	/**
@@ -49,8 +49,9 @@ class Kohanut_Core {
 			return "Kohanut::main_nav failed because page is not loaded";
 		}
 		
-		//return self::$page->render_descendants('mainnav',true,'ASC',$maxdepth);
-		return "secondary nav isn't written yet";
+		return self::$page->parent()->render_descendants('nav',true,'ASC',$maxdepth);
+		//return self::$page->render_descendants('nav',true,'ASC',$maxdepth);
+		//return "secondary nav isn't written yet";
 	} 
 	
 	/**
@@ -85,9 +86,9 @@ class Kohanut_Core {
 			return "Kohanut Error: layout_area($id) failed. (Kohanut::page was not set)";
 		}
 		
-		$out = "\n<!-- Content Area $id ($name) -->\n";
 		// Find all the pagecontents for this area
 		
+		// attempting to use less queries... didn't really work so commenting out
 		/*$query = DB::select()
 			->join('elementtypes')
 			->on('pagecontents.elementtype','=','elementtypes.id')
@@ -96,27 +97,66 @@ class Kohanut_Core {
 		*/
 		$query = NULL;
 		
-		$contents = Sprig::factory('pagecontent',array(
+		$elements = Sprig::factory('pagecontent',array(
 			'page' => self::$page->id,
 			'area' => $id,
 		))->load($query,FALSE);
 		
-		foreach ($contents as $item) {
-			
-			// Create an instance of the element and render it
-			$element = Kohanut_Element::type($item->elementtype->name);
-			$element->id = $item->element;
-			$out .= $element->render();
-			
-		}
-		$out .= "\n<!-- End Content Area $id ($name) -->\n";
+		$content = "";
 		
-		return $out;
+		foreach ($elements as $item) {
+			// Create an instance of the element and render it
+			try
+			{
+				$element = Kohanut_Element::type($item->elementtype->load()->name);
+				$element->id = $item->element;
+				$content .= $element->render();
+			}
+			catch (Exception $e)
+			{
+				$content .= "Error: Could not load element.";
+			}
+		}
+		
+		return new View('kohanut/contentarea',array(
+			'id' => $id,
+			'name' => $name,
+			'content' => $content
+		));
 	}
-
+	
+	/**
+	 * Return an element of a type, by name.
+	 *
+	 * The element must have a "name" field
+	 * Ex: element('snippet','footer')
+	 *
+	 */
 	public static function element($type,$name)
 	{
-		return "Draw $type : $name";
+		
+		// Create an instance of the element
+		try
+		{
+			$element = Kohanut_Element::type($type);
+			$element->name = $name;
+			$element->load();
+		}
+		catch (Exception $e)
+		{
+			return "Could not render $type '$name' (" . $e->getMessage() . ")";
+		}
+		
+		// If its loaded, render it, otherwise display an error.
+		if ($element->loaded())
+		{
+			return $element->render();
+		}
+		else
+		{
+			return "Could not render $type '$name', I could not find a $type with the name '$name'.";
+		}
+		
 	}
 	
 	/* CSS control
@@ -135,10 +175,12 @@ class Kohanut_Core {
 
 	public static function stylesheet_render()
 	{
+		$out = "";
 		foreach (self::$stylesheets as $key => $stylesheet)
 		{
-			return "\t" . html::style($stylesheet) . "\n";
+			$out .= "\t" . html::style($stylesheet) . "\n";
 		}
+		return $out;
 	}
 	
 	/* Javascript control
@@ -166,10 +208,12 @@ class Kohanut_Core {
 
 	public static function javascript_render()
 	{
+		$out = "";
 		foreach (self::$javascripts as $key => $javascript)
 		{
-			return "\t" . html::script($javascript) . "\n";
+			$out .= "\t" . html::script($javascript) . "\n";
 		}
+		return $out;
 	}
 
 	/* Meta control
@@ -188,10 +232,12 @@ class Kohanut_Core {
 	
 	public static function meta_render()
 	{
+		$out = "";
 		foreach (self::$metas as $key => $meta)
 		{
-			return "\t" . $meta . "\n";
+			$out .= "\t" . $meta . "\n";
 		}
+		return $out;
 	}
 
 }

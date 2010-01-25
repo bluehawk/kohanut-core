@@ -30,4 +30,19 @@ class Model_Pagecontent extends Sprig {
 	
 	}
 	
+	public function add($page,$area,$elementtype,$element)
+	{
+		if ($this->loaded())
+		{
+			throw Kohana_Exception('Cannot add a pagecontent that already exists');
+		}
+		
+		$this->page = $page;
+		$this->arear = $area;
+		$this->elementtype = $elementtype;
+		$this->element = $element;
+		
+		$this->create();
+	}
+	
 }

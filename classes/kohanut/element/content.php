@@ -4,7 +4,7 @@
  */
 class Kohanut_Element_Content extends Kohanut_Element
 {
-
+	protected $type = 'content';
 	protected $_table = 'element_content';
 
 	public function _init()
@@ -16,11 +16,57 @@ class Kohanut_Element_Content extends Kohanut_Element
 		);
 	
 	}
+	
+	public function title()
+	{
+		return "Content";
+	}
 
 	public function render()
 	{
+		// Load the element
 		$this->load();
-		return $this->code;
+		if ( ! $this->loaded())
+		{
+			return "Could not find element.";
+		}
+		
+		$out = "";
+		
+		// If admin mode, render the panel
+		if (Kohanut::$adminmode)
+		{
+			$out .= $this->render_panel();
+		}
+		
+		// Return the element
+		$out .= $this->code;
+		return $out;
+	}
+	
+	public function add($page,$area)
+	{
+		$view = View::factory('kohanut/admin/content/add',array('element'=>$this));
+		
+		if ($_POST)
+		{
+			try
+			{
+				$this->values($_POST);
+				$this->create();
+				$this->register($page,$area);
+			}
+			catch (Validate_Exception $e)
+			{
+				$view->errors = $e->array->errors('page');
+			}
+		}
+		return $view;
+	}
+	
+	public function edit()
+	{
+		
 	}
 
 }

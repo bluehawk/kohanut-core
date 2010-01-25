@@ -2,23 +2,23 @@
 
 class Kohanut_Nav {
 
-	// protected data
-	protected $id;
-	protected $name;
-	protected $url;
+	// id name and url
+	public $id;
+	public $name;
+	public $url;
 	
-	// array of Kohanut_Nav childred
+	// Array of Kohanut_Nav childred
 	protected $children = array();
 	
-	// pointer to parent node
-	protected $parent = null;
+	// Pointer to parent node
+	protected $parent = NULL;
 	
-	// what type of node is this? used for rendering nav menus
+	// What type of node is this? used for rendering nav menus
     public $isfirst = false;
     public $islast = false;
     public $iscurrent = false;
 	
-	// constructor, only used when creating the root, or by addchild() below
+	// Constructor, only used when creating the root, or by addchild() below
 	public function __construct($id,$name,$url)
 	{
 		$this->id = $id;
@@ -27,7 +27,7 @@ class Kohanut_Nav {
 	}
 
 	/**
-	 * parent
+	 * Parent
 	 * @return a link to this nodes parent
 	 *
 	 * note that this can return null you if request the roots parent
@@ -48,8 +48,11 @@ class Kohanut_Nav {
 	 */
 	public function &addchild($id,$name,$url)
 	{
+		// Create a new Nav item and sets its parent to $this
 		$new = New Kohanut_Nav($id,$name,$url);
 		$new->parent = &$this;
+		
+		// Add this item to the children array
 		$this->children[] = &$new;
 		return $new;
 	}
@@ -61,17 +64,21 @@ class Kohanut_Nav {
 	 * this will render the menu structure of this, and all child nodes
 	 */
 	public function render() {
-		// open the mainnav ul
-		$out = "\n<!-- Begin Main Nav -->\n<ul class='mainnav'>";
-		// mark first and last
+		
+		// Open the ul
+		$out = "<ul>";
+		
+		// Mark first and last
 		$this->children[0]->isfirst = true;
 		end($this->children)->islast = true;
-		// render children
+		
+		// Render children
 		foreach($this->children as $child) {
 			$out .= $child->_render();
 		}
-		// close mainnav ul, and return output
-		$out .= "</ul>\n<!-- End Main Nav -->\n";
+		
+		// Close the ul, return the output
+		$out .= "</ul>";
 		return $out;
 	}
 	
@@ -82,25 +89,32 @@ class Kohanut_Nav {
 	 */
 	private function _render()
 	{
+		// Open the current item
 		$out = '<li';
-		// do we have any classes?
+		
+		// Do we have any classes?
 		if ($this->isfirst OR $this->islast OR $this->iscurrent)
 		{
 			$out .= ' class="' . trim( ($this->isfirst?'first ':'') . ($this->islast?'last ':'') . ($this->iscurrent?'current':'')) . '"';
 		}
 		$out .= '><a href="' . $this->url . '">' . $this->name . "</a>";
-		// do we have children?
+		
+		// Do we have children?
 		if (count($this->children)) {
-			// mark first and last
+			
+			// Mark first and last
 			$this->children[0]->isfirst = true;
 			end($this->children)->islast = true;
-			// and render children
+			
+			// Render children
 			$out .= "<ul>";
 			foreach($this->children as $child) {
 				$out .= $child->_render();
 			}
 			$out .= "</ul>";
 		}
+		
+		// Close current item, return the output
 		$out .= '</li>';
 		return $out;
 	}

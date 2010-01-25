@@ -28,7 +28,7 @@ class Controller_Kohanut_Admin_Pages extends Controller_Kohanut_Admin {
 		
 	}
 	
-	public function action_edit($id)
+	public function action_meta($id)
 	{
 		// Find the page
 		$page = Model_Page::find($id);
@@ -61,6 +61,38 @@ class Controller_Kohanut_Admin_Pages extends Controller_Kohanut_Admin {
 		$this->view->body->page = $page;
 		$this->view->body->errors = $errors;
 		$this->view->body->success = $success;
+	}
+	
+	public function action_edit($id)
+	{
+		// Find the page
+		$page = Model_Page::find($id);
+
+		if ( ! $page)
+		{
+			return $this->admin_error("Could not find page with id <strong>" . (int) $id . "</strong>");
+		}
+		
+		// If this page is an external link, redirect to meta
+		if ($page->islink)
+			$this->request->redirect('/admin/pages/meta/' . $id);
+			
+		if ($_POST)
+		{
+			// redirect to adding a new element
+			$this->request->redirect('admin/content/add/' . Arr::get($_POST,'type',NULL) .'/'. $id .'/' . Arr::get($_POST,'area',NULL) );
+		}
+		
+		// Make it so the usual admin stuff is not shown (as in the header and main nav)
+		$this->auto_render = false;
+		
+		// Make it so the admin pane for pages is shown
+		Kohanut::$adminmode = true;
+		Kohanut::stylesheet('kohanutres/page.css');
+		
+		// Render the page
+		$this->request->response = $page->render();
+		
 	}
 	
 	public function action_add($id)

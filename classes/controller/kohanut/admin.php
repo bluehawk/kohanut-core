@@ -11,6 +11,8 @@ class Controller_Kohanut_Admin extends Controller {
 	// The view to render
 	protected $view;
 	
+	protected $auto_render = true;
+	
 	// admin pages require login
 	protected $requires_login = true;
 	
@@ -56,11 +58,15 @@ class Controller_Kohanut_Admin extends Controller {
 
 	public function after()
 	{
-		// Tell the view which tab to highlight
-		$this->view->controller = $this->request->controller;
 		
-		// Send the response
-		$this->request->response = $this->view;
+		if ($this->auto_render)
+		{
+			// Tell the view which tab to highlight
+			$this->view->controller = $this->request->controller;
+			
+			// Send the response
+			$this->request->response = $this->view;
+		}
 
 	}
 
