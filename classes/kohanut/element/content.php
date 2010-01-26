@@ -21,26 +21,10 @@ class Kohanut_Element_Content extends Kohanut_Element
 	{
 		return "Content";
 	}
-
-	public function render()
+	
+	public function _render()
 	{
-		// Load the element
-		$this->load();
-		if ( ! $this->loaded())
-		{
-			return "Could not find element.";
-		}
-		
-		$out = "";
-		
-		// If admin mode, render the panel
-		if (Kohanut::$adminmode)
-		{
-			$out .= $this->render_panel();
-		}
-		
-		// Return the element
-		$out .= $this->code;
-		return $out;
+		return $this->code;
 	}
+
 }

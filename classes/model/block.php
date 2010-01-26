@@ -2,7 +2,7 @@
 /**
  * 
  */
-class Model_Pagecontent extends Sprig {
+class Model_Block extends Sprig {
 
 	protected function _init()
 	{
@@ -34,7 +34,7 @@ class Model_Pagecontent extends Sprig {
 	{
 		if ($this->loaded())
 		{
-			throw Kohana_Exception('Cannot add a pagecontent that already exists');
+			throw Kohana_Exception('Cannot add a block that already exists');
 		}
 		
 		$this->page = $page;

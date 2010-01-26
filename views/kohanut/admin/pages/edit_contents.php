@@ -10,11 +10,11 @@ if (!isset(Kohanut::$layoutareas) || count(Kohanut::$layoutareas) < 1) {
 <?php foreach (Kohanut::$layoutareas as $id=>$name):  ?>
 	<h3 class="ui-widget-header ui-corner-top"><?php echo $name ?></h3>
 	<div class=" ui-widget-content ui-corner-bottom">
-		<ul class="standardlist pagecontentlist contentareasortable">
+		<ul class="standardlist blocklist contentareasortable">
 			
 		<?php
 		// find the contents on this page and area
-		$contents = ORM::factory('pagecontent')->with('elementtype')->where('page_id',Kohanut::$page->id)->where('area_id',$id)->orderby('order','ASC')->find_all();
+		$contents = ORM::factory('block')->with('elementtype')->where('page_id',Kohanut::$page->id)->where('area_id',$id)->orderby('order','ASC')->find_all();
 		//if (count($contents) == 0) {
 		//	echo "<li><p>No Elements in this area</p></li>";
 		//}
@@ -80,7 +80,7 @@ if (!isset(Kohanut::$layoutareas) || count(Kohanut::$layoutareas) < 1) {
 			<li><a href="#addcontenttabs-3">Something else</a></li>
 		</ul>
 		<div id="addcontenttabs-1">
-			<ul class="standardlist pagecontentlist contentaddable">
+			<ul class="standardlist blocklist contentaddable">
 				<li><a href="/admin/pages/add_element/<?php echo Kohanut::$page->id ?>/1"><p><img class="headericon" src="/kohanutres/img/fam/pilcrow.png" alt="" />Page Content</p></a></li>
 				<li><a><p><img class="headericon" src="/kohanutres/img/fam/tag.png" alt="" />PHP Code</p></a></li>
 				<li><a><p><img class="headericon" src="/kohanutres/img/fam/application_side_tree.png" alt="" />Secondary Nav</p></a></li>

@@ -86,18 +86,18 @@ class Kohanut_Core {
 			return "Kohanut Error: layout_area($id) failed. (Kohanut::page was not set)";
 		}
 		
-		// Find all the pagecontents for this area
+		// Find all the blocks for this area
 		
 		// attempting to use less queries... didn't really work so commenting out
 		/*$query = DB::select()
 			->join('elementtypes')
-			->on('pagecontents.elementtype','=','elementtypes.id')
-			->order_by('pagecontents.area','ASC')
-			->order_by('pagecontents.order','ASC');
+			->on('blocks.elementtype','=','elementtypes.id')
+			->order_by('blocks.area','ASC')
+			->order_by('blocks.order','ASC');
 		*/
-		$query = NULL;
+		$query = DB::select()->order_by('order','ASC');
 		
-		$elements = Sprig::factory('pagecontent',array(
+		$elements = Sprig::factory('block',array(
 			'page' => self::$page->id,
 			'area' => $id,
 		))->load($query,FALSE);
@@ -110,14 +110,12 @@ class Kohanut_Core {
 			{
 				$element = Kohanut_Element::type($item->elementtype->load()->name);
 				$element->id = $item->element;
-				//$element->
-				$element->typeid = $item->elementtype->id;
-				$element->pagecontentid = $item->id;
+				$element->block = $item;
 				$content .= $element->render();
 			}
 			catch (Exception $e)
 			{
-				$content .= "Error: Could not load element.";
+				$content .= "Error: Could not load element." . $e;
 			}
 		}
 		

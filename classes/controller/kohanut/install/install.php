@@ -79,7 +79,7 @@ class Controller_Kohanut_Install_Install extends Controller {
 			ENGINE=InnoDB")->execute();
 		
 		DB::query(NULL,"
-			CREATE TABLE `pagecontents` (
+			CREATE TABLE `blocks` (
 				`id` INT(11) NOT NULL AUTO_INCREMENT,
 				`page` INT(11) NOT NULL,
 				`area` INT(11) NOT NULL,
@@ -153,8 +153,8 @@ class Controller_Kohanut_Install_Install extends Controller {
 			INSERT INTO `elementtypes` (`id`,`name`) VALUES ('2','code');
 			INSERT INTO `elementtypes` (`id`,`name`) VALUES ('3','snippet');
 			
-			INSERT INTO `pagecontents` (`id`, `page`, `area`, `order`, `elementtype`, `element`) VALUES ('1', '1', '1', '1', '1', '1');
-			INSERT INTO `pagecontents` (`id`, `page`, `area`, `order`, `elementtype`, `element`) VALUES ('2', '1', '2', '1', '1', '2');
+			INSERT INTO `blocks` (`id`, `page`, `area`, `order`, `elementtype`, `element`) VALUES ('1', '1', '1', '1', '1', '1');
+			INSERT INTO `blocks` (`id`, `page`, `area`, `order`, `elementtype`, `element`) VALUES ('2', '1', '2', '1', '1', '2');
 			
 			INSERT INTO `element_content` (`id`, `code`) VALUES ('1',  '<h1>Thanks for Using Kohanut!</h1>\n\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam orci nisl, interdum nec molestie eget, tempus vel mi. Donec tristique quam sed orci interdum quis ultricies quam malesuada. Quisque auctor tincidunt tellus at aliquet. Nullam nec posuere tortor. Donec scelerisque cursus mollis. Pellentesque quam nisi, rhoncus vitae feugiat ac, vestibulum sed ligula. Vivamus risus lacus, viverra et dictum in, feugiat sed lorem. Fusce eu arcu sit amet felis elementum aliquet eget et nunc. Aliquam dictum ligula imperdiet urna tempus quis suscipit erat ultricies. Sed imperdiet pretium vehicula.</p>');
 			INSERT INTO `element_content` (`id`, `code`) VALUES ('2',  '<p>Content</p>');
