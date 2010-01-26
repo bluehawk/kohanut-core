@@ -4,11 +4,20 @@
  */
 class Kohanut_Element extends Sprig
 {
-
-	protected $type = "UNDEFINED";
+	// Type is the name of the class/table.  Ex "content" or "snippet"
+	public $type = "undefined";
+	// Typeid is the id of the elementtype in the elementtypes table
+	public $typeid = NULL;
+	// Pagecontentid is the id of the element in the pagecontents table
+	public $pagecontentid = NULL;
 
 	// Whether to cache an element. NOT IMPLEMENTED YET
 	protected $cache = false;
+	
+	// Whether an element is unique. If this is false, an element can be in
+	// more than one place, like a snippet. Also deleting it from a page
+	// will not actually delete the element, just the link to it.
+	protected $unique = true;
 	
 	public function _init()
 	{
@@ -24,13 +33,45 @@ class Kohanut_Element extends Sprig
 	// Add the element, this should act very similar to "action_add" in a controller, should return a view.
 	public function add($page,$area)
 	{
+		$view = View::factory('kohanut/admin/content/add',array('element'=>$this));
 		
+		if ($_POST)
+		{
+			try
+			{
+				$this->values($_POST);
+				$this->create();
+				$this->register($page,$area);
+				request::instance()->redirect('admin/pages/edit/' . $page);
+			}
+			catch (Validate_Exception $e)
+			{
+				$view->errors = $e->array->errors('page');
+			}
+		}
+		return $view;
 	}
 	
 	// Edit the element, this should act very similar to "action_edit" in a controller, should return a view.
 	public function edit()
 	{
+		$view = View::factory('kohanut/admin/content/edit',array('element'=>$this));
 		
+		if ($_POST)
+		{
+			try
+			{
+				$this->values($_POST);
+				$this->update();
+				$view->success = "Update successfully";
+			}
+			catch (Validate_Exception $e)
+			{
+				$view->errors = $e->array->errors('page');
+			}
+		}
+		
+		return $view;
 	}
 	
 	// This should be a description of what this element is. Ex: "Content" or "Snippet: 'footer'"
@@ -48,10 +89,10 @@ class Kohanut_Element extends Sprig
 	public function render_panel()
 	{
 		$out = '<div class="kohanut_element_ctl"><p class="title">' . $this->title() . '</p>
-			<a href="#" class="button"><img src="/kohanutres/img/fam/pencil.png" title="Edit"/>Edit</a>
+			<a href="/admin/content/edit/'. $this->typeid .'/'. $this->id . '" class="button"><img src="/kohanutres/img/fam/pencil.png" title="Edit"/>Edit</a>
 			<a href="#" class="button"><img src="/kohanutres/img/fam/arrow_up.png" title="Move Up" />Move Up</a>
 			<a href="#" class="button"><img src="/kohanutres/img/fam/arrow_down.png"  title="Move Down"/>Move Down</a>
-			<a href="#" class="button"><img src="/kohanutres/img/fam/delete.png" title="Delete" />Delete</a>
+			<a href="/admin/content/delete/" class="button"><img src="/kohanutres/img/fam/delete.png" title="Delete" />Delete</a>
 			<div style="clear:left"></div>
 		</div>';
 
@@ -60,6 +101,7 @@ class Kohanut_Element extends Sprig
 	
 	public function register($page,$area)
 	{
+		// You can only register an element that exists
 		if ( ! $this->loaded())
 			throw Kohanut_Exception("Attempting to register an element that does not exist, or has not been created yet.");
 			
@@ -73,6 +115,7 @@ class Kohanut_Element extends Sprig
 		if ( ! $elementtype->loaded())
 			throw Kohanut_Exception("Attempt to register an element failed, could not find elementtype :type",array('type'=>$this->type));
 		
+		// Create the page content
 		$new = Sprig::factory('pagecontent',array(
 			'page'        => (int) $page,
 			'area'        => (int) $area,

@@ -93,7 +93,7 @@ class Controller_Kohanut_Install_Install extends Controller {
 		
 		DB::query(NULL,"
 			CREATE TABLE `element_content` (
-				`id` INT(10) UNSIGNED NOT NULL,
+				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 				`code` TEXT NOT NULL,
 				PRIMARY KEY (`id`)
 			)
@@ -102,7 +102,7 @@ class Controller_Kohanut_Install_Install extends Controller {
 				
 		DB::query(NULL,"
 			CREATE TABLE `element_snippet` (
-				`id` INT(10) UNSIGNED NOT NULL,
+				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 				`code` TEXT NOT NULL,
 				`name` VARCHAR(127) NOT NULL,
 				PRIMARY KEY (`id`)
@@ -112,7 +112,7 @@ class Controller_Kohanut_Install_Install extends Controller {
 				
 		DB::query(NULL,"
 			CREATE TABLE `element_code` (
-				`id` INT(10) UNSIGNED NOT NULL,
+				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 				`code` TEXT NOT NULL,
 				PRIMARY KEY (`id`)
 			)
@@ -121,7 +121,7 @@ class Controller_Kohanut_Install_Install extends Controller {
 		
 		DB::query(NULL,"
 			CREATE TABLE `elementtypes` (
-				`id` INT(10) UNSIGNED NOT NULL,
+				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 				`name` VARCHAR(127) NOT NULL,
 				PRIMARY KEY (`id`)
 			)

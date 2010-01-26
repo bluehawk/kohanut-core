@@ -1,6 +1,6 @@
 <div id="full">
 	<div class="box">
-		<h2>Adding <?php echo ucfirst($element->type) ?></h2>
+		<h2>Editing <?php echo ucfirst($element->type) ?></h2>
 		<div class="content">
 			
 			<?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
@@ -15,7 +15,7 @@
 					</li>
 					<?php endforeach ?>
 	
-					<?php echo Form::submit('submit','Add',array('class'=>'submit')) ?>
+					<?php echo Form::submit('submit','Save',array('class'=>'submit')) ?>
 					
 				</form>
 			</ul>

@@ -110,6 +110,9 @@ class Kohanut_Core {
 			{
 				$element = Kohanut_Element::type($item->elementtype->load()->name);
 				$element->id = $item->element;
+				//$element->
+				$element->typeid = $item->elementtype->id;
+				$element->pagecontentid = $item->id;
 				$content .= $element->render();
 			}
 			catch (Exception $e)

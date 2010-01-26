@@ -4,7 +4,7 @@
  */
 class Kohanut_Element_Content extends Kohanut_Element
 {
-	protected $type = 'content';
+	public $type = 'content';
 	protected $_table = 'element_content';
 
 	public function _init()
@@ -43,30 +43,4 @@ class Kohanut_Element_Content extends Kohanut_Element
 		$out .= $this->code;
 		return $out;
 	}
-	
-	public function add($page,$area)
-	{
-		$view = View::factory('kohanut/admin/content/add',array('element'=>$this));
-		
-		if ($_POST)
-		{
-			try
-			{
-				$this->values($_POST);
-				$this->create();
-				$this->register($page,$area);
-			}
-			catch (Validate_Exception $e)
-			{
-				$view->errors = $e->array->errors('page');
-			}
-		}
-		return $view;
-	}
-	
-	public function edit()
-	{
-		
-	}
-
 }
