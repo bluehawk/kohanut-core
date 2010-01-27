@@ -80,7 +80,7 @@ class Controller_Kohanut_Admin_Pages extends Controller_Kohanut_Admin {
 		if ($_POST)
 		{
 			// redirect to adding a new element
-			$this->request->redirect('admin/content/add/' . Arr::get($_POST,'type',NULL) .'/'. $id .'/' . Arr::get($_POST,'area',NULL) );
+			$this->request->redirect('admin/elements/add/' . Arr::get($_POST,'type',NULL) .'/'. $id .'/' . Arr::get($_POST,'area',NULL) );
 		}
 		
 		// Make it so the usual admin stuff is not shown (as in the header and main nav)

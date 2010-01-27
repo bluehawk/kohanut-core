@@ -4,22 +4,23 @@
  */
 class Kohanut_Element_Snippet extends Kohanut_Element
 {
-	
+	public $type = "snippet";
 	protected $_table = 'element_snippet';
+	
+	public $unique = false;
 
 	public function _init()
 	{
 		$this->_fields += array(
 			'id' => new Sprig_Field_Auto,
-			'name' => new Sprig_Field_Text,
+			'name' => new Sprig_Field_Char,
 			'code' => new Sprig_Field_Text,
 		);
 	
 	}
 
-	public function render()
+	public function _render()
 	{
-		$this->load();
 		return $this->code;
 	}
 	

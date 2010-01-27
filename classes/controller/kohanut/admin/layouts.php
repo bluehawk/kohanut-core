@@ -26,7 +26,6 @@ class Controller_Kohanut_Admin_Layouts extends Controller_Kohanut_Admin {
 	
 	public function action_edit($id)
 	{
-		
 		// Find the layout
 		$layout = Model_Layout::find($id);
 		

@@ -80,5 +80,7 @@
 		
 	</div>
 	
+	<?php // echo View::factory('profiler/stats'); ?>
+	
 </body>
 </html>

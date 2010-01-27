@@ -57,7 +57,7 @@ class Kohanut_Element extends Sprig
 	// Add the element, this should act very similar to "action_add" in a controller, should return a view.
 	public function action_add($page,$area)
 	{
-		$view = View::factory('kohanut/admin/content/add',array('element'=>$this));
+		$view = View::factory('kohanut/admin/elements/add',array('element'=>$this));
 		
 		if ($_POST)
 		{
@@ -79,7 +79,7 @@ class Kohanut_Element extends Sprig
 	// Edit the element, this should act very similar to "action_edit" in a controller, should return a view.
 	public function action_edit()
 	{
-		$view = View::factory('kohanut/admin/content/edit',array('element'=>$this));
+		$view = View::factory('kohanut/admin/elements/edit',array('element'=>$this));
 		
 		if ($_POST)
 		{
@@ -100,7 +100,7 @@ class Kohanut_Element extends Sprig
 	
 	public function action_delete()
 	{
-		$view = View::factory('kohanut/admin/content/delete',array('element'=>$this));
+		$view = View::factory('kohanut/admin/elements/delete',array('element'=>$this));
 		
 		if ($_POST)
 		{
@@ -133,12 +133,15 @@ class Kohanut_Element extends Sprig
 	
 	public function render_panel()
 	{
+		// Block is null when this element was not called from Kohanut::content_area(), so don't draw the content area controls
+		if ($this->block == NULL)
+			return;
 		
-		 $out = '<div class="kohanut_element_ctl"><p class="title">' . $this->title() . '</p>
-			<a href="/admin/content/edit/'. $this->block->elementtype->id .'/'. $this->id . '" class="button"><img src="/kohanutres/img/fam/pencil.png" title="Edit"/>Edit</a>
-			<a href="/admin/content/moveup/'.$this->block->id.'" class="button"><img src="/kohanutres/img/fam/arrow_up.png" title="Move Up" />Move Up</a>
-			<a href="/admin/content/movedown/'.$this->block->id.'" class="button"><img src="/kohanutres/img/fam/arrow_down.png"  title="Move Down"/>Move Down</a>
-			<a href="/admin/content/delete/'. $this->block->id .'" class="button"><img src="/kohanutres/img/fam/delete.png" title="Delete" />Delete</a>
+		$out = '<div class="kohanut_element_ctl"><p class="title">' . $this->title() . '</p>
+			<a href="/admin/elements/edit/'. $this->block->elementtype->id .'/'. $this->id . '" class="button"><img src="/kohanutres/img/fam/pencil.png" title="Edit"/>Edit</a>
+			<a href="/admin/elements/moveup/'.$this->block->id.'" class="button"><img src="/kohanutres/img/fam/arrow_up.png" title="Move Up" />Move Up</a>
+			<a href="/admin/elements/movedown/'.$this->block->id.'" class="button"><img src="/kohanutres/img/fam/arrow_down.png"  title="Move Down"/>Move Down</a>
+			<a href="/admin/elements/delete/'. $this->block->id .'" class="button"><img src="/kohanutres/img/fam/delete.png" title="Delete" />Delete</a>
 			<div style="clear:left"></div>
 		</div>';
 

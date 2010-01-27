@@ -4,8 +4,9 @@
  */
 class Kohanut_Element_Content extends Kohanut_Element
 {
-	public $type = 'content';
 	protected $_table = 'element_content';
+	
+	public $type = 'content';
 
 	public function _init()
 	{
