@@ -20,7 +20,7 @@ if (Kohanut::$adminmode)
 		}
 		?>
 	</select>
-	<?php echo form::submit('Add','add'); ?>
+	<?php echo form::submit('add','Add Element',array('class'=>'submit')); ?>
 	<?php echo form::close(); ?>
 	<div style="clear:left;"></div>
 </div>

@@ -1,0 +1,104 @@
+body {
+	background:#F7F4E9 url('../img/body.png') repeat-x top center;
+}
+small {
+	color:#888
+}
+
+th,.button,.active,input.submit,.pagination a:hover,.date td a:hover {
+	background:#1F7F1F;
+	color:#fff
+}
+
+select, textarea, input, td, #content, #foot {
+	background:#fff url('../img/gradient.png') repeat-x 0 -28px
+}
+tr {
+	background-position:0 -18px;
+}
+#content {
+	background-position:0 1px;
+}
+.box h1 {
+	color:#1F7F1F;
+}
+.active,.button, th, #head, #navigation a, input.submit {
+	color:#fff;
+}
+
+input, select, textarea {
+	border-color:#ddd
+}
+
+input.submit, a.button {
+	border:none;
+	background:#1F7F1F url('../img/button.png') 0 -10px repeat-x scroll;
+	text-decoration:none;
+	font-weight:bold;
+}
+
+input.submit:hover, a.button:hover {
+	border:none;
+	background:#1F7F1F url('../img/button.png') 0 -5px repeat-x scroll;
+}
+
+input.submit:active, a.button:active  {
+	background:#1F7F1F url('../img/button-hover.png') bottom left repeat-x scroll;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	border-color:#D3D3D3
+}
+
+a {
+	color:#666
+}
+
+#head {
+	background:#005014 url('../img/header-bg.gif') top left repeat-x scroll;
+}
+#navigation {
+	background:#434A48;
+	color:white;
+}
+#navigation a:hover {
+	background:#6A6D6C
+}
+#navigation a.active  {
+	background:#1F7F1F
+}
+
+.box {
+	background:#fff;
+	border-color:#ddd;
+}
+.box > .utils a {
+	background:#fff url('../img/gradient.png') repeat-x 0 -28px;
+	border-color:#aaa;
+}
+.box > h1 {
+	background:url('../img/box-h2.png') repeat-x bottom center #fff;
+	border-bottom:1px solid #CCC;
+}
+
+.error {
+	background:#FAA;
+	border:1px solid #FC5D5D;
+	font-weight:bold;
+}
+
+.success {
+	background:#aaffac;
+	border:1px solid #00ff40;
+	font-weight:bold;
+}
+
+.notice {
+	background:#FFFFAA;
+	border:1px solid #FFCC00;
+	font-weight:bold;
+}
+
+.glow-sortable-dropindicator {
+	background:#eee
+}

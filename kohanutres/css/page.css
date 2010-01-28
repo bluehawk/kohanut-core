@@ -1,0 +1,127 @@
+#kohanut_header {
+	background:#089708 url('../img/header-bg.gif') bottom left repeat-x scroll;
+	padding:5px 15px;
+	color:white;
+	height:30px;
+}
+
+	#kohanut_header a {
+		color:white;
+	}
+	
+.kohanut_element_ctl * {
+	text-decoration:none;
+	text-transform:none;
+	padding:0;
+	margin:0;
+}
+
+.kohanut_element_ctl {
+
+	font-size:12px;
+	background:#666666 url('../img/contentbar.png') 0 0px repeat-x scroll;
+	padding:5px;
+	color:white;
+	font-family:Arial,Helvetica,sans serif;
+	
+	-moz-border-radius-bottomright:5px;
+	-moz-border-radius-topleft:5px;
+	-webkit-border-bottom-right-radius:5px;
+	-webkit-border-top-left-radius:5px;
+	
+	position:relative;
+	
+}
+
+	.kohanut_element_ctl p.title {
+		padding:.2em;
+		margin:0;
+		font-size:1.2em;
+		font-weight:bold;
+		color:white;
+		text-transform:none;
+	}
+	
+	.kohanut_element_ctl p {
+		line-height:1em;
+	}
+	
+	.kohanut_element_ctl ul.kohanut_element_actions {
+		display:none;
+		list-style-type:none;
+	}
+	
+	.kohanut_element_ctl:hover ul.kohanut_element_actions {
+		display:block;
+		position:absolute;
+		background:#666666;
+		z-index:1;
+		left:0;
+		top:2.4em;
+		
+		-moz-border-radius-bottomright:5px;
+		-webkit-border-bottom-right-radius:5px;
+
+	}
+	
+	.kohanut_element_ctl ul.kohanut_element_actions li {
+		width:100%;;
+	}
+	
+		.kohanut_element_ctl ul.kohanut_element_actions li:hover {
+			
+		}
+		
+		.kohanut_element_ctl ul.kohanut_element_actions li img {
+			position:relative;
+			top:3px;
+			padding-right:4px;
+		}
+		
+		.kohanut_element_ctl ul.kohanut_element_actions li a {
+			color:white;
+			font-weight:bold;
+			padding:1px 10px 1px 5px;
+			display:block;
+			
+			-moz-border-radius-bottomright:5px;
+			-moz-border-radius-topleft:5px;
+			-webkit-border-bottom-right-radius:5px;
+			-webkit-border-top-left-radius:5px;
+		}
+		
+		.kohanut_element_ctl ul.kohanut_element_actions li a:hover {
+			background:#22AA22;
+		}
+	
+	.kohanut_element_ctl input, .kohanut_element_ctl select  {
+		-moz-border-radius-bottomright:5px;
+		-moz-border-radius-topleft:5px;
+		-webkit-border-bottom-right-radius:5px;
+		-webkit-border-top-left-radius:5px;
+		border:1px solid #ddd;
+		font-family:inherit;
+		font-size:inherit;
+		padding:2px;
+	}
+	
+	.kohanut_element_ctl input.submit {
+		color:#fff;
+		padding:4px 5px
+	}
+	
+	.kohanut_element_ctl input.submit  {
+		border:none;
+		background:#1F7F1F url('../img/button.png') 0 -10px repeat-x scroll;
+		text-decoration:none;
+		font-weight:bold;
+	}
+	
+	.kohanut_element_ctl input.submit:hover {
+		border:none;
+		background:#1F7F1F url('../img/button.png') 0 -5px repeat-x scroll;
+	}
+	
+	.kohanut_element_ctl input.submit:active  {
+		background:#1F7F1F url('../img/button-hover.png') bottom left repeat-x scroll;
+	}

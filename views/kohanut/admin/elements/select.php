@@ -4,23 +4,24 @@
 		
 		<?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
 		
-		
 		<form method="post">
-
-			<?php foreach ($element->inputs() as $label => $input): ?>
+			
 			<p>
-				<label><?php echo $label ?></label>
-				<?php echo $input ?>
-			</p>
+				<label for="which">Select a <?php echo ucfirst($element->type) ?></label>
+				<select name="which" id="which">
+			<?php foreach ($element->load(NULL,FALSE) as $item): ?>
+			
+				<option value="<?php echo $item->id?>"><?php echo $item->name ?></option>
+			
 			<?php endforeach ?>
-
+				</select>
+			</p>
 			<p>
 				<?php echo Form::submit('submit','Add',array('class'=>'submit')) ?>
 				<a>cancel</a>
 			</p>
 			
 		</form>
-		
 		
 		</div>
 	</div>

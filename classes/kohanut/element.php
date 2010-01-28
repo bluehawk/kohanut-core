@@ -13,7 +13,7 @@ class Kohanut_Element extends Sprig
 	// Whether an element is unique. If this is false, an element can be in
 	// more than one place, like a snippet. Also deleting it from a page
 	// will not actually delete the element, just the link to it.
-	public $unique = true;
+	public $unique = TRUE;
 
 	// Block is the sprig model for the block that is linking to this element
 	public $block = NULL;
@@ -36,7 +36,7 @@ class Kohanut_Element extends Sprig
 			// If its still not loaded, something is wrong.
 			if ( ! $this->loaded())
 			{
-				throw Kohanut_Exception('Rendering of element failed, element could not be loaded. Block id # :id',array('id',$this->block->id));
+				throw new Kohanut_Exception('Rendering of element failed, element could not be loaded. Block id # :id',array('id',$this->block->id));
 			}
 		}
 		
@@ -57,7 +57,7 @@ class Kohanut_Element extends Sprig
 	// Add the element, this should act very similar to "action_add" in a controller, should return a view.
 	public function action_add($page,$area)
 	{
-		$view = View::factory('kohanut/admin/elements/add',array('element'=>$this));
+		$view = View::factory('kohanut/admin/elements/add',array('element'=>$this,'page'=>$page,'area'=>$area));
 		
 		if ($_POST)
 		{
@@ -137,22 +137,25 @@ class Kohanut_Element extends Sprig
 		if ($this->block == NULL)
 			return;
 		
-		$out = '<div class="kohanut_element_ctl"><p class="title">' . $this->title() . '</p>
-			<a href="/admin/elements/edit/'. $this->block->elementtype->id .'/'. $this->id . '" class="button"><img src="/kohanutres/img/fam/pencil.png" title="Edit"/>Edit</a>
-			<a href="/admin/elements/moveup/'.$this->block->id.'" class="button"><img src="/kohanutres/img/fam/arrow_up.png" title="Move Up" />Move Up</a>
-			<a href="/admin/elements/movedown/'.$this->block->id.'" class="button"><img src="/kohanutres/img/fam/arrow_down.png"  title="Move Down"/>Move Down</a>
-			<a href="/admin/elements/delete/'. $this->block->id .'" class="button"><img src="/kohanutres/img/fam/delete.png" title="Delete" />Delete</a>
+		return <<<HTML
+		<div class="kohanut_element_ctl">
+			<p class="title">{$this->title()}</p>
+			<ul class="kohanut_element_actions">
+				<li><a href="/admin/elements/edit/{$this->block->elementtype->id}/{$this->id}"><img src="/kohanutres/img/fam/pencil.png" title="Edit"/>Edit</a></li>
+				<li><a href="/admin/elements/moveup/{$this->block->id}"><img src="/kohanutres/img/fam/arrow_up.png" title="Move Up" />Move Up</a></li>
+				<li><a href="/admin/elements/movedown/{$this->block->id}"><img src="/kohanutres/img/fam/arrow_down.png"  title="Move Down"/>Move Down</a></li>
+				<li><a href="/admin/elements/delete/{$this->block->id}"><img src="/kohanutres/img/fam/delete.png" title="Delete" />Delete</a></li>
+			</ul>
 			<div style="clear:left"></div>
-		</div>';
-
-		return $out;
+		</div>
+HTML;
 	}
 	
 	public function register($page,$area)
 	{
 		// You can only register an element that exists
 		if ( ! $this->loaded())
-			throw Kohanut_Exception("Attempting to register an element that does not exist, or has not been created yet.");
+			throw new Kohanut_Exception("Attempting to register an element that does not exist, or has not been created yet.");
 			
 		// Get the highest 'order' from elements in the same page and area
 		$query = DB::select()->order_by('order','DESC');
@@ -162,7 +165,7 @@ class Kohanut_Element extends Sprig
 		// Get the id of this elementtype
 		$elementtype = Sprig::factory('elementtype',array('name'=>$this->type))->load();
 		if ( ! $elementtype->loaded())
-			throw Kohanut_Exception("Attempt to register an element failed, could not find elementtype :type",array('type'=>$this->type));
+			throw new Kohanut_Exception("Attempt to register an element failed, could not find elementtype :type",array('type'=>$this->type));
 		
 		// Create the page content
 		$new = Sprig::factory('block',array(

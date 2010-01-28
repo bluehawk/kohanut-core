@@ -42,7 +42,7 @@
 	<div class="box">
 		
 		<h1>Help</h1>
-		<p><a href="/admin/users/new/" class="button curved-alt">Create a new User</a></p>
+		<p><a href="/admin/users/new/" class="button">Create a new User</a></p>
 			
 	</div>
 </div>

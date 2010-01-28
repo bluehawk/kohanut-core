@@ -2,8 +2,6 @@
 	
 	<div class="box">
 		
-		
-		
 		<h1>Editing Page: <?php echo $page->name ?></h1>
 		
 		<?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
@@ -15,7 +13,7 @@
 		<?php else: ?>
 		
 			<h2>Edit Page Content</h2>
-			<p><a href="/admin/pages/edit/<?php echo $page->id ?>" class="button curved-alt">Click to edit this pages content</a></p>
+			<p><a href="/admin/pages/edit/<?php echo $page->id ?>" class="button">Click to edit this pages content</a></p>
 			
 		<?php endif; ?>
 		

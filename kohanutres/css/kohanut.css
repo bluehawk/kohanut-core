@@ -97,6 +97,10 @@
 			font-family:monospace;
 			margin:0;
 		}
+		
+		#pagetree .pageinfo .islink {
+			color:#2B9B1F;
+		}
 
 		#pagetree li .pageinfo:hover {
 			background-color:#CCFF99;

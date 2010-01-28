@@ -44,7 +44,7 @@
 <div class="grid_4">
 	<div class="box">
 		<h1>Help</h1>
-		<p><a class="button curved-alt" href="/admin/layouts/new">Create a New Layout</a></p>
+		<p><a class="button" href="/admin/layouts/new">Create a New Layout</a></p>
 		<p>Help goes here</p>
 	</div>
 </div>

@@ -51,7 +51,7 @@ class Model_Redirect extends Sprig {
 			{
 				// This should never happen, log an error and display an error
 				Kohana::$log->add('ERROR', "Kohanut - Could not redirect '$this->url' to '$this->newurl'. Unknown redirect type: ($this->type)");
-				throw Kohanut_Exception("Unknown redirect type",array(),404);
+				throw new Kohanut_Exception("Unknown redirect type",array(),404);
 			}
 			
 		}

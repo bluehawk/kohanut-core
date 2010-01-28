@@ -1,30 +1,33 @@
-<div class="container_12">
-    <div class="grid_8">
-        
-		<div class="ui-widget">
-            <h2 class="ui-widget-header ui-corner-top">
-				<img class="headericon" src="/kohanutres/img/fam/note_edit.png" alt="edit" />Edit Snippet
-			</h2>
-            <div class="ui-padding ui-widget-content ui-corner-bottom">
-            
-                <?php echo $form ?>
-                <div class="clear"></div>
-                <br/>
-                <a onclick="javascript:return confirm('Really Delete it?')" href="/admin/snippets/delete/<?php echo $id ?>"><img src="/kohanutres/img/fam/note_delete.png" style="float:left;padding-right:5px;" alt="delete" /> Delete this snippet </a>
-            
-            </div>
-        </div>
-    </div>
-    
-    <div class="grid_4">
-        <div class="ui-widget">
-            <h2 class="ui-widget-header ui-corner-top">What are Snippets?</h2>
-            <div class="ui-padding ui-widget-content ui-corner-bottom">
-            
-                <p>Small pieces of code that you can use throughout the site.</p>
-            
-            </div>
-        </div>
-    </div>
-	<div class='clear' ></div>
+<div class="grid_12">
+	
+	<div class="box">
+		<h1>Edit Snippet</h1>
+		
+		<?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
+			
+			<?php echo Form::open() ?>
+			
+			<?php foreach ($snippet->inputs() as $label => $input): ?>
+				<p>
+					<label><?php echo $label ?></label>
+					<?php echo $input ?>
+				</p>
+			<?php endforeach ?>
+			
+			<p>
+				<input type="submit" name="submit" value="Save Changes" class="submit" />
+				<a href="/admin/snippets/">cancel</a>
+			</p>
+			
+			<?php echo Form::close();  ?>
+			
+	</div>
+	
+</div>
+
+<div class="grid_4">
+	<div class="box">
+		<h1>Help</h1>
+		<p>Help goes here</p>
+	</div>
 </div>

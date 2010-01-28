@@ -7,7 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="/kohanutres/reset.css" />
 	<link rel="stylesheet" href="/kohanutres/css/960.css" type="text/css" media="screen" charset="utf-8" />
 	<link rel="stylesheet" href="/kohanutres/css/template.css" type="text/css" media="screen" charset="utf-8" />
-	<link rel="stylesheet" href="/kohanutres/css/colour.css" type="text/css" media="screen" charset="utf-8" />
+	<link rel="stylesheet" href="/kohanutres/css/color.css" type="text/css" media="screen" charset="utf-8" />
 	<link rel="stylesheet" href="/kohanutres/css/kohanut.css" type="text/css" media="screen" charset="utf-8" />
 	
 	<!--
@@ -23,6 +23,7 @@
 <body>
 
 	<div id="head">
+		<img src="/kohanutres/img/logo.png" alt="Kohanut Logo" class="logo"/>
 		<h1>Kohanut</h1>
 	
 		<p class="info">

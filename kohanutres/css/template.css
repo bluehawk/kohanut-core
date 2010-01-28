@@ -96,20 +96,21 @@ label, #navigation, .error, .success, input[type="submit"], input[type="reset"] 
 	font-weight:bold;
 }
 
+h1, h2, h3, h4, h5, h6 {
+	margin:0 0 10px;
+}
 
 h1 {
 	font-size:1.7em;
 }
+
 h2 {
 	font-size:1.4em;
 }
 
 h3 {
 	font-size:1em;
-}
-
-h1, h2, h3, h4, h5, h6 {
-	margin:0 0 10px;
+	margin-bottom:0;
 }
 
 a:hover {
@@ -123,6 +124,10 @@ a.edit, a.delete {
 }
 a {
 	padding:4px;
+}
+
+a.button {
+	padding:4px 6px;
 }
 
 /* Table styling */
@@ -146,19 +151,30 @@ th, td {
 	padding:5px 30px;
 	width:940px;
 	position:relative;
+	height:40px;
+}
+
+#head .logo {
+	float:left;
+	padding-right:10px;
 }
 
 #head h1 {
 	border:none;
 	margin:0;
 	padding:0;
+	font-size:2.1em;
 }
 
 #head .info {
 	position:absolute;
 	right:1em;
 	top:0pt;
-	padding-top:.9em;
+	padding-top:1em;
+}
+
+#head .info a {
+	color:white;
 }
 
 /* Nagivation */
@@ -205,7 +221,7 @@ th, td {
 	-webkit-border-top-right-radius:5px;
 }
 
-.curved-alt, input, textarea, select, .box, .date td a, .utils a  {
+.curved-alt, .button, input, textarea, select, .box, .date td a, .utils a  {
 	-moz-border-radius-bottomright:5px;
 	-moz-border-radius-topleft:5px;
 	-webkit-border-bottom-right-radius:5px;

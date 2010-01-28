@@ -35,7 +35,7 @@ foreach ($nodes as $node)
 		<?php if ($node->islink) echo '<div class="link"></div>'; ?>
 		<div style="float:left">
 			<p class='pagename'><?php echo $node->name ?></p>
-			<p class='pageurl'><?php echo $node->url ?></p>
+			<p class='pageurl<?php if ($node->islink) echo ' islink'; ?>'><?php echo $node->url ?><?php if ($node->islink) echo '  (Link) '; ?></p>
 		</div>
 		<div class='actions'>
 			<a href="<?php echo $node->url ?>" title="Click to view"><img src="/kohanutres/img/fam/page_world.png" alt="View" /><br/><span>view</span></a>
@@ -58,7 +58,7 @@ for( $i=0 ; $i < $level  ; $i++ ) {
 	echo "</li></ul>";
 }
 
-echo '
+?>
 <script type="text/javascript">
 $(document).ready(function(){
 
@@ -73,8 +73,4 @@ $(document).ready(function(){
 	$("#pagetreeloading").hide();
 
 });
-
 </script>
-
-';
-?>
