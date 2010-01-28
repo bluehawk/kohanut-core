@@ -1,22 +1,8 @@
-<div id="side">
+<div class="grid_12">
 	
 	<div class="box">
-		<h2>Actions</h2>
-		<div class="content">
-			
-			<p><a href="/admin/users/new/"><img src="/kohanutres/img/fam/user_add.png" alt="Create new User" />Create a new User</a></p>
-			
-		</div>
-	</div>
-	
-</div>
-
-<div id="main">
-	
-	<div class="box">
-		<h2><img src='/kohanutres/img/fam/user.png' alt="link" class='headericon' />Users</h2>
+		<h1>Users</h1>
 		
-			
 		<ul id="userlist" class="standardlist">
 		<?php
 		$zebra = false;
@@ -47,8 +33,16 @@
 		}
 		?>
 		</ul>
-		<div class="clear"></div>
 		
 	</div>
 	
+</div>
+
+<div class="grid_4">
+	<div class="box">
+		
+		<h1>Help</h1>
+		<p><a href="/admin/users/new/" class="button curved-alt">Create a new User</a></p>
+			
+	</div>
 </div>

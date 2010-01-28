@@ -1,41 +1,33 @@
-<div id="side">
+<div class="grid_12">
 	
 	<div class="box">
-		<h2>Help</h2>
-		<div class="content">
+		<h1>Create New User</h1>
+		
+		<?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
 			
-			<p>blah</p>
+			<?php echo Form::open() ?>
 			
-		</div>
+			<ul>
+			<?php foreach ($user->inputs() as $label => $input): ?>
+				<p>
+					<label><?php echo $label ?></label>
+					<?php echo $input ?>
+				</p>
+			<?php endforeach ?>
+			
+			<p>
+				<input type="submit" name="submit" value="Create User" class="submit" />
+				<a href="/admin/users/">cancel</a>
+			</p>
+			
+			</form>
 	</div>
 	
 </div>
 
-<div id="main">
-	
+<div class="grid_4">
 	<div class="box">
-		<h2><img class="headericon" src="/kohanutres/img/fam/user_edit.png" alt="edit"/>New User</h2>
-		<div class="content">
-			
-			<?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
-			
-			<?php echo Form::open() ?>
-			
-			<ul class="leftform">
-			<?php foreach ($user->inputs() as $label => $input): ?>
-				<li>
-					<label><?php echo $label ?></label>
-					<?php echo $input ?>
-				</li>
-			<?php endforeach ?>
-			
-			<?php echo Form::submit('save', 'Save Changes', array('class'=>'submit')); ?>
-			
-			<?php echo Form::close();  ?>
-			
-		</div>
-		<div class="clear"></div>
-		
+		<h1>Help</h1>
+		<p>Help goes here</p>
 	</div>
-	
 </div>

@@ -1,104 +1,90 @@
-<div id="side">
+<div class="grid_12">
 	
 	<div class="box">
-		<h2>Help</h2>
-		<div class="content">
-			
-			<p>blah</p>
-			
-		</div>
-	</div>
-	
-</div>
-
-<div id="main">
-	
-	<div class="box">
-		<h2><img class="headericon" src="/kohanutres/img/fam/page_edit.png" alt="Editing" />Editing Page: <?php echo $page->name ?></h2>
-		<div class="content">
-			
+		
+		
+		
+		<h1>Editing Page: <?php echo $page->name ?></h1>
+		
+		<?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
+		
 		<?php if ($page->islink): ?>
 			
 			<p class="notice">This is an external link, meaning it is not actually a page managed by this system, but rather it links to a page somewhere else.  To change it to a page that you can control here, uncheck "External Link?" below.</p>
 			
 		<?php else: ?>
 		
-			<div style="padding-left:140px;margin-bottom:15px;">
-				<h3>Edit Page Content</h3>
-				<a href="/admin/pages/edit/<?php echo $page->id ?>">Click to edit this pages content</a>
-			</div>
+			<h2>Edit Page Content</h2>
+			<p><a href="/admin/pages/edit/<?php echo $page->id ?>" class="button curved-alt">Click to edit this pages content</a></p>
 			
 		<?php endif; ?>
 		
-			<?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
+		
+		<form method="post">
 			
-			<ul class="standardform">
-				<form method="post">
-					
-					<li>
-						<label>Navigation Name</label>
-						<?php echo $page->input('name'); ?>
-					</li>
-					<li>
-						<label>URL</label>
-						<?php echo $page->input('url'); ?>
-					</li>
-					<li>
-						<label>External Link?</label>
-						<?php echo $page->input('islink',array('class'=>'check')) ?>
-					</li>
-					<li>
-						<label>Show in Navigation?</label>
-						<?php echo $page->input('shownav',array('class'=>'check')) ?>
-					</li>
-					<li>
-						<label>Show in Site Map?</label>
-						<?php echo $page->input('showmap',array('class'=>'check')) ?>
-					</li>
-					
-				<?php if ( ! $page->islink): ?>
-					<li><label>&nbsp;</label><h3>Page Meta Data</h3></li>
-					
-					<li>
-						<label>Title</label>
-						<?php echo $page->input('title'); ?>
-					</li>
-					<li>
-						<label>Meta keywords</label>
-						<?php echo $page->input('metakw'); ?>
-					</li>
-					<li>
-						<label>Meta description</label>
-						<?php echo $page->input('metadesc'); ?>
-					</li>
-					<li>
-						<label>Layout</label>
-						<?php echo $page->input('layout'); ?>
-					</li>
-				<?php endif; ?>
-					<?php echo Form::submit('submit','Save changes',array('class'=>'submit')) ?>
-					
-				</form>
-			</ul>
+			<p>
+				<label>Navigation Name<small>This is the name that shows up in the navigation</small></label>
+				<?php echo $page->input('name'); ?>
+			</p>
+			<p>
+				<label>URL<small>This is the "link" to the page, or whats in the address bar.</small></label>
+				<?php echo $page->input('url'); ?>
+			</p>
+			<p>
+				<label>External Link<small>Checking this will mean you can't edit this page here, it simply links to the URL above</small></label>
+				<?php echo $page->input('islink',array('class'=>'check')) ?>
+			</p>
+			<p>
+				<label>Show in Navigation<small>Check this to have this page show in the main, and other navigation menus</small></label>
+				<?php echo $page->input('shownav',array('class'=>'check')) ?>
+			</p>
+			<p>
+				<label>Show in Site Map?<small>Check this to have this page show in the site map</small></label>
+				<?php echo $page->input('showmap',array('class'=>'check')) ?>
+			</p>
 			
-			<div class="clear"></div>
+		<?php if ( ! $page->islink): ?>
+		<hr/>
+			<h1>Page Meta Data</h1>
 			
-		</div>
+			<p>
+				<label>Title<small>This is what shows up at the top of the window or tab</small></label>
+				<?php echo $page->input('title'); ?>
+			</p>
+			<p>
+				<label>Meta keywords<small>Keywords are used by search engines to find and rank your page</small></label>
+				<?php echo $page->input('metakw'); ?>
+			</p>
+			<p>
+				<label>Meta description<small>Description is used by search engines to summarize your page for visitors</small></label>
+				<?php echo $page->input('metadesc'); ?>
+			</p>
+			<p>
+				<label>Layout<small>Which layout this page should use</small></label>
+				<?php echo $page->input('layout'); ?>
+			</p>
+		<?php endif; ?>
+		
+			<p>
+				<?php echo Form::submit('submit','Save Changes',array('class'=>'submit')) ?>
+				<a href="/admin/pages">cancel</a>
+			</p>
+			
+		</form>
+	
+		<div class="clear"></div>
+		
 	</div>
 	
 </div>
 
-<script type="text/javascript">
-$(document).ready(function(){
+<div class="grid_4">
 	
+	<div class="box">
+		<h1>Help</h1>
+		
+		<p>I need to write the help for this page.</p>
+		
+	</div>
 	
-	$("#type_link").click( function(){
-		$("#pageinfo").animate({height:"hide"},"slow");
-	});
-	
-	$("#type_page").click( function(){
-		$("#pageinfo").animate({height:"show"},"slow");
-	});
-});
-</script>
-
+</div>

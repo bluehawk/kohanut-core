@@ -1,7 +1,37 @@
-<div id="side">
+<div class="grid_12">
 	
 	<div class="box">
-		<h2>Help</h2>
+		<h1>Move Page</h1>
+		
+		<?php echo Form::open(); ?>
+			<p><label>Move "<?php echo $page->name ?>" to </label>
+				<?php
+				echo Form::select('action',array(
+					'before'=>'before',
+					'after'=>'after',
+					'first'=>'first child of',
+					'last'=>'last child of',
+				));
+				echo Form::select('target',$page->select_list('id','name','&nbsp;&nbsp;&nbsp;'));
+				?>
+			</p>
+			
+			<p>
+				<?php echo Form::submit('submit','Move Page',array('class'=>'submit')); ?>
+				<a class="cancel" href="/admin/pages">cancel</a>
+			</p>
+			
+			<div class="clear"></div>
+		</form>
+		
+	</div>
+	
+</div>
+
+<div class="grid_4">
+	
+	<div class="box">
+		<h1>Help</h1>
 		<div class="content">
 			
 			<p>To move this page to a new location, use the drop downs to choose the new location for the page.</p>
@@ -13,34 +43,4 @@
 		</div>
 	</div>
 	
-</div>
-
-<div id="main">
-	
-	<div class="box">
-		<h2>Move Page</h2>
-		<div class="content">
-			<?php echo Form::open(); ?>
-				<p>Move "<?php echo $page->name ?>" to 
-					<?php
-					echo Form::select('action',array(
-						'before'=>'before',
-						'after'=>'after',
-						'first'=>'first child of',
-						'last'=>'last child of',
-					));
-					echo Form::select('target',$page->select_list('id','name','&nbsp;&nbsp;&nbsp;'));
-					?>
-				</p>
-				
-				<?php echo Form::submit('submit','Submit'); ?>
-				
-	
-				<a class="cancel" href="/admin/pages">cancel</a>
-				<br/>
-				<div class="clear"></div>
-			</form>
-		</div>
-	</div>
-
 </div>

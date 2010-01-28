@@ -80,8 +80,39 @@ class Controller_Kohanut_Admin_Users extends Controller_Kohanut_Admin {
 		$this->view->body->success = $success;
 	}
 	
-	public function action_delete()
+	public function action_delete($id)
 	{
+		// Sanitize
+		$id = (int) $id;
 		
+		// Find the user
+		$user = Sprig::factory('user',array('id'=>$id))->load();
+		
+		if ( ! $user->loaded())
+			return $this->admin_error("Could not find user with id <strong>$id</strong>");
+		
+		$errors = false;
+		
+		// If the form was submitted, delete the user.
+		if ($_POST)
+		{
+
+			try
+			{
+				$user->delete();
+				$this->request->redirect('/admin/users/');
+			}
+			catch (Exception $e)
+			{
+				$errors = array('submit'=>"Could not delete user.");
+			}
+			
+		}
+		
+		$this->view->title = "Delete User";
+		$this->view->body = new View('kohanut/admin/users/delete');
+	
+		$this->view->body->user = $user;
+		$this->view->body->errors = $errors;
 	}
 }

@@ -8,13 +8,20 @@ class Model_Redirect extends Sprig {
 	{
 		$this->_fields += array(
 			'id' => new Sprig_Field_Auto,
-			'url' => new Sprig_Field_Char,
-			'newurl' => new Sprig_Field_Char,
+			'url' => new Sprig_Field_Char(array(
+				'label' => 'Old URL<small>If someone goes to this url...</small>',
+			)),
+			'newurl' => new Sprig_Field_Char(array(
+				'label' => 'New URL<small>...it will take them to this one.</small>',
+			)),
 			'type' => new Sprig_Field_Enum(array(
-				'choices' => array('301'=>'301','302'=>'302')
+				'choices' => array('301'=>'301 (Permanent)','302'=>'302 (Temporary)'),
+				'label' => 'Type<small>This should be 301 (Permanent) in most cases.</small>',
 			)),
 		);
 	}
+	
+	
 	
 	/**
 	 * Find a redirect from $url

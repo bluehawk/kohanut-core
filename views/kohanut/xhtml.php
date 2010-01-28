@@ -9,7 +9,7 @@
 <?php if (isset(Kohanut::$page->metakw) && Kohanut::$page->metakw != ""): ?>
 	<meta name="keywords" content="<?php echo Kohanut::$page->metakw ?>" />
 <?php endif; ?>
-	<meta name="generator" content="Kohanut" />
+<?php //	<meta name="generator" content="Kohanut" /> ?>
 <!-- Begin Kohanut includes -->
 <?php echo Kohanut::stylesheet_render(); ?>
 <?php echo Kohanut::javascript_render(); ?>

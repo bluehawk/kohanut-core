@@ -1,5 +1,5 @@
 <?php if ( ! empty($errors)): ?>
-<ul class="errors">
+<ul class="error">
 <?php foreach ($errors as $field => $error): ?>
  <li rel="<?php echo $field ?>"><?php echo ucfirst($error) ?></li>
 <?php endforeach ?>

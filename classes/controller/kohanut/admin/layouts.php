@@ -73,7 +73,7 @@ class Controller_Kohanut_Admin_Layouts extends Controller_Kohanut_Admin {
 				$layout->values($_POST);
 				$layout->create();
 				
-				$this->request->redirect('/admin/layouts/edit/' . $layout->id );
+				$this->request->redirect('/admin/layouts/');
 			}
 			catch (Validate_Exception $e)
 			{

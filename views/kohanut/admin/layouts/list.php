@@ -1,22 +1,8 @@
-<div id="side">
+<div class="grid_12">
 	
 	<div class="box">
-		<h2>Actions</h2>
-		<div class="content">
-			
-			<p><a href="/admin/layouts/new/"><img src="/kohanutres/img/fam/layout_add.png" alt="Create new layout" />Create a new Layout</a></p>
-			
-		</div>
-	</div>
-	
-</div>
-
-<div id="main">
-	
-	<div class="box">
-		<h2><img src='/kohanutres/img/fam/layout.png' alt="link" class='headericon' />Layouts</h2>
+		<h1>Layouts</h1>
 		
-			
 		<ul id="layoutlist" class="standardlist">
 		<?php
 		$zebra = false;
@@ -33,7 +19,7 @@
 					</div>
 					<a href="/admin/layouts/edit/<?php echo $item->id ?>" ><p>
 						<?php echo $item->name ?>
-						<span class="layoutdesc"><?php echo $item->desc ?></span>
+						<small><?php echo $item->desc ?></small>
 					</p></a>
 				
 				</li>
@@ -53,4 +39,12 @@
 		
 	</div>
 	
+</div>
+
+<div class="grid_4">
+	<div class="box">
+		<h1>Help</h1>
+		<p><a class="button curved-alt" href="/admin/layouts/new">Create a New Layout</a></p>
+		<p>Help goes here</p>
+	</div>
 </div>

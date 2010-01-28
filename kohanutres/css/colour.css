@@ -1,0 +1,95 @@
+body {
+	background:#F7F4E9 url(body.png) repeat-x top center;
+}
+small {
+	color:#888
+}
+
+th,#navigation,.button,.active,input.submit,.pagination a:hover,.date td a:hover {
+	background:#1F7F1F;
+	color:#fff
+}
+
+select, textarea, input, td, #content, #foot {
+	background:#fff url(gradient.png) repeat-x 0 -28px
+}
+tr {
+	background-position:0 -18px;
+}
+#content {
+	background-position:0 1px;
+}
+.box h1 {
+	color:#1F7F1F;
+}
+.active,.button, th, #head, #navigation a, input.submit {
+	color:#fff;
+}
+
+input, select, textarea {
+	border-color:#ddd
+}
+
+input.submit:hover  {
+
+}
+
+h1,h2,h3,h4,h5,h6 {
+	border-color:#D3D3D3
+}
+
+a {
+	color:#666
+}
+a.edit {
+	background-image:url(edit.png)
+}
+a.delete {
+	background-image:url(trash.png)
+}
+
+#head {
+	background:#313230
+}
+
+#navigation a:hover {
+	background:#2E992A
+}
+#navigation .active {
+	background:#2FAA29
+}
+
+.box {
+	background:#fff;
+	border-color:#ddd;
+}
+.box > .utils a {
+	background:#fff url(gradient.png) repeat-x 0 -28px;
+	border-color:#aaa;
+}
+.box > h1 {
+	background:url(box-h2.png) repeat-x bottom center #fff;
+	border-bottom:1px solid #CCC;
+}
+
+.error {
+	background:#FAA;
+	border:1px solid #FC5D5D;
+	font-weight:bold;
+}
+
+.success {
+	background:#aaffac;
+	border:1px solid #00ff40;
+	font-weight:bold;
+}
+
+.notice {
+	background:#FFFFAA;
+	border:1px solid #FFCC00;
+	font-weight:bold;
+}
+
+.glow-sortable-dropindicator {
+	background:#eee
+}

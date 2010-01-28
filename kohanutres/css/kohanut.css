@@ -1,0 +1,194 @@
+/*  Page tree - this is the tree that lists pages and has the options for editing them */
+		
+		/* treeview.css  http://jquery.bassistance.de/treeview/demo/ */
+		
+		.treeview, .treeview ul { 
+			padding: 0;
+			margin: 0;
+			list-style: none;
+		}
+		
+		.treeview ul {
+			margin-top: 0px;
+		}
+		
+		.treeview .hitarea {
+			background: url('../img/treeview.gif') -64px -25px no-repeat;
+			height: 16px;
+			width: 16px;
+			margin-left: -16px;
+			float: left;
+			cursor: pointer;
+		}
+		/* fix for IE6 */
+		* html .hitarea {
+			display: inline;
+			float:none;
+		}
+		
+		.treeview li { 
+			margin: 0;
+			padding: 0px 0pt 0px 16px;
+				
+		}
+		
+		.treeview a.selected {
+			background-color: #eee;
+		}
+		
+		#treecontrol { margin: 1em 0; display: none; }
+		
+		.treeview .hover { cursor: pointer; }
+		
+		.treeview li { background: url('../img/treeview-line.gif') 0 0 no-repeat; }
+		.treeview li.collapsable, .treeview li.expandable { background-position: 0 -176px; }
+		
+		.treeview .expandable-hitarea { background-position: -80px -3px; }
+		
+		.treeview li.last { background-position: 0 -1766px }
+		.treeview li.lastCollapsable, .treeview li.lastExpandable { background-image: url('../img/treeview.gif'); }  
+		.treeview li.lastCollapsable { background-position: 0 -111px }
+		.treeview li.lastExpandable { background-position: -32px -67px }
+		
+		.treeview div.lastCollapsable-hitarea, .treeview div.lastExpandable-hitarea { background-position: 0; }
+
+#pagetree {
+	padding-top:10px;
+	margin:0 10px;
+}
+
+	#pagetree li {
+		
+	}
+	
+	/* make is so the parent element "Home" can't be collapsed, doesn't have the tickbox, doesn't have the padding */
+	#pagetree>li {
+		padding-left:0;
+		background:none;
+	}
+		#pagetree>li>.hitarea {
+			display:none;
+		}
+		
+		#pagetree li .pageinfo {
+			min-height:27px;
+			position:relative;
+			top:-6px;
+			z-index:2;
+			padding:0px 0 3px 24px;
+		}
+		
+		#pagetree li>.pageinfo { background:transparent url('../img/fam/page.png') 2px 6px no-repeat scroll;}
+		#pagetree li .link  {background:transparent url('../img/link.png') 1px 2px no-repeat scroll; position:absolute;top:0;left:0;width:16px;height:16px;}
+		#pagetree li.expandable>.pageinfo{ background:transparent url('../img/folder.png') 3px 5px no-repeat scroll; }
+		#pagetree li.collapsable>.pageinfo{ background:transparent url('../img/folder-open.png') 3px 5px no-repeat scroll; }
+	
+		#pagetree .pageinfo .pagename {
+			font-weight:bold;
+			font-size:90%;
+			margin:0;
+			padding:2px 0 0;
+		}
+		
+		#pagetree .pageinfo .pageurl {
+			color:#666666;
+			font-size:90%;
+			padding:0;
+			font-family:monospace;
+			margin:0;
+		}
+
+		#pagetree li .pageinfo:hover {
+			background-color:#CCFF99;
+			
+		}
+	
+		#pagetree .pageinfo .actions {
+			display:none;
+			float:right;
+			padding:5px 0 0;
+			z-index:1;
+		}
+			#pagetree .pageinfo:hover .actions {
+				display:block;
+			}
+			
+			#pagetree .pageinfo .actions a {
+				text-decoration:none;
+				font-size:70%;
+				text-align:center;
+				line-height:8px;
+				float:left;
+				color:#003300;
+				padding:0px 4px;
+			}
+			
+			#pagetree .pageinfo .actions a:hover span {
+				color:#009900;
+				text-decoration:underline;
+			}
+
+ul.standardlist {
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	margin-top:-10px;
+}
+
+	ul.standardlist li {
+		background:white;
+		clear:left;
+		padding:0;margin:0;
+	}
+	
+	ul.standardlist p {
+		font-weight:bold;
+	}
+	
+	ul.standardlist a {
+		cursor:pointer;
+		text-decoration:none;
+		padding:0;
+		margin:0;
+	}
+		ul.standardlist li.z {
+			background:#efefef;
+		}
+		
+		ul.standardlist li:hover {
+			background:#CCFF99;
+		}
+	
+	ul.standardlist li div.actions {
+		float:right;
+		display:none;
+		padding:0; margin:0;
+		padding-right:5px;
+	}
+	
+		ul.standardlist li:hover div.actions {
+			display:block;
+		}
+		
+		ul.standardlist div.actions a {
+			text-decoration:none;
+			font-size:70%;
+			text-align:center;
+			line-height:8px;
+			float:left;
+			color:#003300;
+			padding:2px 3px;
+		}
+		ul.standardlist div.actions a:hover span {
+			color:#009900;
+			text-decoration:underline;
+		}
+		
+	
+	ul.standardlist li p {
+		margin:0;
+		padding:8px;
+		color:black;
+		margin:0;
+		min-height:16px;
+	}
