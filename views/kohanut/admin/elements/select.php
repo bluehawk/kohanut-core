@@ -16,6 +16,7 @@
 			<?php endforeach ?>
 				</select>
 			</p>
+			
 			<p>
 				<?php echo Form::submit('submit','Add',array('class'=>'submit')) ?>
 				<a>cancel</a>

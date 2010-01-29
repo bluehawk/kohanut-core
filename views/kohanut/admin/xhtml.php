@@ -4,7 +4,6 @@
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 	<title><?php echo (isset($title) ? "Admin - " . $title : "Admin"); ?></title>
-	<link rel="stylesheet" type="text/css" href="/kohanutres/reset.css" />
 	<link rel="stylesheet" href="/kohanutres/css/960.css" type="text/css" media="screen" charset="utf-8" />
 	<link rel="stylesheet" href="/kohanutres/css/template.css" type="text/css" media="screen" charset="utf-8" />
 	<link rel="stylesheet" href="/kohanutres/css/color.css" type="text/css" media="screen" charset="utf-8" />

@@ -50,28 +50,13 @@ class Model_Layout extends Sprig {
 			return "Layout Failed to render because it wasn't loaded.";
 		}
 		
-		/**
-		 * eval() the layout code to a buffer
-		 * The 'Kohanut::layout_area()' functions inside the layout code will
-		 * pull all the needed contents.
-		 * Note: the space after the <?php tag in essential, as it somehow
-		 * fixes an "unexpected $end in eval()'d code" error.
-		 */
-		try {
-			// Create the output buffer
-			ob_start();
-			
-			// Eval the layout code, save, and delete the buffer
-			eval('?>' . $this->code . '<?php ');
-			$layoutcode = ob_get_contents();
-			ob_end_clean();
-		}
-		catch (Exception $e)
-		{
-			ob_end_clean();
-			$layoutcode = "<h1>There was an error processing the layout code.</h1><p>" . $e . "</p>";
-		}
-		
+		// Make the twig loader, environment and template and pass the layout code.
+		$loader = new Twig_Loader_String();
+		$twig = new Twig_Environment($loader, array(
+			'cache' => APPPATH.'cache/twig',
+		));
+		$template = $twig->loadTemplate($this->code);
+		return $template->render(array('Kohanut'=>new Kohanut));
 		
 		// And return the output
 		return $layoutcode;

@@ -11,7 +11,7 @@
 		
 		<?php endif; ?>
 		
-		<?php form::open() ?>
+		<?php echo form::open() ?>
 			<p>
 				<input type="submit" name="submit" value="Yes, delete it." class="submit" />
 				<a href="/admin/pages/">cancel</a>

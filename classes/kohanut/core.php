@@ -5,7 +5,7 @@
 class Kohanut_Core {
 
 	// Kohanut version
-	public static $version = "0.3 beta";
+	public static $version = "0.5";
 	
 	// the page that is selected. used when editing and viewing a page
 	public static $page = null;

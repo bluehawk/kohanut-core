@@ -13,7 +13,7 @@ class Controller_Kohanut_Install_Install extends Controller {
 			
 		if ( ! $post->check()) {
 		
-			$view = new View('kohanut/install');
+			$view = new View('kohanut/admin/install');
 			$view->errors = $post->errors('kohanut/admin/error');
 			$this->request->response = $view;
 			return;
@@ -139,15 +139,17 @@ class Controller_Kohanut_Install_Install extends Controller {
 		// Create sample layouts, pages, and content
 		
 		$queries = explode(";\n",trim("
-			INSERT INTO `layouts` (`id`, `name`, `desc`, `code`) VALUES ('1', 'Home', 'Home page', '<?php Kohanut::stylesheet(\'default.css\'); ?>\n\n<div id=\'wrapper\'>\n<div id=\'logo\'>\n    <h1><a href=\'/\'>Site Name</a></h1>\n    <h2>Tag line goes here</h2>\n</div>\n<div id=\'header\'>\n    <div id=\'menu\'>\n        <?php echo Kohanut::main_nav(2); ?>\n    </div>\n    <?php echo Kohanut::bread_crumbs(); ?>\n</div>\n\n<div id=\'page\'>\n    <div id=\'content\'>\n        <?php echo Kohanut::content_area(1,\'Main Column\') ?>\n    </div>\n    <div id=\'sidebar\'>\n        <?php echo Kohanut::content_area(2,\'Side Column\') ?>\n    </div>\n    <div style=\'clear:both;\'></div>\n</div>\n\n<?php echo Kohanut::element(\'snippet\',\'footer\'); ?>\n\n</div>');
-			INSERT INTO `layouts` (`id`, `name`, `desc`, `code`) VALUES ('2', 'Two Column', 'Standard two column template', '<?php Kohanut::stylesheet(\'default.css\'); ?>\n<?php Kohanut::meta(\"<meta name=\'something\' value=\'this is cool\' />\") ?>\n\n<div id=\'wrapper\'>\n<div id=\'logo\'>\n    <h1>Site Name</h1>\n    <h2>Tag line goes here</h2>\n</div>\n<div id=\'header\'>\n    <div id=\'menu\'>\n        <?php echo Kohanut::main_nav(2); ?>\n    </div>\n    <?php echo Kohanut::bread_crumbs(); ?>\n</div>\n\n<div id=\'page\'>\n    <div id=\'content\'>\n        <?php echo Kohanut::content_area(1,\'Main Column\') ?>\n    </div>\n    <div id=\'sidebar\'>\n        <?php echo Kohanut::secondary_nav() ?>\n        <?php echo Kohanut::content_area(2,\'Side Column\') ?>\n    </div>\n    <div style=\'clear:both;\'></div>\n</div>\n<?php echo Kohanut::element(\'snippet\',\'footer\'); ?>\n\n</div>');
 			
-			INSERT INTO `pages` (`id`, `url`, `name`, `layout`, `islink`, `showmap`, `shownav`, `title`, `metadesc`, `metakw`, `lft`, `rgt`, `lvl`, `scp`) VALUES ('1', '/', 'Home', '1', '0', '1', '1', 'Home Page', 'Meta description!', 'meta, keywords, go, here', '1', '12', '0', '1');
-			INSERT INTO `pages` (`id`, `url`, `name`, `layout`, `islink`, `showmap`, `shownav`, `title`, `metadesc`, `metakw`, `lft`, `rgt`, `lvl`, `scp`) VALUES ('2', '/products', 'Products', '2', '0', '1', '1', 'Products', 'Meta Desc', 'keywords', '4', '11', '1', '1');
+			INSERT INTO `layouts` (`id`, `name`, `desc`, `code`) VALUES ('1', 'Home', 'Home page', '{{ Kohanut.stylesheet(\'default.css\') }}\n\n<div id=\'wrapper\'>\n<div id=\'logo\'>\n    <h1><a href=\'/\'>Site Name</a></h1>\n    <h2>Tag line goes here</h2>\n</div>\n<div id=\'header\'>\n    <div id=\'menu\'>\n        {{ Kohanut.main_nav(2) }}\n    </div>\n    {{ Kohanut.bread_crumbs() }}\n</div>\n\n<div id=\'page\'>\n    <div id=\'content\'>\n         {{ Kohanut.content_area(1,\'Main Column\') }}\n    </div>\n    <div id=\'sidebar\'>\n         {{ Kohanut.content_area(2,\'Side Column\') }}\n    </div>\n    <div style=\'clear:both;\'></div>\n</div>\n{{ Kohanut.element(\'snippet\',\'footer\') }}\n</div>');
+			INSERT INTO `layouts` (`id`, `name`, `desc`, `code`) VALUES ('2', 'Two Column', 'Standard two column template', '{{ Kohanut.stylesheet(\'default.css\') }}\n{{ Kohanut.meta(\"<meta name=\'something\' value=\'this is cool\' />\") }}\n\n<div id=\'wrapper\'>\n<div id=\'logo\'>\n    <h1><a href=\'/\'>Site Name</a></h1>\n    <h2>Tag line goes here</h2>\n</div>\n<div id=\'header\'>\n    <div id=\'menu\'>\n        {{ Kohanut.main_nav(2) }}\n    </div>\n    {{ Kohanut.bread_crumbs() }}\n</div>\n\n<div id=\'page\'>\n    <div id=\'content\'>\n         {{ Kohanut.content_area(1,\'Main Column\') }}\n    </div>\n    <div id=\'sidebar\'>\n         {{ Kohanut.secondary_nav() }}\n         {{ Kohanut.content_area(2,\'Side Column\') }}\n    </div>\n    <div style=\'clear:both;\'></div>\n</div>\n{{ Kohanut.element(\'snippet\',\'footer\') }}\n</div>');
+
+			INSERT INTO `pages` (`id`, `url`, `name`, `layout`, `islink`, `showmap`, `shownav`, `title`, `metadesc`, `metakw`, `lft`, `rgt`, `lvl`, `scp`) VALUES ('1', '/', 'Home', '1', '0', '1', '1', 'Home Page', 'Meta description!', 'meta, keywords, go, here', '1', '14', '0', '1');
+			INSERT INTO `pages` (`id`, `url`, `name`, `layout`, `islink`, `showmap`, `shownav`, `title`, `metadesc`, `metakw`, `lft`, `rgt`, `lvl`, `scp`) VALUES ('2', '/products', 'Products', '2', '0', '1', '1', 'Products', 'Meta Desc', 'keywords', '4', '9', '1', '1');
 			INSERT INTO `pages` (`id`, `url`, `name`, `layout`, `islink`, `showmap`, `shownav`, `title`, `metadesc`, `metakw`, `lft`, `rgt`, `lvl`, `scp`) VALUES ('3', '/products/something', 'Something', '2', '0', '1', '1', '', '', '', '5', '6', '2', '1');
 			INSERT INTO `pages` (`id`, `url`, `name`, `layout`, `islink`, `showmap`, `shownav`, `title`, `metadesc`, `metakw`, `lft`, `rgt`, `lvl`, `scp`) VALUES ('4', 'http://google.com', 'External Link', '2', '1', '1', '1', '', '', '', '7', '8', '2', '1');
-			INSERT INTO `pages` (`id`, `url`, `name`, `layout`, `islink`, `showmap`, `shownav`, `title`, `metadesc`, `metakw`, `lft`, `rgt`, `lvl`, `scp`) VALUES ('5', '/about', 'About', '2', '0', '1', '1', '', '', '', '9', '10', '1', '1');
+			INSERT INTO `pages` (`id`, `url`, `name`, `layout`, `islink`, `showmap`, `shownav`, `title`, `metadesc`, `metakw`, `lft`, `rgt`, `lvl`, `scp`) VALUES ('5', '/about', 'About', '2', '0', '1', '1', '', '', '', '10', '13', '1', '1');
 			INSERT INTO `pages` (`id`, `url`, `name`, `layout`, `islink`, `showmap`, `shownav`, `title`, `metadesc`, `metakw`, `lft`, `rgt`, `lvl`, `scp`) VALUES ('6', '/', 'Home', '2', '1', '1', '1', '', '', '', '2', '3', '1', '1');
+			INSERT INTO `pages` (`id`, `url`, `name`, `layout`, `islink`, `showmap`, `shownav`, `title`, `metadesc`, `metakw`, `lft`, `rgt`, `lvl`, `scp`) VALUES ('7', '/about/story', 'Story', '2', '0', '1', '1', '', '', '', '11', '12', '2', '1');
 
 			INSERT INTO `elementtypes` (`id`,`name`) VALUES ('1','content');
 			INSERT INTO `elementtypes` (`id`,`name`) VALUES ('2','code');
@@ -156,8 +158,11 @@ class Controller_Kohanut_Install_Install extends Controller {
 			INSERT INTO `blocks` (`id`, `page`, `area`, `order`, `elementtype`, `element`) VALUES ('1', '1', '1', '1', '1', '1');
 			INSERT INTO `blocks` (`id`, `page`, `area`, `order`, `elementtype`, `element`) VALUES ('2', '1', '2', '1', '1', '2');
 			
-			INSERT INTO `element_content` (`id`, `code`) VALUES ('1',  '<h1>Thanks for Using Kohanut!</h1>\n\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam orci nisl, interdum nec molestie eget, tempus vel mi. Donec tristique quam sed orci interdum quis ultricies quam malesuada. Quisque auctor tincidunt tellus at aliquet. Nullam nec posuere tortor. Donec scelerisque cursus mollis. Pellentesque quam nisi, rhoncus vitae feugiat ac, vestibulum sed ligula. Vivamus risus lacus, viverra et dictum in, feugiat sed lorem. Fusce eu arcu sit amet felis elementum aliquet eget et nunc. Aliquam dictum ligula imperdiet urna tempus quis suscipit erat ultricies. Sed imperdiet pretium vehicula.</p>');
-			INSERT INTO `element_content` (`id`, `code`) VALUES ('2',  '<p>Content</p>');
+			INSERT INTO `element_content` (`id`, `code`) VALUES ('1', '<h1>Thanks for Using Kohanut!</h1>\n\n<p>If you are seeing this message that Kohanut has been successfully installed and is ready to go!  You can browse around the default site using the navigation at the top of the screen.  To log in to the admin and start making changes simply browse to <a href=\"/admin\">/admin</a> and log in using the password you entered during the install.  Enjoy!</p>');
+			INSERT INTO `element_content` (`id`, `code`) VALUES ('2', '<p>This is the side column. I would put calls to action or something over here</p>');
+			
+			INSERT INTO `element_snippet` (`id`, `code`, `name`) VALUES ('1', '<div id=\"footer\"><p>This is the Footer.</p></div>', 'footer');
+			
 		"));
 		
 		foreach ($queries as $query)
@@ -165,7 +170,7 @@ class Controller_Kohanut_Install_Install extends Controller {
 			DB::query(NULL,$query)->execute();
 		}
 		
-		$this->request->response = new View('kohanut/install-success');
+		$this->request->response = new View('kohanut/admin/install-success');
 		return;
 	
 	}

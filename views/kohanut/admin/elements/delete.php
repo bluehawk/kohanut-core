@@ -5,7 +5,7 @@
 		<?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
 		
 		
-		<form method="post">
+		<?php echo form::open() ?>
 
 			<p>Are you sure you want to delete this element?</p>
 			<?php if ($element->unique == TRUE): ?>

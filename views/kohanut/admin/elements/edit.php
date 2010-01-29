@@ -1,27 +1,29 @@
-<div id="full">
+<div class="grid_16">
 	<div class="box">
 		<h2>Editing <?php echo ucfirst($element->type) ?></h2>
-		<div class="content">
-			
-			<?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
-			
-			<ul class="standardform">
-				<form method="post">
 		
-					<?php foreach ($element->inputs() as $label => $input): ?>
-					<li>
-						<label><?php echo $label ?></label>
-						<?php echo $input ?>
-					</li>
-					<?php endforeach ?>
-	
-					<?php echo Form::submit('submit','Save',array('class'=>'submit')) ?>
-					
-				</form>
-			</ul>
-			<div class="clear"></div>
-				
-		</div>
-	</div>
+			
+		<?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
+		
+		
+		<?php echo form::open(); ?>
 
+			<?php foreach ($element->inputs() as $label => $input): ?>
+			<p>
+				<label><?php echo $label ?></label>
+				<?php echo $input ?>
+			</p>
+			<?php endforeach ?>
+
+			<p>
+				<?php echo Form::submit('submit','Save Changes',array('class'=>'submit')) ?>
+				<a>cancel</a>
+			</p>
+			
+		</form>
+		
+		<div class="clear"></div>
+		
+	</div>
+	
 </div>

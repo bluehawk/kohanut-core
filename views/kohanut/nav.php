@@ -1,14 +1,13 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
 // mainnav -  The root node, it is not displayed on the nav and represents "/" or home, and has a parent of null.
-$mainnav = New Kohanut_Nav($nodes->current()->id,$nodes->current()->name,$nodes->current()->url);
+$root = New Kohanut_Nav($nodes->current()->id,$nodes->current()->name,$nodes->current()->url);
 // pointer - Always points to the element created in the previous loop iteration
-$pointer = &$mainnav;
+$pointer = &$root;
 // new - The element we created THIS loop, becomes pointer at end of loop
 $new = "";
 // level - level of the node that was created LAST loop (pointer)
 $lastlevel = $nodes->current()->{$level_column};
-
 
 /*
 Now, we loop through each node. There are three possible scenarios:
@@ -79,4 +78,4 @@ while($nodes->next() && $nodes->valid())
 }
 
 // Finally, render the whole thing
-echo $mainnav->render();
+echo $root->render();
