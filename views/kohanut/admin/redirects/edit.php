@@ -19,7 +19,7 @@
 			<a href="/admin/redirects/">cancel</a>
 		</p>
 		
-		<?php echo Form::close();  ?>
+		</form>
 		
 	</div>
 	

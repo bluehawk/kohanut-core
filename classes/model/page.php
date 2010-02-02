@@ -85,6 +85,7 @@ class Model_Page extends Sprig_MPTT {
 	 */
 	public function render()
 	{
+		
 		if ( ! $this->loaded())
 		{
 			throw new Kohanut_Exception("Page render failed because page was not loaded.",array(),404);

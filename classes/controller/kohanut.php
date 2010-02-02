@@ -50,8 +50,9 @@ class Controller_Kohanut extends Controller
 		}
 		catch (Kohanut_Exception $e)
 		{
-			echo "Kohanut caught an exception.";
-			// at this point we would find the "error" template and display the error
+			// At this point we would find the "error" template and display the error
+			//$error = Sprig::factory('layout',array('name'=>'Error'))
+			//$this->request->respons = new View('kohanut/xhtml', array('layoutcode' => $error->render()));
 			throw $e;
 		}
 	}

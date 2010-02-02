@@ -116,13 +116,6 @@ class Controller_Kohanut_Admin_Pages extends Controller_Kohanut_Admin {
 			{
 				$newpage->_values($_POST);
 				
-				//$newpage->values(array(
-				//	'name'   => Arr::get($_POST,'name',''),
-				//	'url'    => Arr::get($_POST,'url',''),
-				//	'islink' => Arr::get($_POST,'islink',''),
-				//	'layout' => Arr::get($_POST,'layout',''),
-				//));
-				
 				// where are we putting it?
 				$location = Arr::get($_POST,'location','last');
 				if ($location == 'first')
@@ -158,7 +151,7 @@ class Controller_Kohanut_Admin_Pages extends Controller_Kohanut_Admin {
 		
 		$this->view->body->errors = $errors;
 		$this->view->body->parent = $page;
-		$this->view->body->newpage = $newpage;
+		$this->view->body->page = $newpage;
 		
 	}
 	
