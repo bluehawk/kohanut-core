@@ -184,7 +184,7 @@ ul.standardlist {
 			padding:2px 3px;
 		}
 		ul.standardlist div.actions a:hover span {
-			color:#009900;
+			color:#009900;/
 			text-decoration:underline;
 		}
 		
@@ -195,4 +195,9 @@ ul.standardlist {
 		color:black;
 		margin:0;
 		min-height:16px;
+	}
+	
+	textarea {
+		font-family:Consolas, Lucida Console, monospace;
+		height:300px;
 	}

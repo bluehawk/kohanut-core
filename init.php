@@ -12,11 +12,16 @@ if (is_dir($modules['kohanut'].'/classes/controller/kohanut/install'))
 		));
 }
 
-
+// Set the kohanut admin route
 Route::set('kohanut-admin','admin(/<controller>(/<action>(/<params>)))',array('params'=>'.*'))
 	->defaults(array(
 		'controller' => 'pages',
 		'action'     => 'index',
 		'directory'  => 'kohanut/admin'
 	));
-	
+
+// Load the Twig class autoloader
+require Kohana::find_file('vendor', 'Twig/lib/Twig/Autoloader');
+
+// Register the Twig class autoloader
+Twig_Autoloader::register();
