@@ -177,10 +177,10 @@ class Controller_Kohanut_Admin_Elements extends Controller_Kohanut_Admin {
 			return $this->admin_error("Could not find block with id " . $id );
 		
 		// Load the type
-		$type = Sprig::factory('elementtype',array('id' => $block->elementtype->id))->load();
+		$type = $block->elementtype->load();
 		
 		if ( ! $type->loaded())
-			return $this->admin_error("Elementtype " . (int) $type . " could not be loaded");
+			return $this->admin_error("Elementtype " . (int) $block->elementtype->id . " could not be loaded");
 			
 		$class = Kohanut_Element::type($type->name);
 		$class->id = $block->element;

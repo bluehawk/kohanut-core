@@ -27,19 +27,24 @@ class Kohanut_Element_Content extends Kohanut_Element
 	
 	}
 	
-	/**
-	 * Overload values to fix checkboxes
+	/** overload values to fix checkboxes
 	 *
 	 * @param array values
 	 * @return $this
 	 */
 	public function values(array $values)
 	{
-		$new = array(
-			'twig'  => 0,
-			'markdown' => 0,
-		);
-		return parent::values(array_merge($new,$values));
+		if ($this->loaded()){
+			$new = array(
+				'twig'  => 0,
+				'markdown' => 0,
+			);
+			return parent::values(array_merge($new,$values));
+		}
+		else
+		{
+			return parent::values($values);
+		}
 	}
 	
 	

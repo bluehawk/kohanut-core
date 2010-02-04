@@ -65,7 +65,9 @@ class Controller_Kohanut_Admin_Snippets extends Controller_Kohanut_Admin {
 		$id = (int) $id;
 	
 		// Find the snippet
-		$snippet = Kohanut_Element::type('snippet',array('id'=>$id))->load();
+		$snippet = Kohanut_Element::type('snippet')->values(array('id'=>$id));
+	
+		$snippet->load();
 		
 		$this->view->title = "Editing Snippet";
 		$this->view->body = new View('kohanut/admin/snippets/edit',array('snippet'=>$snippet,'errors'=>false,'success'=>false));

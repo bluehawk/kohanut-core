@@ -14,7 +14,6 @@
 				<li <?php if ($zebra) echo "class='z' " ?> title="Click to edit" >
 					<div class="actions">
 						<a href="/admin/layouts/edit/<?php echo $item->id ?>"><img src="/kohanutres/img/fam/layout_edit.png" alt="edit" /><br/><span>edit</span></a>
-						<a href="/admin/layouts/copy/<?php echo $item->id ?>" title="Click to copy"><img src="/kohanutres/img/fam/layout_go.png" alt="copy" /><br/><span>copy</span></a>
 						<a href="/admin/layouts/delete/<?php echo $item->id ?>" title="Click to delete"><img src="/kohanutres/img/fam/layout_delete.png" alt="delete" /><br/><span>delete</span></a>
 					</div>
 					<a href="/admin/layouts/edit/<?php echo $item->id ?>" ><p>

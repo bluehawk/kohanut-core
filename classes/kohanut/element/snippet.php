@@ -61,11 +61,18 @@ class Kohanut_Element_Snippet extends Kohanut_Element
 	 */
 	public function values(array $values)
 	{
-		$new = array(
-			'twig'  => 0,
-			'markdown' => 0,
-		);
-		return parent::values(array_merge($new,$values));
+		if ($this->loaded())
+		{
+			$new = array(
+				'twig'  => 0,
+				'markdown' => 0,
+			);
+			return parent::values(array_merge($new,$values));
+		}
+		else
+		{
+			return parent::values($values);
+		}
 	}
 	
 	// Add the element, this should act very similar to "action_add" in a controller, should return a view.

@@ -74,7 +74,7 @@ class Controller_Kohanut extends Controller
 				throw new Kohanut_Exception("Could not find '$page->url'",array(),404);
 			}
 			
-			// Set the status to 200, rather than 404, which was set by the router
+			// Set the status to 200, rather than 404, which was set by the router with the reflectionexception
 			Kohanut::status(200);
 			
 			// Set the response
@@ -84,7 +84,7 @@ class Controller_Kohanut extends Controller
 		catch (Kohanut_Exception $e)
 		{
 			// Find the error page
-			$error = Sprig::factory('page',array('url'=>'/edrror'))->load();
+			$error = Sprig::factory('page',array('url'=>'/error'))->load();
 			
 			// If i couldn't find the error page, just give a generic message
 			if ( ! $error->loaded())
