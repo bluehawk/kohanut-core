@@ -16,7 +16,7 @@ if (Kohanut::$adminmode)
 		$elements = Sprig::factory('elementtype')->load(NULL,FALSE);
 		foreach ($elements as $e)
 		{
-			echo "<option value='{$e->id}'>{$e->name}</option>";
+			echo "<option value='{$e->id}'>" . ucfirst($e->name) . "</option>";
 		}
 		?>
 	</select>

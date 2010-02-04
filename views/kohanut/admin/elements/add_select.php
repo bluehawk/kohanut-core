@@ -8,18 +8,17 @@
 			
 			<p>
 				<label for="which">Select a <?php echo ucfirst($element->type) ?></label>
-				<select name="which" id="which">
-			<?php foreach ($element->load(NULL,FALSE) as $item): ?>
-			
-				<option value="<?php echo $item->id?>"><?php echo $item->name ?></option>
-			
-			<?php endforeach ?>
-				</select>
+				<?php
+				
+				$choices = $element->select_list($element->pk());
+
+				echo Form::select('element', $choices, $element->id) ?>
+				
 			</p>
 			
 			<p>
-				<?php echo Form::submit('submit','Add',array('class'=>'submit')) ?>
-				<a>cancel</a>
+				<?php echo Form::submit('submit','Add ' . ucfirst($element->type) ,array('class'=>'submit')) ?>
+				<a href="/admin/pages/edit/<?php echo $page ?>">cancel</a>
 			</p>
 			
 		</form>

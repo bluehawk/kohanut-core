@@ -20,68 +20,93 @@ class Controller_Kohanut_Admin_Snippets extends Controller_Kohanut_Admin {
 	
 	public function action_new()
 	{
-		
 		$snippet = Kohanut_Element::type('snippet');
 		
-		$errors = false;
+		$this->view->title = "Editing Snippet";
+		$this->view->body = new View('kohanut/admin/snippets/new',array('snippet'=>$snippet,'errors'=>false));
+		
 		
 		if ($_POST)
 		{
+			
+			$snippet->values($_POST);
+			
+			// Make sure there are no twig syntax errors
+			if ($snippet->twig)
+			{
+				try
+				{
+					$test = Kohanut_Twig::render($_POST['code']);
+				}
+				catch (Twig_SyntaxError $e)
+				{
+					$e->setFilename('code');
+					$this->view->body->errors[] = "There was a Twig Syntax error: " . $e->getMessage();
+					return;
+				}
+			}
+			
+			// Try to save
 			try
 			{
-				$snippet->values($_POST);
 				$snippet->create();
 				
 				$this->request->redirect('/admin/snippets/');
 			}
 			catch (Validate_Exception $e)
 			{
-				$errors = $e->array->errors('snippet');
+				$this->view->body->errors = $e->array->errors('snippet');
 			}
 		}
-		
-		$this->view->title = "New Snippet";
-		$this->view->body = View::factory('/kohanut/admin/snippets/new');
-		$this->view->body->snippet = $snippet;
-		$this->view->body->errors = $errors;
 	}
 	
 	public function action_edit($id)
 	{
 		// Sanitize
 		$id = (int) $id;
-		
+	
 		// Find the snippet
-		$snippet = Kohanut_Element::type('snippet')->values(array('id'=>$id))->load();
+		$snippet = Kohanut_Element::type('snippet',array('id'=>$id))->load();
+		
+		$this->view->title = "Editing Snippet";
+		$this->view->body = new View('kohanut/admin/snippets/edit',array('snippet'=>$snippet,'errors'=>false,'success'=>false));
 		
 		if ( ! $snippet->loaded())
 		{
 			return $this->admin_error("Could not find snippet with id <strong>$id</strong>.");
 		}
 		
-		$errors = false;
-		$success = false;
-		
 		if ($_POST)
 		{
+			
+			$snippet->values($_POST);
+			
+			// Make sure there are no twig syntax errors
+			if ($snippet->twig)
+			{
+				try
+				{
+					$test = Kohanut_Twig::render($_POST['code']);
+				}
+				catch (Twig_SyntaxError $e)
+				{
+					$e->setFilename('code');
+					$this->view->body->errors[] = "There was a Twig Syntax error: " . $e->getMessage();
+					return;
+				}
+			}
+			
+			// Try saving the snippet
 			try
 			{
-				$snippet->values($_POST);
 				$snippet->update();
-				$success = "Updated Successfully";
+				$this->view->body->success = "Updated Successfully";
 			}
 			catch (Validate_Exception $e)
 			{
-				$errors = $e->array->errors('snippet');
+				$this->view->body->errors = $e->array->errors('snippet');
 			}
 		}
-		
-		$this->view->title = "Editing Snippet";
-		$this->view->body = new View('kohanut/admin/snippets/edit');
-	
-		$this->view->body->snippet = $snippet;
-		$this->view->body->errors = $errors;
-		$this->view->body->success = $success;
 	}
 	
 	public function action_delete($id)

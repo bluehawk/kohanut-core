@@ -5,22 +5,32 @@
 		
 		<?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
 			
-		<?php echo Form::open() ?>
-		
-		<?php foreach ($snippet->inputs() as $label => $input): ?>
+			<?php echo Form::open() ?>
+			
 			<p>
-				<label><?php echo $label ?></label>
-				<?php echo $input ?>
+				<label><?php echo $snippet->label('name') ?></label>
+				<?php echo $snippet->input('name') ?>
 			</p>
-		<?php endforeach ?>
-		
-		<p>
-			<input type="submit" name="submit" value="Create Snippet" class="submit" />
-			<a href="/admin/snippets/">cancel</a>
-		</p>
-		
-		<?php echo Form::close();  ?>
-		
+			
+			<p>
+				<label><?php echo $snippet->label('code') ?></label>
+				<?php echo $snippet->input('code') ?>
+			</p>
+			
+			<p>
+				<?php echo $snippet->input('markdown',array('class'=>'check')) ?>
+				Enable Markdown
+				<?php echo $snippet->input('twig',array('class'=>'check')) ?>
+				Enable Twig
+			</p>
+			
+			<p>
+				<input type="submit" name="submit" value="Create Snippet" class="submit" />
+				<a href="/admin/snippets/">cancel</a>
+			</p>
+			
+			<?php echo Form::close();  ?>
+			
 	</div>
 	
 </div>

@@ -43,23 +43,12 @@ class Model_Layout extends Sprig {
 	public function render()
 	{
 		// Ensure the layout is loaded
-		$this->load();
-		
 		if ( ! $this->loaded())
 		{
 			return "Layout Failed to render because it wasn't loaded.";
 		}
 		
-		// Make the twig loader, environment and template and pass the layout code.
-		$loader = new Twig_Loader_String();
-		$twig = new Twig_Environment($loader, array(
-			'cache' => APPPATH.'cache/twig',
-		));
-		$template = $twig->loadTemplate($this->code);
-		return $template->render(array('Kohanut'=>new Kohanut));
-		
-		// And return the output
-		return $layoutcode;
+		return Kohanut_Twig::render($this->code);
 	}
 
 }

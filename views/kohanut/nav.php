@@ -24,7 +24,9 @@ else  (currentlevel == $last level)
 */
 while($nodes->next() && $nodes->valid())
 {
-	
+	// If show in nav is false, skip this item
+	if ( ! $nodes->current()->shownav)
+		continue;
 	if ($nodes->current()->{$level_column} > $lastlevel)
 	{
 		

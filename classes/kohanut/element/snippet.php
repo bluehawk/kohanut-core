@@ -19,16 +19,29 @@ class Kohanut_Element_Snippet extends Kohanut_Element
 			'code' => new Sprig_Field_Text(array(
 				'label' => 'Content',
 			)),
-			/*'type' => new Sprig_Field_Enum(array(
-				'choices' => array('Markdown'=>'markdown','HTML=>'html'),
-				'label' => 'Type',
-			)),*/
+			'markdown' => new Sprig_Field_Boolean(array('append_label'=>false,'default'=>true)),
+			
+			'twig' => new Sprig_Field_Boolean(array('append_label'=>false,'default'=>false)),
 		);
 	}
 
-	public function _render()
+	protected function _render()
 	{
-		return $this->code;
+		$out = $this->code;
+		
+		// Should we run it through markdown?
+		if ($this->markdown)
+		{
+			$out = Markdown($out);
+		}
+		
+		// Should we run it through twig?
+		if ($this->twig)
+		{
+			$out = Kohanut_Twig::render($out);
+		}
+		
+		return $out;
 	}
 	
 	public function title()
@@ -36,16 +49,30 @@ class Kohanut_Element_Snippet extends Kohanut_Element
 		return "Snippit: " . $this->name;
 	}
 	
+	/** overload values to fix checkboxes
+	 *
+	 * @param array values
+	 * @return $this
+	 */
+	public function values(array $values)
+	{
+		$new = array(
+			'twig'  => 0,
+			'markdown' => 0,
+		);
+		return parent::values(array_merge($new,$values));
+	}
+	
 	// Add the element, this should act very similar to "action_add" in a controller, should return a view.
 	public function action_add($page,$area)
 	{
-		$view = View::factory('kohanut/admin/elements/select',array('element'=>$this));
+		$view = View::factory('kohanut/admin/elements/add_select',array('element'=>$this));
 		
 		if ($_POST)
 		{
 			try
 			{
-				$id = Arr::get($_POST,'which',NULL);
+				$id = Arr::get($_POST,'element',NULL);
 				$this->id = (int) $id;
 				$this->load();
 				if ( ! $this->loaded())
@@ -59,6 +86,33 @@ class Kohanut_Element_Snippet extends Kohanut_Element
 				$view->errors = $e->array->errors('page');
 			}
 		}
+		return $view;
+	}
+	
+	// Edit the element, this should act very similar to "action_edit" in a controller, should return a view.
+	public function action_edit()
+	{
+		$view = View::factory('kohanut/admin/elements/edit_select',array('element'=>$this));
+		
+		if ($_POST)
+		{
+			try
+			{
+				//echo "OH NOES";
+				$this->block->values($_POST);
+				$this->block->update();
+				$this->id = $this->block->element;
+				$this->load();
+				//$this->values($_POST);
+				//$this->update();
+				$view->success = "Update successfully";
+			}
+			catch (Validate_Exception $e)
+			{
+				$view->errors = $e->array->errors('page');
+			}
+		}
+		
 		return $view;
 	}
 	

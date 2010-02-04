@@ -2,13 +2,10 @@
 /**
  * 
  */
-class Kohanut_Element extends Sprig
+abstract class Kohanut_Element extends Sprig
 {
 	// Type is the name of the class/table.  Ex "content" or "snippet"
 	public $type = "undefined";
-	
-	// Whether to cache an element. NOT IMPLEMENTED YET
-	public $cache = false;
 	
 	// Whether an element is unique. If this is false, an element can be in
 	// more than one place, like a snippet. Also deleting it from a page
@@ -17,11 +14,6 @@ class Kohanut_Element extends Sprig
 
 	// Block is the sprig model for the block that is linking to this element
 	public $block = NULL;
-	
-	public function _init()
-	{
-		
-	}
 	
 	// Render the element, this should always return a string.
 	public function render()
@@ -49,10 +41,23 @@ class Kohanut_Element extends Sprig
 		}
 		
 		// And render the actual element
-		$out .= $this->_render();
+		try
+		{
+			$out .= $this->_render();
+		}
+		catch (Exception $e)
+		{
+			$out .= "<p>There was an error while rendering the element: " . $e->getMessage() . "</p>";
+		}
 		
 		return $out;
 	}
+	
+	// This should render the content of the element
+	abstract protected function _render();
+	
+	// This should return a discriptive title like "Content" or "Snippet: Footer"
+	abstract public function title();
 	
 	// Add the element, this should act very similar to "action_add" in a controller, should return a view.
 	public function action_add($page,$area)
@@ -119,12 +124,6 @@ class Kohanut_Element extends Sprig
 		return $view;
 	}
 	
-	// This should be a description of what this element is. Ex: "Content" or "Snippet: 'footer'"
-	public function title()
-	{
-		
-	}
-	
 	public static function type($type)
 	{
 		$type = "Kohanut_Element_$type";
@@ -141,7 +140,7 @@ class Kohanut_Element extends Sprig
 		<div class="kohanut_element_ctl">
 			<p class="title">{$this->title()}</p>
 			<ul class="kohanut_element_actions">
-				<li><a href="/admin/elements/edit/{$this->block->elementtype->id}/{$this->id}"><img src="/kohanutres/img/fam/pencil.png" title="Edit"/>Edit</a></li>
+				<li><a href="/admin/elements/edit/{$this->block->id}"><img src="/kohanutres/img/fam/pencil.png" title="Edit"/>Edit</a></li>
 				<li><a href="/admin/elements/moveup/{$this->block->id}"><img src="/kohanutres/img/fam/arrow_up.png" title="Move Up" />Move Up</a></li>
 				<li><a href="/admin/elements/movedown/{$this->block->id}"><img src="/kohanutres/img/fam/arrow_down.png"  title="Move Down"/>Move Down</a></li>
 				<li><a href="/admin/elements/delete/{$this->block->id}"><img src="/kohanutres/img/fam/delete.png" title="Delete" />Delete</a></li>

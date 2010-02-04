@@ -40,8 +40,8 @@ class Controller_Kohanut_Install_Install extends Controller {
 				`name` VARCHAR(128) NOT NULL,
 				`layout` INT(10) UNSIGNED NOT NULL DEFAULT '0',
 				`islink` TINYINT(1) UNSIGNED NULL DEFAULT '0',
-				`showmap` TINYINT(3) UNSIGNED NULL DEFAULT '1',
-				`shownav` TINYINT(3) UNSIGNED NULL DEFAULT '1',
+				`showmap` TINYINT(1) UNSIGNED NULL DEFAULT '1',
+				`shownav` TINYINT(1) UNSIGNED NULL DEFAULT '1',
 				`title` VARCHAR(256) NULL DEFAULT NULL,
 				`metadesc` TEXT NULL,
 				`metakw` TEXT NULL,
@@ -95,6 +95,8 @@ class Controller_Kohanut_Install_Install extends Controller {
 			CREATE TABLE `element_content` (
 				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 				`code` TEXT NOT NULL,
+				`markdown` TINYINT(1) UNSIGNED NULL DEFAULT '1',
+				`twig` TINYINT(1) UNSIGNED NULL DEFAULT '1',
 				PRIMARY KEY (`id`)
 			)
 			COLLATE=latin1_swedish_ci
@@ -105,15 +107,17 @@ class Controller_Kohanut_Install_Install extends Controller {
 				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 				`code` TEXT NOT NULL,
 				`name` VARCHAR(127) NOT NULL,
+				`markdown` TINYINT(1) UNSIGNED NULL DEFAULT '1',
+				`twig` TINYINT(1) UNSIGNED NULL DEFAULT '1',
 				PRIMARY KEY (`id`)
 			)
 			COLLATE=latin1_swedish_ci
 			ENGINE=InnoDB")->execute();
 				
 		DB::query(NULL,"
-			CREATE TABLE `element_code` (
+			CREATE TABLE `element_request` (
 				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-				`code` TEXT NOT NULL,
+				`url` TEXT NOT NULL,
 				PRIMARY KEY (`id`)
 			)
 			COLLATE=latin1_swedish_ci
@@ -152,7 +156,7 @@ class Controller_Kohanut_Install_Install extends Controller {
 			INSERT INTO `pages` (`id`, `url`, `name`, `layout`, `islink`, `showmap`, `shownav`, `title`, `metadesc`, `metakw`, `lft`, `rgt`, `lvl`, `scp`) VALUES ('7', '/about/story', 'Story', '2', '0', '1', '1', '', '', '', '11', '12', '2', '1');
 
 			INSERT INTO `elementtypes` (`id`,`name`) VALUES ('1','content');
-			INSERT INTO `elementtypes` (`id`,`name`) VALUES ('2','code');
+			INSERT INTO `elementtypes` (`id`,`name`) VALUES ('2','request');
 			INSERT INTO `elementtypes` (`id`,`name`) VALUES ('3','snippet');
 			
 			INSERT INTO `blocks` (`id`, `page`, `area`, `order`, `elementtype`, `element`) VALUES ('1', '1', '1', '1', '1', '1');

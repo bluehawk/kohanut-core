@@ -15,95 +15,114 @@ class Controller_Kohanut_Admin_Layouts extends Controller_Kohanut_Admin {
 		$this->view->body = new View('kohanut/admin/layouts/list');
 		
 		// Get the list of layouts
-		$layouts = Sprig::factory('layout')->load(NULL,FALSE);
-		
-		// Pass it to the view
-		$this->view->body->layouts = $layouts;
-		
-		// Check for post, this means they are making a new layout
-		
+		$this->view->body->layouts = Sprig::factory('layout')->load(NULL,FALSE);
 	}
 	
 	public function action_edit($id)
 	{
+		// Sanitize
+		$id = (int) $id;
+		
+		// Create the view
+		$this->view->title = "Editing Layout";
+		$this->view->body = new View('kohanut/admin/layouts/edit',array('errors'=>false,'success'=>false));
+
 		// Find the layout
 		$layout = Model_Layout::find($id);
+		
+		$this->view->body->layout = $layout;
 		
 		if ( ! $layout)
 		{
 			return $this->admin_error("Could not find layout with id <strong>" . (int) $id . "</strong>");
 		}
 		
-	
-		$errors = false;
-		$success = false;
-		
 		if ($_POST)
 		{
+			$layout->values($_POST);
+			
+			// Make sure there are no twig syntax errors
 			try
 			{
-				$layout->values($_POST);
+				$test = Kohanut_Twig::render($_POST['code']);
+			}
+			catch (Twig_SyntaxError $e)
+			{
+				$e->setFilename('code');
+				$this->view->body->errors[] = "There was a Twig Syntax error: " . $e->getMessage();
+				return;
+			}
+			
+			// Try to save the layout
+			try
+			{
 				$layout->update();
-				$success = "Updated Successfully";
+				$this->view->body->success = "Updated Successfully";
 			}
 			catch (Validate_Exception $e)
 			{
-				$errors = $e->array->errors('layout');
+				$this->view->body->errors = $e->array->errors('layout');
 			}
 		}
 		
-		$this->view->title = "Editing Layout";
-		$this->view->body = new View('kohanut/admin/layouts/edit');
-	
-		$this->view->body->layout = $layout;
-		$this->view->body->errors = $errors;
-		$this->view->body->success = $success;
 	}
 	
 	public function action_new()
 	{
+		$this->view->title = "New Layout";
+		$this->view->body = new View('kohanut/admin/layouts/new',array('errors'=>false));
+		
 		$layout = Sprig::factory('layout');
 		
-		$errors = false;
+		$this->view->body->layout = $layout;
 		
 		if ($_POST)
 		{
+			$layout->values($_POST);
+			
+			// Make sure there are no twig syntax errors
 			try
 			{
-				$layout->values($_POST);
+				$test = Kohanut_Twig::render($_POST['code']);
+			}
+			catch (Twig_SyntaxError $e)
+			{
+				$e->setFilename('code');
+				$this->view->body->errors[] = "There was a Twig Syntax error: " . $e->getMessage();
+				return;
+			}
+			
+			// Try to save the layout
+			try
+			{
 				$layout->create();
 				
 				$this->request->redirect('/admin/layouts/');
 			}
 			catch (Validate_Exception $e)
 			{
-				$errors = $e->array->errors('layout');
+				$this->view->body->errors = $e->array->errors('layout');
 			}
 		}
-		
-		$this->view->title = "New Layout";
-		$this->view->body = new View('kohanut/admin/layouts/new');
-	
-		$this->view->body->layout = $layout;
-		$this->view->body->errors = $errors;
 	}
 	
 	public function action_delete($id)
 	{
+		$this->view->title = "Delete Layout";
+		$this->view->body = new View('kohanut/admin/layouts/delete',array('errors'=>false));
+
 		// Find the layout
 		$layout = Model_Layout::find($id);
+		$this->view->body->layout = $layout;
 		
 		if ( ! $layout)
 		{
 			return $this->admin_error("Could not find layout with id <strong>" . (int) $id . "</strong>");
 		}
 		
-		$errors = false;
-		
 		// If the form was submitted, delete the layout.
 		if ($_POST)
 		{
-
 			try
 			{
 				$layout->delete();
@@ -111,16 +130,8 @@ class Controller_Kohanut_Admin_Layouts extends Controller_Kohanut_Admin {
 			}
 			catch (Exception $e)
 			{
-				$errors = array('submit'=>"Delete failed! This is most likely caused because this template is still being used by one or more pages.");
+				$this->view->body->errors = array('submit'=>"Delete failed! This is most likely caused because this template is still being used by one or more pages. Here is the error message: <br />" . $e->getMessage());
 			}
-			
 		}
-		
-		$this->view->title = "Delete Layout";
-		$this->view->body = new View('kohanut/admin/layouts/delete');
-	
-		$this->view->body->layout = $layout;
-		$this->view->body->errors = $errors;
-
 	}
 }

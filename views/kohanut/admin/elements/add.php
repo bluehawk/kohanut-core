@@ -4,23 +4,21 @@
 		
 		<?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
 		
-		
 		<form method="post">
-
+		
 			<?php foreach ($element->inputs() as $label => $input): ?>
 			<p>
 				<label><?php echo $label ?></label>
 				<?php echo $input ?>
 			</p>
 			<?php endforeach ?>
-
+			
 			<p>
 				<?php echo Form::submit('submit','Add',array('class'=>'submit')) ?>
-				<a>cancel</a>
+				<a href="/admin/pages/edit/<?php echo $page ?>">cancel</a>
 			</p>
 			
 		</form>
-		
 		
 		</div>
 	</div>

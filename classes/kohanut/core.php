@@ -5,18 +5,21 @@
 class Kohanut_Core {
 
 	// Kohanut version
-	public static $version = "0.5";
+	const VERSION = "0.5.0";
 	
-	// the page that is selected. used when editing and viewing a page
+	// Page that is selected. used when editing and viewing a page
 	public static $page = null;
 
-	// true if we are in admin mode, this is used when we eval the layout code
+	// True if we are in admin mode, this is used to add the panels when editing pages
 	public static $adminmode = FALSE;
 	
-	// which styles, scripts, and metas are wanted on the page
-	protected static $javascripts = array();
-	protected static $stylesheets = array();
-	protected static $metas = array();
+	// Content if we are in override
+	protected static $_content = NULL;
+	
+	// Which styles, scripts, and metas are wanted on the page
+	protected static $_javascripts = array();
+	protected static $_stylesheets = array();
+	protected static $_metas = array();
 
 	/**
 	 * Draws the main nav.
@@ -81,9 +84,20 @@ class Kohanut_Core {
 	 */
 	public static function content_area($id,$name)
 	{
-		// ensure that Kohanut::page has been set and loaded a real page
+		// Ensure that Kohanut::page has been set and loaded a real page
 		if (!is_object(self::$page) || !self::$page->loaded()) {
-			return "Kohanut Error: layout_area($id) failed. (Kohanut::page was not set)";
+			return "Kohanut Error: content_area($id) failed. (Kohanut::page was not set)";
+		}
+		
+		// If Kohanut::$_content is set, we are overriding the render
+		if (self::$_content !== NULL)
+		{
+			$temp = self::$_content;
+			return new View('kohanut/contentarea',array(
+				'id' => $id,
+				'name' => $name,
+				'content' => Arr::get($temp,$id-1,'')
+			));
 		}
 		
 		// Find all the blocks for this area
@@ -115,7 +129,7 @@ class Kohanut_Core {
 			}
 			catch (Exception $e)
 			{
-				$content .= "Error: Could not load element." . $e;
+				$content .= "<p>Error: Could not load element." . $e . "</p>";
 			}
 		}
 		
@@ -170,14 +184,14 @@ class Kohanut_Core {
 		
 		foreach ($stylesheets as $key => $stylesheet)
 		{
-			self::$stylesheets[] = $stylesheet;
+			self::$_stylesheets[] = $stylesheet;
 		}
 	}
 
 	public static function stylesheet_render()
 	{
 		$out = "";
-		foreach (self::$stylesheets as $key => $stylesheet)
+		foreach (self::$_stylesheets as $key => $stylesheet)
 		{
 			$out .= "\t" . html::style($stylesheet) . "\n";
 		}
@@ -194,23 +208,23 @@ class Kohanut_Core {
 
 		foreach ($javascripts as $key => $javascript)
 		{
-			self::$javascripts[] = $javascript;
+			self::$_javascripts[] = $javascript;
 		}
 	}
 
 	public static function javascript_remove($javascripts = array())
 	{
-		foreach (self::$javascripts as $key => $javascript)
+		foreach (self::$_javascripts as $key => $javascript)
 		{
 			if (in_array($javascript, $javascripts))
-				unset(self::$javascripts[$key]);
+				unset(self::$_javascripts[$key]);
 		}
 	}
 
 	public static function javascript_render()
 	{
 		$out = "";
-		foreach (self::$javascripts as $key => $javascript)
+		foreach (self::$_javascripts as $key => $javascript)
 		{
 			$out .= "\t" . html::script($javascript) . "\n";
 		}
@@ -227,18 +241,59 @@ class Kohanut_Core {
 			
 		foreach ($metas as $key => $meta)
 		{
-			self::$metas[] = $meta;
+			self::$_metas[] = $meta;
 		}
 	}
 	
 	public static function meta_render()
 	{
 		$out = "";
-		foreach (self::$metas as $key => $meta)
+		foreach (self::$_metas as $key => $meta)
 		{
 			$out .= "\t" . $meta . "\n";
 		}
 		return $out;
+	}
+	
+	public static function render_stats()
+	{
+		$run = Profiler::application();
+		$run = $run['current'];
+		$queries = Profiler::groups();
+		$queries = count($queries['database (default)']);
+		return "Page rendered in " . Num::format($run['time'],3) . " seconds using " . Num::format($run['memory']/1024/1024,2) . "MB and " . $queries . " queries.";
+	}
+	
+	/**
+	 * Manually render a page using the specified layout and content
+	 *
+	 *    echo Kohanut::render('error','/',$content);
+	 * 
+	 * @param  string   Name of the layout to use
+	 * @param  page     url of the page to pretend is active (needed for navs). There MUST be a page with this url in the database.
+	 * @param  array    Array of content
+	 * 
+	 */
+	public static function render($layoutname, $pageurl, $content)
+	{
+		// Find the layout
+		$layout = Sprig::factory('layout',array('name'=>$layoutname))->load();
+		if ( ! $layout->loaded())
+			throw new Kohanut_Exception("Kohanut::render() failed because the layout with name '$layoutname' could not be found");
+		// Find the Page
+		$page = Sprig::factory('page',array('url'=>$pageurl))->load();
+		if ( ! $page->loaded())
+			throw new Kohanut_Exception("Kohanut::render() failed because the page with url '$pageurl' could not be found.");
+		// Set the required Kohanut variables, and render the page.
+		self::$page = $page;
+		self::$_content = $content;
+		return new View('kohanut/xhtml', array('layoutcode' => $layout->render()));
+	}
+	
+	public static function status($id)
+	{
+		$request = Request::instance();
+		$request->status = $id;
 	}
 
 }

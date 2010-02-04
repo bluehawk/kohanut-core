@@ -82,6 +82,9 @@ class Controller_Kohanut_Admin_Elements extends Controller_Kohanut_Admin {
 		if ($page == NULL OR $type == NULL OR $area == NULL)
 			return $this->admin_error("Add requires 3 parameters, type, page and area.");
 		
+		$type = (int) $type;
+		$page = (int) $page;
+		$area = (int) $area;
 		
 		$type = Sprig::factory('elementtype',array('id'=> (int) $type ))->load();
 		
@@ -92,41 +95,54 @@ class Controller_Kohanut_Admin_Elements extends Controller_Kohanut_Admin {
 		
 		$this->view->title = "Add Element";
 		$this->view->body = $class->action_add((int) $page, (int) $area);
+		$this->view->body->page = $page;
 	}
 	
 	public function action_edit($params)
 	{
 		$params = explode('/',$params);
-		$type = Arr::get($params,0,NULL);
-		$id   = Arr::get($params,1,NULL);
+		$id  = Arr::get($params,0,NULL);
 		
-		if ($type == NULL OR $id == NULL)
-			return $this->admin_error("Edit requires 2 parameters, type and id.");
+		if ($id == NULL)
+			return $this->admin_error("Edit requires a block id");
+		
+		// Load the block
+		$block = Sprig::factory('block',array('id'=>$id))->load();
+		
+		if ( ! $block->loaded())
+			return $this->admin_error("Could not find block with id " . $id );
 			
-		
-		$type = Sprig::factory('elementtype',array('type'=> (int) $type ))->load();
+		// Load the type
+		$type = $block->elementtype->load();
 		
 		if ( ! $type->loaded())
-			return $this->admin_error("Elementtype " . (int) $type . " could not be loaded");
+			return $this->admin_error("Elementtype " . (int) $block->elementtype->id . " could not be loaded");
 		
 		$class = Kohanut_Element::type($type->name);
-		$class->id = (int) $id;
+		$class->id = (int) $block->element;
 		$class->load();
+		$class->block = $block;
 		
 		if ( ! $class->loaded())
-			return $this->admin_error("Elementtype " . $type->name . " with id " . (int) $id . " could not be loaded");
+			return $this->admin_error("Elementtype " . $type->name . " with id " . (int) $block->element . " could not be loaded");
 		
 		$this->view->title = "Edit Element";
 		$this->view->body = $class->action_edit();
+		$this->view->body->page = $block->page->id;
 	}
 	
 	public function action_delete($id)
 	{
-		$block = Sprig::factory('block',array('id'=> (int) $id))->load();
+		// Sanitize
+		$id = (int) $id;
+		
+		// Load the block
+		$block = Sprig::factory('block',array('id'=>$id))->load();
 		
 		if ( ! $block->loaded())
-			return $this->admin_error("Could not find block with id " . (int) $id );
+			return $this->admin_error("Could not find block with id " . $id );
 		
+		// Load the type
 		$type = Sprig::factory('elementtype',array('id' => $block->elementtype->id))->load();
 		
 		if ( ! $type->loaded())

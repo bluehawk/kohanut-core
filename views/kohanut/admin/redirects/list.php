@@ -54,7 +54,7 @@
     <div class="box">
         <h1>Help</h1>
         
-        <p><a href="/admin/redirects/new" class="button">Create a new Redirect</a></p>
+        <p><a href="/admin/redirects/new" class="button">Create a New Redirect</a></p>
         
         <h3>What are redirects?</h3>
         <p>You should add a redirect if you move a page or a site, so links on other sites do not break, and search engine rankings are preserved.</p>

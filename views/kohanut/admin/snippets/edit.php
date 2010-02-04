@@ -7,12 +7,22 @@
 			
 			<?php echo Form::open() ?>
 			
-			<?php foreach ($snippet->inputs() as $label => $input): ?>
-				<p>
-					<label><?php echo $label ?></label>
-					<?php echo $input ?>
-				</p>
-			<?php endforeach ?>
+			<p>
+				<label><?php echo $snippet->label('name') ?></label>
+				<?php echo $snippet->input('name') ?>
+			</p>
+			
+			<p>
+				<label><?php echo $snippet->label('code') ?></label>
+				<?php echo $snippet->input('code') ?>
+			</p>
+			
+			<p>
+				<?php echo $snippet->input('markdown',array('class'=>'check')) ?>
+				Enable Markdown
+				<?php echo $snippet->input('twig',array('class'=>'check')) ?>
+				Enable Twig
+			</p>
 			
 			<p>
 				<input type="submit" name="submit" value="Save Changes" class="submit" />
