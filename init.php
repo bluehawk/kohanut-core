@@ -19,11 +19,3 @@ Route::set('kohanut-admin','admin(/<controller>(/<action>(/<params>)))',array('p
 		'action'     => 'index',
 		'directory'  => 'kohanut/admin'
 	));
-
-// Load the Twig class autoloader
-require Kohana::find_file('vendor', 'Twig/lib/Twig/Autoloader');
-// Register the Twig class autoloader
-Twig_Autoloader::register();
-
-// Include Markdown Extra
-require Kohana::find_file('vendor','Markdown/markdown');

@@ -1,14 +1,13 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
+ * Layouts controller
  *
- *
+ * @package    Kohanut
+ * @author     Michael Peters
+ * @copyright  (c) Michael Peters
+ * @license    http://kohanut.com/license
  */
 class Controller_Kohanut_Admin_Layouts extends Controller_Kohanut_Admin {
-
-	public function before()
-	{
-		parent::before();
-	}
 
 	public function action_index()
 	{

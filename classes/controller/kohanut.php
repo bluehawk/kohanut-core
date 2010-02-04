@@ -1,18 +1,46 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
-
 /**
  * This is the Kohanut controller, it's responsible for rendering pages
  * 
- * @author	Michael Peters
+ * @package    Kohanut
+ * @author     Michael Peters
+ * @copyright  (c) Michael Peters
+ * @license    http://kohanut.com/license
  */
 class Controller_Kohanut extends Controller
 {
-	/*
-	 * Attempt to find a page in the CMS, and view it
+	
+	/**
+	 * Ensure that Twig and Markdown are loaded.
+	 *
+	 * @return void
+	 */
+	public function before()
+	{
+		if ( ! class_exists('Twig_Autoloader'))
+		{
+			// Load the Twig class autoloader
+			require Kohana::find_file('vendor', 'Twig/lib/Twig/Autoloader');
+			// Register the Twig class autoloader
+			Twig_Autoloader::register();
+		}
+		
+		// Include Markdown Extra
+		if ( ! function_exists('Markdown'))
+		{
+			require Kohana::find_file('vendor','Markdown/markdown');
+		}
+	}
+	
+	/**
+	 * Attempt to find a page in the CMS, return the response
+	 *
+	 * @param  string  The url to load, will be autodetected if needed
+	 * @return void
 	 */ 
 	public function action_view($url=NULL)
 	{
-		
+
 		// If no $url is passed, default to the server request uri
 		if ($url === NULL) {
 			$url = $_SERVER['REQUEST_URI'];
@@ -45,15 +73,29 @@ class Controller_Kohanut extends Controller
 				Kohana::$log->add('INFO', "Kohanut - Could not find '$url' (404)"); 
 				throw new Kohanut_Exception("Could not find '$page->url'",array(),404);
 			}
+			
+			// Set the status to 200, rather than 404, which was set by the router
+			Kohanut::status(200);
+			
+			// Set the response
 			$this->request->response = $page->render();
 			
 		}
 		catch (Kohanut_Exception $e)
 		{
-			// At this point we would find the "error" template and display the error
-			//$error = Sprig::factory('layout',array('name'=>'Error'))
-			//$this->request->respons = new View('kohanut/xhtml', array('layoutcode' => $error->render()));
-			throw $e;
+			// Find the error page
+			$error = Sprig::factory('page',array('url'=>'/edrror'))->load();
+			
+			// If i couldn't find the error page, just give a generic message
+			if ( ! $error->loaded())
+			{
+				Kohanut::status(404);
+				$this->request->response = View::factory('kohanut/generic404');
+				return;
+			}
+			
+			// Return the response
+			$this->request->response = $error->render();
 		}
 	}
 }

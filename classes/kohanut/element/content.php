@@ -1,6 +1,11 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * 
+ * Kohanut Content Elemenent. Can render markdown and/or twig.
+ *
+ * @package    Kohanut
+ * @author     Michael Peters
+ * @copyright  (c) Michael Peters
+ * @license    http://kohanut.com/license
  */
 class Kohanut_Element_Content extends Kohanut_Element
 {
@@ -22,7 +27,8 @@ class Kohanut_Element_Content extends Kohanut_Element
 	
 	}
 	
-	/** overload values to fix checkboxes
+	/**
+	 * Overload values to fix checkboxes
 	 *
 	 * @param array values
 	 * @return $this

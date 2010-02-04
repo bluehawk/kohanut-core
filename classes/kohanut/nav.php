@@ -1,5 +1,12 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
-
+/**
+ * Kohanut_Nav is used to draw the navigations.  The view/nav.php file is run first, which creates these.
+ *
+ * @package    Kohanut
+ * @author     Michael Peters
+ * @copyright  (c) Michael Peters
+ * @license    http://kohanut.com/license
+ */
 class Kohanut_Nav {
 
 	// id name and url

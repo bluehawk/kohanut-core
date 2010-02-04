@@ -1,18 +1,16 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * User Controller.  This controller manages logging users in and out
+ * User Controller. This manages users login in and out.
  *
+ * @package    Kohanut
+ * @author     Michael Peters
+ * @copyright  (c) Michael Peters
+ * @license    http://kohanut.com/license
  */
 class Controller_Kohanut_Admin_User extends Controller_Kohanut_Admin {
 
 	// allow people to get to these methods without being logged in
 	protected $requires_login = false;
-
-	public function before()
-	{
-		
-		parent::before();
-	}
 
 	public function action_login()
 	{

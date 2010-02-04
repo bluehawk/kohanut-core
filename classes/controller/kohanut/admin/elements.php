@@ -1,17 +1,30 @@
 <?php defined('SYSPATH') or die('No direct script access.');
-
+/**
+ * This is the Elements controller, it's responsible for moving, editing and adding elements, using the drivers.
+ *
+ * @package    Kohanut
+ * @author     Michael Peters
+ * @copyright  (c) Michael Peters
+ * @license    http://kohanut.com/license
+ */
 class Controller_Kohanut_Admin_Elements extends Controller_Kohanut_Admin {
 
-	public function before()
-	{
-		parent::before();
-	}
-	
+	/**
+	 * This class doesn't need an index
+	 *
+	 * @return  void
+	 */
 	public function action_index()
 	{
-		
+		return $this->admin_error('Nothing to see here.');
 	}
 	
+	/**
+	 * Move a block up in its area
+	 *
+	 * @param   int   The id of the block to move
+	 * @return  redirects back to editing the page
+	 */
 	public function action_moveup($id)
 	{
 		// Sanitize
@@ -42,6 +55,12 @@ class Controller_Kohanut_Admin_Elements extends Controller_Kohanut_Admin {
 		Request::instance()->redirect('/admin/pages/edit/' . $block->page->id);
 	}
 	
+	/**
+	 * Move a block down in its area
+	 *
+	 * @param   int   The id of the block to move
+	 * @return  redirects back to editing the page
+	 */
 	public function action_movedown($id)
 	{
 		// Sanitize
@@ -72,6 +91,12 @@ class Controller_Kohanut_Admin_Elements extends Controller_Kohanut_Admin {
 		Request::instance()->redirect('/admin/pages/edit/' . $block->page->id);
 	}
 	
+	/**
+	 * Gives a form for adding an element to a page, the three params are actually one.
+	 *
+	 * @param   string   type/page/area Ex: 3/89/1
+	 * @return  void
+	 */
 	public function action_add($params)
 	{
 		$params = explode('/',$params);
@@ -98,13 +123,16 @@ class Controller_Kohanut_Admin_Elements extends Controller_Kohanut_Admin {
 		$this->view->body->page = $page;
 	}
 	
-	public function action_edit($params)
+	/**
+	 * Gives a form for editing an element on a page.
+	 *
+	 * @param   int   Block id to edit
+	 * @return  void
+	 */
+	public function action_edit($id)
 	{
-		$params = explode('/',$params);
-		$id  = Arr::get($params,0,NULL);
-		
-		if ($id == NULL)
-			return $this->admin_error("Edit requires a block id");
+		// Sanitize
+		$id = (int) $id;
 		
 		// Load the block
 		$block = Sprig::factory('block',array('id'=>$id))->load();
@@ -131,6 +159,12 @@ class Controller_Kohanut_Admin_Elements extends Controller_Kohanut_Admin {
 		$this->view->body->page = $block->page->id;
 	}
 	
+	/**
+	 * Gives a form for confirming deleting of an element
+	 *
+	 * @param   int   Block id to delete
+	 * @return  void
+	 */
 	public function action_delete($id)
 	{
 		// Sanitize

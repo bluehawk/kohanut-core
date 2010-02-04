@@ -1,6 +1,11 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * 
+ * Kohanut Snippet Element. Similar to content, but not unique, and therefore reusable.
+ *
+ * @package    Kohanut
+ * @author     Michael Peters
+ * @copyright  (c) Michael Peters
+ * @license    http://kohanut.com/license
  */
 class Kohanut_Element_Snippet extends Kohanut_Element
 {

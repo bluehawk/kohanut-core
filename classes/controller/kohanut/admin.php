@@ -1,7 +1,11 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
+ * Kohanut Admin controller. This ensures that the admin is logged in, and does some auto-rendering and templating.
  *
- *
+ * @package    Kohanut
+ * @author     Michael Peters
+ * @copyright  (c) Michael Peters
+ * @license    http://kohanut.com/license
  */
 class Controller_Kohanut_Admin extends Controller {
 
@@ -41,6 +45,20 @@ class Controller_Kohanut_Admin extends Controller {
 		if ( ! $this->user AND $this->requires_login)
 		{
 			$this->request->redirect('admin/user/login');
+		}
+		
+		if ( ! class_exists('Twig_Autoloader'))
+		{
+			// Load the Twig class autoloader
+			require Kohana::find_file('vendor', 'Twig/lib/Twig/Autoloader');
+			// Register the Twig class autoloader
+			Twig_Autoloader::register();
+		}
+		
+		// Include Markdown Extra
+		if ( ! function_exists('Markdown'))
+		{
+			require Kohana::find_file('vendor','Markdown/markdown');
 		}
 		
 	}

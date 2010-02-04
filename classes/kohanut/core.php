@@ -1,6 +1,11 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * 
+ * This is the static Kohanut Class that can be used to do various CMS like things through the app.
+ *
+ * @package    Kohanut
+ * @author     Michael Peters
+ * @copyright  (c) Michael Peters
+ * @license    http://kohanut.com/license
  */
 class Kohanut_Core {
 
@@ -25,7 +30,7 @@ class Kohanut_Core {
 	 * Draws the main nav.
 	 *
 	 * @param   int   Max depth to traverse
-	 * @return  void
+	 * @return  string
 	 */
 	public static function main_nav($maxdepth=2)
 	{
@@ -42,7 +47,7 @@ class Kohanut_Core {
 	 * Draws the secondary (side) nav.
 	 *
 	 * @param   int   Max depth to traverse
-	 * @return  boolean
+	 * @return  string
 	 */
 	public static function secondary_nav($maxdepth=2)
 	{
@@ -53,14 +58,12 @@ class Kohanut_Core {
 		}
 		
 		return self::$page->parent()->render_descendants('nav',true,'ASC',$maxdepth);
-		//return self::$page->render_descendants('nav',true,'ASC',$maxdepth);
-		//return "secondary nav isn't written yet";
 	} 
 	
 	/**
 	 * Draws a breadcrumbs trail
 	 *
-	 * @return void
+	 * @return string
 	 */
 	public static function bread_crumbs()
 	{
@@ -76,7 +79,7 @@ class Kohanut_Core {
 	}
 	
 	/**
-	 * Draws the content in a content area
+	 * Draws the content in a content area, assemlbing it from the blocks table, unless Kohanut::$_content is set
 	 *
 	 * @param   int     The id of the area
 	 * @param   string  The name of the area (for admin)
@@ -146,6 +149,9 @@ class Kohanut_Core {
 	 * The element must have a "name" field
 	 * Ex: element('snippet','footer')
 	 *
+	 * @param  string  The type of element
+	 * @param  name    The name of the element
+	 * @return string
 	 */
 	public static function element($type,$name)
 	{
@@ -255,6 +261,11 @@ class Kohanut_Core {
 		return $out;
 	}
 	
+	/**
+	 * Print some render stats
+	 *
+	 * @return string
+	 */
 	public static function render_stats()
 	{
 		$run = Profiler::application();
@@ -265,14 +276,15 @@ class Kohanut_Core {
 	}
 	
 	/**
-	 * Manually render a page using the specified layout and content
+	 * Manually render a page using the specified layout and content. Example usage:
 	 *
-	 *    echo Kohanut::render('error','/',$content);
+	 *     echo Kohanut::render('error','/',$content);
 	 * 
 	 * @param  string   Name of the layout to use
 	 * @param  page     url of the page to pretend is active (needed for navs). There MUST be a page with this url in the database.
 	 * @param  array    Array of content
-	 * 
+	 * @return string
+	 * @throws Kohanut_Exception
 	 */
 	public static function render($layoutname, $pageurl, $content)
 	{
@@ -290,6 +302,12 @@ class Kohanut_Core {
 		return new View('kohanut/xhtml', array('layoutcode' => $layout->render()));
 	}
 	
+	/**
+	 * Set the HTTP status for the request
+	 *
+	 * @param int  The status
+	 * @return void
+	 */
 	public static function status($id)
 	{
 		$request = Request::instance();

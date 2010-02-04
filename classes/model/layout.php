@@ -1,6 +1,11 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * 
+ * Kohanut Layout Model
+ *
+ * @package    Kohanut
+ * @author     Michael Peters
+ * @copyright  (c) Michael Peters
+ * @license    http://kohanut.com/license
  */
 class Model_Layout extends Sprig {
 

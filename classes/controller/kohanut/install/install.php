@@ -1,5 +1,12 @@
 <?php defined('SYSPATH') or die('No direct script access.');
-
+/**
+ * Kohanut Installer
+ *
+ * @package    Kohanut
+ * @author     Michael Peters
+ * @copyright  (c) Michael Peters
+ * @license    http://kohanut.com/license
+ */
 class Controller_Kohanut_Install_Install extends Controller {
 
 	public function action_index()

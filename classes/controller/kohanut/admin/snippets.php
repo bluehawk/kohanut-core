@@ -1,14 +1,13 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
+ * Snippets Controller
  *
- *
+ * @package    Kohanut
+ * @author     Michael Peters
+ * @copyright  (c) Michael Peters
+ * @license    http://kohanut.com/license
  */
 class Controller_Kohanut_Admin_Snippets extends Controller_Kohanut_Admin {
-
-	public function before()
-	{
-		parent::before();
-	}
 
 	public function action_index()
 	{

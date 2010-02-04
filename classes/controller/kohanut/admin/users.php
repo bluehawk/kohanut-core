@@ -1,7 +1,11 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Users Controller.  This manages creating, editing, and removing users
+ * Users Controller
  *
+ * @package    Kohanut
+ * @author     Michael Peters
+ * @copyright  (c) Michael Peters
+ * @license    http://kohanut.com/license
  */
 class Controller_Kohanut_Admin_Users extends Controller_Kohanut_Admin {
 

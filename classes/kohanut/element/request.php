@@ -1,6 +1,11 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * 
+ * Kohanut Request Element. Executes a Kohana HMVC request and returns the result.
+ *
+ * @package    Kohanut
+ * @author     Michael Peters
+ * @copyright  (c) Michael Peters
+ * @license    http://kohanut.com/license
  */
 class Kohanut_Element_Request extends Kohanut_Element
 {
