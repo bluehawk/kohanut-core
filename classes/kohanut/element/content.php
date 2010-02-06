@@ -9,9 +9,10 @@
  */
 class Kohanut_Element_Content extends Kohanut_Element
 {
-	protected $_table = 'element_content';
+	protected $_type = 'content';
 	
-	public $type = 'content';
+	// Sprig init
+	protected $_table = 'element_content';
 
 	public function _init()
 	{
@@ -26,27 +27,6 @@ class Kohanut_Element_Content extends Kohanut_Element
 		);
 	
 	}
-	
-	/** overload values to fix checkboxes
-	 *
-	 * @param array values
-	 * @return $this
-	 */
-	public function values(array $values)
-	{
-		if ($this->loaded()){
-			$new = array(
-				'twig'  => 0,
-				'markdown' => 0,
-			);
-			return parent::values(array_merge($new,$values));
-		}
-		else
-		{
-			return parent::values($values);
-		}
-	}
-	
 	
 	public function title()
 	{
@@ -136,7 +116,7 @@ class Kohanut_Element_Content extends Kohanut_Element
 			try
 			{
 				$this->create();
-				$this->register($page,$area);
+				$this->create_block($page,$area);
 				request::instance()->redirect('admin/pages/edit/' . $page);
 			}
 			catch (Validate_Exception $e)
@@ -147,25 +127,23 @@ class Kohanut_Element_Content extends Kohanut_Element
 		return $view;
 	}
 	
-	public function action_delete()
+	/** overload values to fix checkboxes
+	 *
+	 * @param array values
+	 * @return $this
+	 */
+	public function values(array $values)
 	{
-		$view = View::factory('kohanut/admin/elements/delete',array('element'=>$this));
-		
-		if ($_POST)
-		{
-			// If this element is unique, delete the element from it's table
-			if ($this->unique == true)
-			{
-				$this->delete();
-			}
-			
-			// Delete the block
-			$this->block->delete();
-			
-			Request::instance()->redirect('/admin/pages/edit/' . $this->block->page->id);
+		if ($this->loaded()){
+			$new = array(
+				'twig'  => 0,
+				'markdown' => 0,
+			);
+			return parent::values(array_merge($new,$values));
 		}
-		
-		return $view;
+		else
+		{
+			return parent::values($values);
+		}
 	}
-
 }

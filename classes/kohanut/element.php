@@ -12,58 +12,17 @@ abstract class Kohanut_Element extends Sprig
 	/**
 	 * @var  string  Name of the class/table.  Ex "content" or "snippet"
 	 */
-	public $type = "undefined";
+	protected $_type = "undefined";
 	
 	/**
 	 * @var  bool  Whether an element is unique. If this is false, an element can be in more than one place, like a snippet (as in one row in the element_snippet table, but it has several rows in the blocks table). If this is true deleting a block will delete the element itself, rather than just the block.
 	 */
-	public $unique = TRUE;
+	protected $_unique = TRUE;
 
 	/**
 	 * @var  object  The sprig model of the block that is linking to this element.  This is null if an element is not represented by a block, for example if it was called via Kohanut::element('snippet','footer')
 	 */
 	public $block = NULL;
-	
-	/**
-	 * Render the element, including the panel if we are in admin mode
-	 *
-	 * @return string
-	 */
-	final public function render()
-	{
-		// Ensure the element is loaded.
-		if ( ! $this->loaded())
-		{
-			$this->id = $this->block->element;
-			// Load the element
-			$this->load();
-			// If its still not loaded, something is wrong.
-			if ( ! $this->loaded())
-			{
-				throw new Kohanut_Exception('Rendering of element failed, element could not be loaded. Block id # :id',array('id',$this->block->id));
-			}
-		}
-		
-		$out = "";
-		
-		// If admin mode, render the panel
-		if (Kohanut::$adminmode)
-		{
-			$out .= $this->render_panel();
-		}
-		
-		// And render the actual element
-		try
-		{
-			$out .= $this->_render();
-		}
-		catch (Exception $e)
-		{
-			$out .= "<p>There was an error while rendering the element: " . $e->getMessage() . "</p>";
-		}
-		
-		return $out;
-	}
 	
 	/**
 	 * Render the element
@@ -96,7 +55,7 @@ abstract class Kohanut_Element extends Sprig
 			{
 				$this->values($_POST);
 				$this->create();
-				$this->register($page,$area);
+				$this->create_block($page,$area);
 				request::instance()->redirect('admin/pages/edit/' . $page);
 			}
 			catch (Validate_Exception $e)
@@ -145,7 +104,7 @@ abstract class Kohanut_Element extends Sprig
 		if ($_POST)
 		{
 			// If this element is unique, delete the element from it's table
-			if ($this->unique == true)
+			if ($this->_unique == true)
 			{
 				$this->delete();
 			}
@@ -159,18 +118,77 @@ abstract class Kohanut_Element extends Sprig
 		return $view;
 	}
 	
+	// Final functions are below here
+	
 	/**
-	 * Return an element of a certain type.
-	 *
-	 * I wanted to call this factory, but sprig was already using that.
+	 * Return the type of the element.
 	 *
 	 * @param  string  The type of element to create
 	 * @return Kohanut_Element
 	 */
-	final public static function type($type)
+	final public function type()
 	{
-		$type = "Kohanut_Element_$type";
-		return New $type;
+		return str_replace('Kohanut_Element_','',get_class($this));
+	}
+	
+	/**
+	 * Return an element of a certain type.
+	 *
+	 * @param  string  The type of element to create
+	 * @return Kohanut_Element object
+	 */
+	final public static function factory($name, array $values = NULL)
+	{
+		$model = 'Kohanut_Element_' . $name;
+		$model = New $model;
+		
+		if ($values)
+		{
+			$model->values($values);
+		}
+		
+		return $model;
+	}
+	
+	/**
+	 * Render the element, including the panel if we are in admin mode
+	 *
+	 * @return string
+	 */
+	final public function render()
+	{
+		// Ensure the element is loaded.
+		if ( ! $this->loaded())
+		{
+			$this->id = $this->block->element;
+			// Load the element
+			$this->load();
+			// If its still not loaded, something is wrong.
+			if ( ! $this->loaded())
+			{
+				throw new Kohanut_Exception('Rendering of element failed, element could not be loaded. Block id # :id',array('id',$this->block->id));
+			}
+		}
+		
+		$out = "";
+		
+		// If admin mode, render the panel
+		if (Kohanut::$adminmode)
+		{
+			$out .= $this->render_panel();
+		}
+		
+		// And render the actual element
+		try
+		{
+			$out .= $this->_render();
+		}
+		catch (Exception $e)
+		{
+			$out .= "<p>There was an error while rendering the element: " . $e->getMessage() . "</p>";
+		}
+		
+		return $out;
 	}
 	
 	/**
@@ -200,18 +218,18 @@ HTML;
 	}
 	
 	/**
-	 * Register a block for this element on the specified page and area
+	 * Create a block for this element on the specified page and area
 	 * (Maybe add_block or create_block is a better name)
 	 *
 	 * @param  int  The page to add this to
 	 * @param  int  The area to add this to
 	 * @return view
 	 */
-	final public function register($page,$area)
+	final public function create_block($page,$area)
 	{
-		// You can only register an element that exists
+		// You can only create a block for an element that exists
 		if ( ! $this->loaded())
-			throw new Kohanut_Exception("Attempting to register an element that does not exist, or has not been created yet.");
+			throw new Kohanut_Exception("Attempting to create a block for an element that does not exist, or has not been created yet.");
 			
 		// Get the highest 'order' from elements in the same page and area
 		$query = DB::select()->order_by('order','DESC');
@@ -219,11 +237,11 @@ HTML;
 		$order = ($block->order) + 1;
 		
 		// Get the id of this elementtype
-		$elementtype = Sprig::factory('elementtype',array('name'=>$this->type))->load();
+		$elementtype = Sprig::factory('elementtype',array('name'=>$this->type()))->load();
 		if ( ! $elementtype->loaded())
-			throw new Kohanut_Exception("Attempt to register an element failed, could not find elementtype :type",array('type'=>$this->type));
+			throw new Kohanut_Exception("Attempt to create a block for an element failed, could not find elementtype :type",array('type'=>$this->type()));
 		
-		// Create the page content
+		// Create the block
 		$new = Sprig::factory('block',array(
 			'page'        => (int) $page,
 			'area'        => (int) $area,
@@ -231,8 +249,12 @@ HTML;
 			'elementtype' => $elementtype->id,
 			'element'     => $this->id,
 		))->create();
-		
-		
+	
+	}
+	
+	final public function unique()
+	{
+		return $this->_unique;
 	}
 
 }

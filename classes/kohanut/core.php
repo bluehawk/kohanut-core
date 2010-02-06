@@ -125,7 +125,7 @@ class Kohanut_Core {
 			// Create an instance of the element and render it
 			try
 			{
-				$element = Kohanut_Element::type($item->elementtype->load()->name);
+				$element = Kohanut_Element::factory($item->elementtype->load()->name);
 				$element->id = $item->element;
 				$element->block = $item;
 				$content .= $element->render();
@@ -159,7 +159,7 @@ class Kohanut_Core {
 		// Create an instance of the element
 		try
 		{
-			$element = Kohanut_Element::type($type);
+			$element = Kohanut_Element::factory($type);
 			$element->name = $name;
 			$element->load();
 		}
@@ -193,7 +193,7 @@ class Kohanut_Core {
 			self::$_stylesheets[] = $stylesheet;
 		}
 	}
-
+	
 	public static function stylesheet_render()
 	{
 		$out = "";
@@ -278,7 +278,7 @@ class Kohanut_Core {
 	/**
 	 * Manually render a page using the specified layout and content. Example usage:
 	 *
-	 *     echo Kohanut::render('error','/',$content);
+	 *     echo Kohanut::override('error','/',$content);
 	 * 
 	 * @param  string   Name of the layout to use
 	 * @param  page     url of the page to pretend is active (needed for navs). There MUST be a page with this url in the database.
@@ -286,16 +286,16 @@ class Kohanut_Core {
 	 * @return string
 	 * @throws Kohanut_Exception
 	 */
-	public static function render($layoutname, $pageurl, $content)
+	public static function override($layoutname, $pageurl, $content)
 	{
 		// Find the layout
 		$layout = Sprig::factory('layout',array('name'=>$layoutname))->load();
 		if ( ! $layout->loaded())
-			throw new Kohanut_Exception("Kohanut::render() failed because the layout with name '$layoutname' could not be found");
+			throw new Kohanut_Exception("Kohanut::override() failed because the layout with name '$layoutname' could not be found");
 		// Find the Page
 		$page = Sprig::factory('page',array('url'=>$pageurl))->load();
 		if ( ! $page->loaded())
-			throw new Kohanut_Exception("Kohanut::render() failed because the page with url '$pageurl' could not be found.");
+			throw new Kohanut_Exception("Kohanut::override() failed because the page with url '$pageurl' could not be found.");
 		// Set the required Kohanut variables, and render the page.
 		self::$page = $page;
 		self::$_content = $content;

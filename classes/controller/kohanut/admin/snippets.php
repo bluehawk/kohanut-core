@@ -11,7 +11,7 @@ class Controller_Kohanut_Admin_Snippets extends Controller_Kohanut_Admin {
 
 	public function action_index()
 	{
-		$snippets = Kohanut_Element::type('snippet')->load(NULL,FALSE);
+		$snippets = Kohanut_Element::factory('snippet')->load(NULL,FALSE);
 		
 		$this->view->title = "Snippets";
 		$this->view->body = View::factory('/kohanut/admin/snippets/list',array('snippets'=>$snippets));
@@ -19,7 +19,7 @@ class Controller_Kohanut_Admin_Snippets extends Controller_Kohanut_Admin {
 	
 	public function action_new()
 	{
-		$snippet = Kohanut_Element::type('snippet');
+		$snippet = Kohanut_Element::factory('snippet');
 		
 		$this->view->title = "Editing Snippet";
 		$this->view->body = new View('kohanut/admin/snippets/new',array('snippet'=>$snippet,'errors'=>false));
@@ -65,7 +65,7 @@ class Controller_Kohanut_Admin_Snippets extends Controller_Kohanut_Admin {
 		$id = (int) $id;
 	
 		// Find the snippet
-		$snippet = Kohanut_Element::type('snippet')->values(array('id'=>$id));
+		$snippet = Kohanut_Element::factory('snippet')->values(array('id'=>$id));
 	
 		$snippet->load();
 		
@@ -117,7 +117,7 @@ class Controller_Kohanut_Admin_Snippets extends Controller_Kohanut_Admin {
 		$id = (int) $id;
 		
 		// Find the snippet
-		$snippet = Kohanut_Element::type('snippet')->values(array('id'=>$id))->load();
+		$snippet = Kohanut_Element::factory('snippet')->values(array('id'=>$id))->load();
 		
 		if ( ! $snippet->loaded())
 		{

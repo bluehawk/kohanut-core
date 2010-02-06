@@ -1,6 +1,6 @@
 <div class="grid_16">
 	<div class="box">
-		<h1>Editing <?php echo ucfirst($element->type) ?></h1>
+		<h1>Editing <?php echo ucfirst($element->type()) ?></h1>
 		
 			
 		<?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>

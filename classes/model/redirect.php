@@ -26,8 +26,6 @@ class Model_Redirect extends Sprig {
 		);
 	}
 	
-	
-	
 	/**
 	 * Find a redirect from $url
 	 *

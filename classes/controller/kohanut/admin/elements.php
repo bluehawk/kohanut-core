@@ -116,7 +116,7 @@ class Controller_Kohanut_Admin_Elements extends Controller_Kohanut_Admin {
 		if ( ! $type->loaded())
 			return $this->admin_error("Elementtype " . (int) $type . " could not be loaded");
 		
-		$class = Kohanut_Element::type($type->name);
+		$class = Kohanut_Element::factory($type->name);
 		
 		$this->view->title = "Add Element";
 		$this->view->body = $class->action_add((int) $page, (int) $area);
@@ -146,7 +146,7 @@ class Controller_Kohanut_Admin_Elements extends Controller_Kohanut_Admin {
 		if ( ! $type->loaded())
 			return $this->admin_error("Elementtype " . (int) $block->elementtype->id . " could not be loaded");
 		
-		$class = Kohanut_Element::type($type->name);
+		$class = Kohanut_Element::factory($type->name);
 		$class->id = (int) $block->element;
 		$class->load();
 		$class->block = $block;
@@ -182,7 +182,7 @@ class Controller_Kohanut_Admin_Elements extends Controller_Kohanut_Admin {
 		if ( ! $type->loaded())
 			return $this->admin_error("Elementtype " . (int) $block->elementtype->id . " could not be loaded");
 			
-		$class = Kohanut_Element::type($type->name);
+		$class = Kohanut_Element::factory($type->name);
 		$class->id = $block->element;
 		$class->block = $block;
 		$class->load();

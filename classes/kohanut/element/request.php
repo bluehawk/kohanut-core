@@ -9,8 +9,7 @@
  */
 class Kohanut_Element_Request extends Kohanut_Element
 {
-
-	public $type = 'request';
+	protected $_type = 'request';
 	protected $_table = 'element_request';
 
 	public function _init()
@@ -20,7 +19,6 @@ class Kohanut_Element_Request extends Kohanut_Element
 			
 			'url' => new Sprig_Field_Char,
 		);
-	
 	}
 	
 	public function title()
@@ -45,6 +43,4 @@ class Kohanut_Element_Request extends Kohanut_Element
 		}
 		return $out;
 	}
-
-
 }
