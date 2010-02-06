@@ -9,13 +9,12 @@
  */
 class Kohanut_Element_Snippet extends Kohanut_Element
 {
-	protected $_type = "snippet";
 	protected $_unique = FALSE;
 	
 	// Sprig Init
 	protected $_table = 'element_snippet';
 	
-	public function _init()
+	protected function _init()
 	{
 		$this->_fields += array(
 			'id' => new Sprig_Field_Auto,

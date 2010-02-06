@@ -9,12 +9,10 @@
  */
 class Kohanut_Element_Content extends Kohanut_Element
 {
-	protected $_type = 'content';
-	
 	// Sprig init
 	protected $_table = 'element_content';
 
-	public function _init()
+	protected function _init()
 	{
 		$this->_fields += array(
 			'id' => new Sprig_Field_Auto,

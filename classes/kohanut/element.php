@@ -9,11 +9,7 @@
  */
 abstract class Kohanut_Element extends Sprig
 {
-	/**
-	 * @var  string  Name of the class/table.  Ex "content" or "snippet"
-	 */
-	protected $_type = "undefined";
-	
+
 	/**
 	 * @var  bool  Whether an element is unique. If this is false, an element can be in more than one place, like a snippet (as in one row in the element_snippet table, but it has several rows in the blocks table). If this is true deleting a block will delete the element itself, rather than just the block.
 	 */

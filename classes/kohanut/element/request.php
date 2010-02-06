@@ -9,10 +9,9 @@
  */
 class Kohanut_Element_Request extends Kohanut_Element
 {
-	protected $_type = 'request';
 	protected $_table = 'element_request';
 
-	public function _init()
+	protected function _init()
 	{
 		$this->_fields += array(
 			'id' => new Sprig_Field_Auto,
