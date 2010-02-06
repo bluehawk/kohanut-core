@@ -42,13 +42,19 @@ class Controller_Kohanut extends Controller
 	{
 
 		// If no $url is passed, default to the server request uri
-		if ($url === NULL) {
+		if ($url === NULL)
+		{
 			$url = $_SERVER['REQUEST_URI'];
 		}
+		
+		// Trim off Kohana::$base_url
+		$url = preg_replace('#^' . Kohana::$base_url . '#','',$url);
+		
 		// Ensure no trailing slash
 		$url = preg_replace('/\/$/','',$url);
-		// Ensure there is a leading slash
-		$url = preg_replace('/^\/?/',"/",$url);
+		
+		// Ensure no leading slash
+		$url = preg_replace('/^\//','',$url);
 		
 		// Try to find what to do on this url
 		try
@@ -61,7 +67,7 @@ class Controller_Kohanut extends Controller
 			}
 			
 			// Check for a redirect on this url
-			Sprig::factory('redirect')->find($url)->go();
+			Sprig::factory('redirect',array('url',$url))->go();
 			
 			// Find the page that matches this url, and isn't an external link
 			$page = Sprig::factory('page',array('url'=>$url,'islink'=>0))
@@ -84,7 +90,7 @@ class Controller_Kohanut extends Controller
 		catch (Kohanut_Exception $e)
 		{
 			// Find the error page
-			$error = Sprig::factory('page',array('url'=>'/error'))->load();
+			$error = Sprig::factory('page',array('url'=>'error'))->load();
 			
 			// If i couldn't find the error page, just give a generic message
 			if ( ! $error->loaded())
@@ -94,7 +100,7 @@ class Controller_Kohanut extends Controller
 				return;
 			}
 			
-			// Return the response
+			// Set the response
 			$this->request->response = $error->render();
 		}
 	}

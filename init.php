@@ -12,6 +12,15 @@ if (is_dir($modules['kohanut'].'/classes/controller/kohanut/install'))
 		));
 }
 
+// Set the kohanut media route
+Route::set('kohanut-media','admin/media(/<file>)', array('file' => '.+'))
+	->defaults(array(
+		'controller' => 'admin',
+		'action'     => 'media',
+		'directory'  => 'kohanut',
+		'file'       => NULL,
+	));
+
 // Set the kohanut admin route
 Route::set('kohanut-admin','admin(/<controller>(/<action>(/<params>)))',array('params'=>'.*'))
 	->defaults(array(

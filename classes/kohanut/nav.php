@@ -65,10 +65,9 @@ class Kohanut_Nav {
 	}
 	
 	/**
-	 * render
-	 * @return	the html of the menu
-	 *
 	 * this will render the menu structure of this, and all child nodes
+	 * 
+	 * @return	the html of the menu
 	 */
 	public function render() {
 		
@@ -104,7 +103,11 @@ class Kohanut_Nav {
 		{
 			$out .= ' class="' . trim( ($this->isfirst?'first ':'') . ($this->islast?'last ':'') . ($this->iscurrent?'current':'')) . '"';
 		}
-		$out .= '><a href="' . $this->url . '">' . $this->name . "</a>";
+		
+		// Add in base_url, but make sure it does not having a trailing slash, and make sure url does.
+		$out .= '>';
+		
+		$out .= html::anchor($this->url,$this->name);
 		
 		// Do we have children?
 		if (count($this->children)) {

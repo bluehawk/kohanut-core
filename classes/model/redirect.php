@@ -14,14 +14,16 @@ class Model_Redirect extends Sprig {
 		$this->_fields += array(
 			'id' => new Sprig_Field_Auto,
 			'url' => new Sprig_Field_Char(array(
-				'label' => 'Old URL<small>If someone goes to this url...</small>',
+				'label' => 'Old URL',
+				'empty' => TRUE,
+				'default' => NULL,
 			)),
 			'newurl' => new Sprig_Field_Char(array(
-				'label' => 'New URL<small>...it will take them to this one.</small>',
+				'label' => 'New URL',
 			)),
 			'type' => new Sprig_Field_Enum(array(
 				'choices' => array('301'=>'301 (Permanent)','302'=>'302 (Temporary)'),
-				'label' => 'Type<small>This should be 301 (Permanent) in most cases.</small>',
+				'label' => 'Type',
 			)),
 		);
 	}

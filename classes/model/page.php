@@ -18,7 +18,10 @@ class Model_Page extends Sprig_MPTT {
 			'id' => new Sprig_Field_Auto,
 			
 			// url and display name
-			'url' => new Sprig_Field_Char,
+			'url' => new Sprig_Field_Char(array(
+				'empty' => TRUE,
+				'default' => NULL,
+			)),
 			'name' => new Sprig_Field_Char,
 			
 			//layout
@@ -72,7 +75,7 @@ class Model_Page extends Sprig_MPTT {
 	 * @param array values
 	 * @return $this
 	 */
-	public function _values(array $values)
+	private function _values(array $values)
 	{
 		$new = array(
 			'islink'  => 0,

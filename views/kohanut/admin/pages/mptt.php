@@ -35,7 +35,16 @@ foreach ($nodes as $node)
 		<?php if ($node->islink) echo '<div class="link"></div>'; ?>
 		<div style="float:left">
 			<p class='pagename'><?php echo $node->name ?></p>
-			<p class='pageurl<?php if ($node->islink) echo ' islink'; ?>'><?php echo $node->url ?><?php if ($node->islink) echo '  (Link) '; ?></p>
+			<?php
+			// echo <p class="pageurl[ islink]">
+			echo "<p class='pageurl" . ($node->islink ?' islink':'') . "'>";
+			// if the link does not have :// in it, echo the url base (like http://example.com/ ) in a span, so its gray
+			echo ( strpos($node->url, '://') === FALSE ? "<span>" . URL::base(FALSE,TRUE) . "</span>" : '' );
+			// echo the url, and if its a link, put (Link) after it
+			echo $node->url . ($node->islink?'  (Link) ':'');
+			// close pageurl
+			echo "</p>";
+			?>
 		</div>
 		<div class='actions'>
 			<a href="<?php echo $node->url ?>" title="Click to view"><img src="/kohanutres/img/fam/page_world.png" alt="View" /><br/><span>view</span></a>

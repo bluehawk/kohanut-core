@@ -4,39 +4,35 @@
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 	<title><?php echo (isset($title) ? "Admin - " . $title : "Admin"); ?></title>
-	<link rel="stylesheet" href="/kohanutres/css/960.css" type="text/css" media="screen" charset="utf-8" />
-	<link rel="stylesheet" href="/kohanutres/css/template.css" type="text/css" media="screen" charset="utf-8" />
-	<link rel="stylesheet" href="/kohanutres/css/color.css" type="text/css" media="screen" charset="utf-8" />
-	<link rel="stylesheet" href="/kohanutres/css/kohanut.css" type="text/css" media="screen" charset="utf-8" />
-	
-	<!--
-	
-	<link rel="stylesheet" type="text/css" href="/kohanutres/kohanut.css" />
-	-->
-	
-	<script type="text/javascript" src="/kohanutres/jquery/jquery-1.3.2.min.js" ></script>
-	<script type="text/javascript" src="/kohanutres/jquery/jquery.treeview.js"></script>
-	<script type="text/javascript" src="/kohanutres/jquery/jquery.cookie.js"></script>
+
+	<?php echo html::style( Route::get('kohanut-media')->uri(array('file'=>'css/960.css'))      , array('media'=>'screen','charset'=>'utf-8') ) . "\n"; ?>
+	<?php echo html::style( Route::get('kohanut-media')->uri(array('file'=>'css/template.css')) , array('media'=>'screen','charset'=>'utf-8') ) . "\n"; ?>
+	<?php echo html::style( Route::get('kohanut-media')->uri(array('file'=>'css/color.css'))    , array('media'=>'screen','charset'=>'utf-8') ) . "\n"; ?>
+	<?php echo html::style( Route::get('kohanut-media')->uri(array('file'=>'css/kohanut.css'))  , array('media'=>'screen','charset'=>'utf-8') ) . "\n"; ?>
+
+	<?php echo html::script(Route::get('kohanut-media')->uri(array('file'=>'jquery/jquery-1.3.2.min.js')) ). "\n"; ?>
+	<?php echo html::script(Route::get('kohanut-media')->uri(array('file'=>'jquery/jquery.treeview.js')) ). "\n"; ?>
+	<?php echo html::script(Route::get('kohanut-media')->uri(array('file'=>'jquery/jquery.cookie.js')) ). "\n"; ?>
 
 </head>
 <body>
 
 	<div id="head">
-		<img src="/kohanutres/img/logo.png" alt="Kohanut Logo" class="logo"/>
+		<?php echo html::image(Route::get('kohanut-media')->uri(array('file'=>'img/logo.png')),array('alt'=>'Kohanut Logo','class'=>'logo')); ?>
 		<h1>Kohanut</h1>
 	
 		<p class="info">
 			Logged in as <?php echo $user; ?> | 
-			<a href="/">Visit Site</a> | <a href="/admin/user/logout">Logout</a>
+			<a href="/">Visit Site</a> | <?php echo html::anchor( Route::get('kohanut-admin')->uri(array('controller'=>'user','action'=>'logout')) , "Logout" ) ?>
 		</p>
 	</div>
 	
 	<ul id="navigation">
-		<li><a href="/admin/pages/" <?php if ($controller == "pages") echo ' class="active"'; ?>>Pages</a></li>
-		<li><a href="/admin/snippets" <?php if ($controller == "snippets") echo ' class="active"'; ?>>Snippets</a></li>
-		<li><a href="/admin/users" <?php if ($controller == "users") echo ' class="active"'; ?>>Users</a></li>
-		<li><a href="/admin/layouts" <?php if ($controller == "layouts") echo ' class="active"'; ?>>Layouts</a></li>
-		<li><a href="/admin/redirects" <?php if ($controller == "redirects") echo ' class="active"'; ?>>Redirects</a></li>
+		<li><?php echo html::anchor( Route::get('kohanut-admin')->uri(array('controller'=>'pages')) , "Pages" ) ?></li>
+		<li><?php echo html::anchor( Route::get('kohanut-admin')->uri(array('controller'=>'snippets')) , "Snippets" ) ?></li>
+		<li><?php echo html::anchor( Route::get('kohanut-admin')->uri(array('controller'=>'users')) , "Users" ) ?></li>
+		<li><?php echo html::anchor( Route::get('kohanut-admin')->uri(array('controller'=>'layouts')) , "Layouts" ) ?></li>
+		<li><?php echo html::anchor( Route::get('kohanut-admin')->uri(array('controller'=>'redirects')) , "Redirects" ) ?></li>
 	</ul>
 
 	<div id="content" class="container_16 clearfix">

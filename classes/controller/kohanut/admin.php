@@ -22,6 +22,13 @@ class Controller_Kohanut_Admin extends Controller {
 	
 	public function before()
 	{
+		
+		if ($this->request->action === 'media')
+		{
+			// Do not template media files
+			$this->auto_render = FALSE;
+		}
+		
 		// default view
 		$this->view = New View('kohanut/admin/xhtml');
 		
@@ -86,6 +93,35 @@ class Controller_Kohanut_Admin extends Controller {
 			$this->request->response = $this->view;
 		}
 
+	}
+	
+	public function action_media()
+	{
+		// Get the file path from the request
+		$file = $this->request->param('file');
+
+		// Find the file extension
+		$ext = pathinfo($file, PATHINFO_EXTENSION);
+
+		// Remove the extension from the filename
+		$file = substr($file, 0, -(strlen($ext) + 1));
+
+		if ($file = Kohana::find_file('kohanut-media', $file, $ext))
+		{
+			// Send the file content as the response
+			$this->request->response = file_get_contents($file);
+		}
+		else
+		{
+			// Return a 404 status
+			$this->request->status = 404;
+		}
+
+		// Set the content type for this extension
+		$this->request->headers['Content-Type'] = File::mime_by_ext($ext);
+		
+		// Send the content-length header
+		$this->request->headers['Content-Length'] = filesize($file);
 	}
 
 }
