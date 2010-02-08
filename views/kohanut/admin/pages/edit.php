@@ -13,7 +13,7 @@
 		<?php else: ?>
 		
 			<h2>Edit Page Content</h2>
-			<p><a href="/admin/pages/edit/<?php echo $page->id ?>" class="button">Click to edit this pages content</a></p>
+			<p><?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'pages','action'=>'edit','params'=>$page->id)),"Click to edit this pages content",array('class'=>'button')) ?></p>
 			
 		<?php endif; ?>
 		
@@ -65,7 +65,7 @@
 		
 			<p>
 				<?php echo Form::submit('submit','Save Changes',array('class'=>'submit')) ?>
-				<a href="/admin/pages">cancel</a>
+				<?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'pages')),'cancel'); ?>
 			</p>
 			
 		</form>

@@ -22,18 +22,15 @@
 <!-- Admin mode header -->
 <div id="kohanut_header">
 	<p>
-		<a href="/admin/pages/">&laquo; Back</a> | 
-		You are editing <strong><?php echo Kohanut::$page->name ?></strong>. <a href="/admin/pages/meta/<?php echo Kohanut::$page->id ?>">Click here to edit meta data</a>
+		<?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'pages')),"&laquo; Back") ?> | 
+		You are editing <strong><?php echo Kohanut::$page->name ?></strong> |
+		<?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'pages','action'=>'meta','params'=>Kohanut::$page->id)),"Edit meta data") ?>
 	</p>
-	<div id="kohanut_meta" style="display:none;">
-		
-	</div>
 </div>
 <!-- End Admin mode header -->
 <?php endif; ?>
 <!-- Begin Page Layout Code -->
 <?php echo $layoutcode ?>
 <!-- End Page Layout Code -->
-<?php //echo View::factory('profiler/stats'); ?>
 </body>
 </html>

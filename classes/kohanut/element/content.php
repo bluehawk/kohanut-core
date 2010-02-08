@@ -115,7 +115,7 @@ class Kohanut_Element_Content extends Kohanut_Element
 			{
 				$this->create();
 				$this->create_block($page,$area);
-				request::instance()->redirect('admin/pages/edit/' . $page);
+				Request::instance()->redirect(Route::get('kohanut-admin')->uri(array('controller'=>'pages','action'=>'edit','params'=>$page)));
 			}
 			catch (Validate_Exception $e)
 			{

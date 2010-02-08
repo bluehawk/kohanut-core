@@ -15,7 +15,7 @@
 			
 			<p>
 				<?php echo Form::submit('submit','Add',array('class'=>'submit')) ?>
-				<a href="/admin/pages/edit/<?php echo $page ?>">cancel</a>
+				<?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'pages','action'=>'edit','params'=>$page)),'cancel'); ?>
 			</p>
 			
 		</form>

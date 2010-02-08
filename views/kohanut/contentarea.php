@@ -8,7 +8,7 @@ if (Kohanut::$adminmode)
 {
 ?>
 <div class="kohanut_element_ctl">
-	<p class="title"><img src="/kohanutres/img/fam/add.png" />Add New Element</p>
+	<p class="title"><?php echo html::image(Route::get('kohanut-media')->uri(array('file'=>'img/fam/add.png'))); ?> Add New Element</p>
 	<?php echo form::open() ?>
 	<?php echo form::hidden('area',$id); ?>
 	<select name="type" style="float:left;margin-right:5px;">

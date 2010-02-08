@@ -17,7 +17,7 @@
 			
 			<p>
 				<input type="submit" name="submit" value="Create User" class="submit" />
-				<a href="/admin/users/">cancel</a>
+				<?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'users')),'cancel'); ?>
 			</p>
 			
 			</form>

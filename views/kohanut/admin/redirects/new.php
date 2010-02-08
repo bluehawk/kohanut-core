@@ -16,7 +16,7 @@
 		
 		<p>
 			<input type="submit" name="submit" value="Create Redirect" class="submit" />
-			<a href="/admin/redirects/">cancel</a>
+			<?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'redirects')),'cancel'); ?>
 		</p>
 		
 		</form>

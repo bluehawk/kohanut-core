@@ -10,7 +10,7 @@
 		<?php echo Form::open() ?>
 			<p>
 				<input type="submit" name="submit" value="Yes, delete it." class="submit" />
-				<a href="/admin/layouts/">cancel</a>
+				<?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'layouts')),'cancel'); ?>
 			</p>
 		</form>
 		

@@ -16,7 +16,7 @@
 			
 			<p>
 				<input type="submit" name="submit" value="Save Changes" class="submit" />
-				<a href="/admin/layouts/">cancel</a>
+				<?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'layouts')),'cancel'); ?>
 			</p>
 			
 			<?php echo Form::close();  ?>

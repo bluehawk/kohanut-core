@@ -14,7 +14,7 @@
 		<?php echo form::open() ?>
 			<p>
 				<input type="submit" name="submit" value="Yes, delete it." class="submit" />
-				<a href="/admin/pages/">cancel</a>
+				<?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'pages')),'cancel'); ?>
 			</p>
 		</form>
 		

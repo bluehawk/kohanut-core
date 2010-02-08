@@ -12,15 +12,21 @@
 			{
 			?>
 				<li <?php if ($zebra) echo "class='z' " ?> title="Click to edit" >
-					<div class="actions">
-						<a href="/admin/layouts/edit/<?php echo $item->id ?>"><img src="/kohanutres/img/fam/layout_edit.png" alt="edit" /><br/><span>edit</span></a>
-						<a href="/admin/layouts/delete/<?php echo $item->id ?>" title="Click to delete"><img src="/kohanutres/img/fam/layout_delete.png" alt="delete" /><br/><span>delete</span></a>
+					<div class='actions'>
+						<?php
+						echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'layouts','action'=>'edit','params'=>$item->id)),
+							 html::image( Route::get('kohanut-media')->uri(array('file'=>'img/fam/layout_edit.png')) ) . 
+							 "<br/><span>edit</span>",array('title'=>'Click to edit'));
+						echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'layouts','action'=>'delete','params'=>$item->id)),
+							 html::image( Route::get('kohanut-media')->uri(array('file'=>'img/fam/layout_delete.png')) ) . 
+							 "<br/><span>delete</span>",array('title'=>'Click to delete'));
+						?>
 					</div>
-					<a href="/admin/layouts/edit/<?php echo $item->id ?>" ><p>
-						<?php echo $item->name ?>
-						<small><?php echo $item->desc ?></small>
-					</p></a>
-				
+					<?php
+					echo
+					html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'redirects','action'=>'edit','params'=>$item->id)),
+								 '<p>' . $item->name . '<small>' . $item->desc . '</small></p>');
+					?>
 				</li>
 				
 			<?php
@@ -43,7 +49,7 @@
 <div class="grid_4">
 	<div class="box">
 		<h1>Help</h1>
-		<p><a class="button" href="/admin/layouts/new">Create a New Layout</a></p>
+		<p><?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'layouts','action'=>'new')),"Create a new Layout",array('class'=>'button')); ?></p>
 		<p>Help goes here</p>
 	</div>
 </div>

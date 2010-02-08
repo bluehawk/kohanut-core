@@ -52,7 +52,7 @@ abstract class Kohanut_Element extends Sprig
 				$this->values($_POST);
 				$this->create();
 				$this->create_block($page,$area);
-				request::instance()->redirect('admin/pages/edit/' . $page);
+				Request::instance()->redirect(Route::get('kohanut-admin')->uri(array('controller'=>'pages','action'=>'edit','params'=>$page)));
 			}
 			catch (Validate_Exception $e)
 			{
@@ -107,8 +107,7 @@ abstract class Kohanut_Element extends Sprig
 			
 			// Delete the block
 			$this->block->delete();
-			
-			Request::instance()->redirect('/admin/pages/edit/' . $this->block->page->id);
+			Request::instance()->redirect(Route::get('kohanut-admin')->uri(array('controller'=>'pages','action'=>'edit','params'=>$this->block->page->id)));
 		}
 		
 		return $view;
@@ -198,19 +197,7 @@ abstract class Kohanut_Element extends Sprig
 		if ($this->block == NULL)
 			return;
 		
-		// this should be a view
-		return <<<HTML
-		<div class="kohanut_element_ctl">
-			<p class="title">{$this->title()}</p>
-			<ul class="kohanut_element_actions">
-				<li><a href="/admin/elements/edit/{$this->block->id}"><img src="/kohanutres/img/fam/pencil.png" title="Edit"/>Edit</a></li>
-				<li><a href="/admin/elements/moveup/{$this->block->id}"><img src="/kohanutres/img/fam/arrow_up.png" title="Move Up" />Move Up</a></li>
-				<li><a href="/admin/elements/movedown/{$this->block->id}"><img src="/kohanutres/img/fam/arrow_down.png"  title="Move Down"/>Move Down</a></li>
-				<li><a href="/admin/elements/delete/{$this->block->id}"><img src="/kohanutres/img/fam/delete.png" title="Delete" />Delete</a></li>
-			</ul>
-			<div style="clear:left"></div>
-		</div>
-HTML;
+		return new View('kohanut/admin/elements/panel',array('title'=>$this->title(),'block'=>$this->block)); 
 	}
 	
 	/**

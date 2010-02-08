@@ -15,11 +15,11 @@
 	<div class="grid_6" style="width:350px;margin:100px auto;display:block;float:none;" >
 		<div class="box">
 			
-				<h1>Success</h1>
+			<h1>Success</h1>
 
-				<p>It seems everything went well, be sure to delete/rename/move or otherwise cause harm to the folder <strong>modules/kohanut/classes/kohanut/install</strong></p>
-				
-				<p><a href="/admin/user/login" class="button">Login</a></p>
+			<p>It seems everything went well, be sure to delete/rename/move or otherwise cause harm to the folder <strong>modules/kohanut/classes/kohanut/install</strong></p>
+			
+			<p><?php echo html::anchor(Route::get('kohanut-login')->uri(array('action'=>'login')),'Login',array('class'=>'button')) ?></p>
 
 		</div>
 			

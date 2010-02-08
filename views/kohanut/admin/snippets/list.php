@@ -12,15 +12,21 @@
 			{
 			?>
 				<li <?php if ($zebra) echo "class='z' " ?> title="Click to edit" >
-					<div class="actions">
-						<a href="/admin/snippets/edit/<?php echo $item->id ?>"><img src="/kohanutres/img/fam/note_edit.png" alt="edit" /><br/><span>edit</span></a>
-						<!--<a href="/admin/snippets/copy/<?php echo $item->id ?>" title="Click to copy"><img src="/kohanutres/img/fam/note_go.png" alt="copy" /><br/><span>copy</span></a>-->
-						<a href="/admin/snippets/delete/<?php echo $item->id ?>" title="Click to delete"><img src="/kohanutres/img/fam/note_delete.png" alt="delete" /><br/><span>delete</span></a>
+					<div class='actions'>
+						<?php
+						echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'snippets','action'=>'edit','params'=>$item->id)),
+							 html::image( Route::get('kohanut-media')->uri(array('file'=>'img/fam/note_edit.png')) ) . 
+							 "<br/><span>edit</span>",array('title'=>'Click to edit'));
+						echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'snippets','action'=>'delete','params'=>$item->id)),
+							 html::image( Route::get('kohanut-media')->uri(array('file'=>'img/fam/note_delete.png')) ) . 
+							 "<br/><span>delete</span>",array('title'=>'Click to delete'));
+						?>
 					</div>
-					<a href="/admin/snippets/edit/<?php echo $item->id ?>" ><p>
-						<?php echo $item->name ?>
-					</p></a>
-				
+					<?php
+					echo
+					html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'snippets','action'=>'edit','params'=>$item->id)),
+								 '<p>' . $item->name . '</p>');
+					?>
 				</li>
 				
 			<?php
@@ -43,7 +49,7 @@
 <div class="grid_4">
 	<div class="box">
 		<h1>Help</h1>
-		<p><a class="button" href="/admin/snippets/new">Create a New snippet</a></p>
+		<p><?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'snippets','action'=>'new')),"Create a new Snippet",array('class'=>'button')); ?></p>
 		<p>Help goes here</p>
 	</div>
 </div>

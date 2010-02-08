@@ -70,7 +70,7 @@ class Kohanut_Element_Snippet extends Kohanut_Element
 					throw new Kohanut_Exception('Attempting to add an element that does not exist. Id: {$this->id}');
 				
 				$this->create_block($page,$area);
-				request::instance()->redirect('admin/pages/edit/' . $page);
+				Request::instance()->redirect(Route::get('kohanut-admin')->uri(array('controller'=>'pages','action'=>'edit','params'=>$page)));
 			}
 			catch (Validate_Exception $e)
 			{

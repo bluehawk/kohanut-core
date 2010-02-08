@@ -29,8 +29,8 @@
 	<ul id="navigation">
 		<li><?php echo html::anchor( Route::get('kohanut-admin')->uri(array('controller'=>'pages')) , "Pages" ) ?></li>
 		<li><?php echo html::anchor( Route::get('kohanut-admin')->uri(array('controller'=>'snippets')) , "Snippets" ) ?></li>
-		<li><?php echo html::anchor( Route::get('kohanut-admin')->uri(array('controller'=>'users')) , "Users" ) ?></li>
 		<li><?php echo html::anchor( Route::get('kohanut-admin')->uri(array('controller'=>'layouts')) , "Layouts" ) ?></li>
+		<li><?php echo html::anchor( Route::get('kohanut-admin')->uri(array('controller'=>'users')) , "Users" ) ?></li>
 		<li><?php echo html::anchor( Route::get('kohanut-admin')->uri(array('controller'=>'redirects')) , "Redirects" ) ?></li>
 	</ul>
 

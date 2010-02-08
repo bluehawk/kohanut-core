@@ -1,65 +1,72 @@
  <div class="grid_12">
-        
-    <div class="box">
-        <h1>Redirects</h1>
-            
-            
-        <ul class="standardlist">
-            
-        <?php
-        $zebra = false;
-        if (count($redirects) > 0)
+	
+	<div class="box">
+		<h1>Redirects</h1>
+			
+			
+		<ul class="standardlist">
+			
+		<?php
+		$zebra = false;
+		if (count($redirects) > 0)
 		{
-            foreach($redirects as $item)
-            {
-            ?>
-                <li <?php if ($zebra) echo "class='z' " ?> title="Click to edit" >
-                    <div class="actions">
-                        <a href="<?php echo $item->url ?>" title="Click to test" ><img src="/kohanutres/img/fam/link_go.png" alt="test" /><br/><span>test</span></a>
-                        <a href="/admin/redirects/edit/<?php echo $item->id ?>"  title="Click to edit"><img src="/kohanutres/img/fam/link_edit.png" alt="edit" /><br/><span>edit</span></a>
-                        <a href="/admin/redirects/delete/<?php echo $item->id ?>" title="Click to delete"><img src="/kohanutres/img/fam/link_delete.png" alt="delete" /><br/><span>delete</span></a>
-                    </div>
-                    <a href="/admin/redirects/edit/<?php echo $item->id ?>" ><p>
-                        <?php echo $item->url ?><img src="/kohanutres/img/fam/bullet_go.png" alt="redirects to" class="redirecticon" /><?php echo $item->newurl ?>
-                        <small>
-                        <?php
-                        if ($item->type == "301")
-                            echo "permanent (301)";
-                        else if ($item->type == "302")
-                            echo "temporary (302)";
-                        else
-                            echo "(error)";
-                        ?>
-                        </small>
-                    </p></a>
-                
-                </li>
-                
-            <?php
-                $zebra = !$zebra;
-            }
-        }
-        else
-        {
-            echo "<li><p>No redirects</p></li>";
-        }
-        ?>
-        </ul>
-            
-        </div>
-            
-    </div>
-    
+			foreach($redirects as $item)
+			{
+			?>
+				<li <?php if ($zebra) echo "class='z' " ?> title="Click to edit" >
+					<div class='actions'>
+						<?php
+						echo html::anchor($item->url,
+							 html::image( Route::get('kohanut-media')->uri(array('file'=>'img/fam/link_go.png')) ) . 
+							 "<br/><span>test</span>",array('title'=>'Click to test'));
+						echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'redirects','action'=>'edit','params'=>$item->id)),
+							 html::image( Route::get('kohanut-media')->uri(array('file'=>'img/fam/link_edit.png')) ) . 
+							 "<br/><span>edit</span>",array('title'=>'Click to edit'));
+						echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'redirects','action'=>'delete','params'=>$item->id)),
+							 html::image( Route::get('kohanut-media')->uri(array('file'=>'img/fam/link_delete.png')) ) . 
+							 "<br/><span>delete</span>",array('title'=>'Click to delete'));
+						?>
+					</div>
+					<?php
+					echo
+					html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'redirects','action'=>'edit','params'=>$item->id)),
+						"<p>" . $item->url .
+						html::image(Route::get('kohanut-media')->uri(array('file'=>'img/fam/bullet_go.png')),array('alt'=>'redirects to')) .
+						$item->newurl .
+						"<small>" .
+							(($item->type == "301")?'permanent (301)':'').
+							(($item->type == "302")?'temporary (302)':'').
+						"</small>" .
+						"</p>"
+					);
+					?>
+				</li>
+				
+			<?php
+				$zebra = !$zebra;
+			}
+		}
+		else
+		{
+			echo "<li><p>No redirects</p></li>";
+		}
+		?>
+		</ul>
+			
+		</div>
+			
+	</div>
+	
 <div class="grid_4">
-    <div class="box">
-        <h1>Help</h1>
-        
-        <p><a href="/admin/redirects/new" class="button">Create a New Redirect</a></p>
-        
-        <h3>What are redirects?</h3>
-        <p>You should add a redirect if you move a page or a site, so links on other sites do not break, and search engine rankings are preserved.</p>
-        <p>When a user types in the outdated link, or clicks on an outdated link, they will be taken to the new link.</p>
-        <p>Redirect type should be permanent (301) in most cases, as this helps to preserve search engine rankings better. Leave it as permanent unless you know what you are doing.</p> 
-           
-    </div>
+	<div class="box">
+		<h1>Help</h1>
+		
+		<p><?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'redirects','action'=>'new')),"Create a new Redirect",array('class'=>'button')); ?></p>
+		
+		<h3>What are redirects?</h3>
+		<p>You should add a redirect if you move a page or a site, so links on other sites do not break, and search engine rankings are preserved.</p>
+		<p>When a user types in the outdated link, or clicks on an outdated link, they will be taken to the new link.</p>
+		<p>Redirect type should be permanent (301) in most cases, as this helps to preserve search engine rankings better. Leave it as permanent unless you know what you are doing.</p> 
+		   
+	</div>
 </div>
