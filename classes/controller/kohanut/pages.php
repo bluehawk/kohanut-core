@@ -47,7 +47,7 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 		{
 			try
 			{
-				$page->_values($_POST);
+				$page->values($_POST);
 				$page->update();
 				$success = "Updated successfully";
 			}
@@ -116,7 +116,7 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 		{
 			try
 			{
-				$newpage->_values($_POST);
+				$newpage->values($_POST);
 				
 				// where are we putting it?
 				$location = Arr::get($_POST,'location','last');
@@ -215,7 +215,7 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 			if (Arr::get($_POST,'submit',FALSE))
 			{
 				$page->delete();
-				$this->request->redirect(Route::get('kohanut-admin')->uri(array('controller'=>'pages','action'=>'edit')));
+				$this->request->redirect(Route::get('kohanut-admin')->uri(array('controller'=>'pages')));
 			}
 		}
 		

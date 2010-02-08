@@ -33,7 +33,7 @@ class Controller_Kohanut_Users extends Controller_Kohanut_Admin {
 				$user->values($_POST);
 				$user->create();
 				
-				$$this->request->redirect(Route::get('kohanut-admin')->uri(array('controller'=>'users')));
+				Request::instance()->redirect(Route::get('kohanut-admin')->uri(array('controller'=>'users')));
 			}
 			catch (Validate_Exception $e)
 			{
@@ -104,7 +104,7 @@ class Controller_Kohanut_Users extends Controller_Kohanut_Admin {
 			try
 			{
 				$user->delete();
-				$this->request->redirect(Route::get('kohanut-admin')->uri(array('controller'=>'users')));
+				Request::instance()->redirect(Route::get('kohanut-admin')->uri(array('controller'=>'users')));
 			}
 			catch (Exception $e)
 			{

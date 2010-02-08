@@ -75,14 +75,20 @@ class Model_Page extends Sprig_MPTT {
 	 * @param array values
 	 * @return $this
 	 */
-	private function _values(array $values)
+	public function values(array $values)
 	{
-		$new = array(
-			'islink'  => 0,
-			'showmap' => 0,
-			'shownav' => 0
-		);
-		return parent::values(array_merge($new,$values));
+		if ($this->loaded()){
+			$new = array(
+				'islink'  => 0,
+				'showmap' => 0,
+				'shownav' => 0.
+			);
+			return parent::values(array_merge($new,$values));
+		}
+		else
+		{
+			return parent::values($values);
+		}
 	}
 	
 	

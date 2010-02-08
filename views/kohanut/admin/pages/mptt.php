@@ -48,7 +48,7 @@ foreach ($nodes as $node)
 			</div>
 			<div class='actions'>
 				<?php
-				echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'pages','action'=>'view','params'=>$node->id)),
+				echo html::anchor($node->url,
 					 html::image( Route::get('kohanut-media')->uri(array('file'=>'img/fam/page_world.png')) ) . 
 					 "<br/><span>view</span>",array('title'=>'Click to view'));
 				echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'pages','action'=>'edit','params'=>$node->id)),

@@ -51,11 +51,11 @@
 			</p>
 			<p>
 				<label>Meta keywords<small>Keywords are used by search engines to find and rank your page</small></label>
-				<?php echo $page->input('metakw'); ?>
+				<?php echo $page->input('metakw',array('style'=>'height:60px')); ?>
 			</p>
 			<p>
 				<label>Meta description<small>Description is used by search engines to summarize your page for visitors</small></label>
-				<?php echo $page->input('metadesc'); ?>
+				<?php echo $page->input('metadesc',array('style'=>'height:60px')); ?>
 			</p>
 			<p>
 				<label>Layout<small>Which layout this page should use</small></label>
