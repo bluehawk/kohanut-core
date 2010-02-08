@@ -4,7 +4,7 @@
 		
 		<h1>Editing Page: <?php echo $page->name ?></h1>
 		
-		<?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
+		<?php include Kohana::find_file('views', 'kohanut/errors') ?>
 		
 		<?php if ($page->islink): ?>
 			

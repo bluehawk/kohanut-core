@@ -14,7 +14,7 @@ class Controller_Kohanut_Snippets extends Controller_Kohanut_Admin {
 		$snippets = Kohanut_Element::factory('snippet')->load(NULL,FALSE);
 		
 		$this->view->title = "Snippets";
-		$this->view->body = View::factory('kohanut/admin/snippets/list',array('snippets'=>$snippets));
+		$this->view->body = View::factory('kohanut/snippets/list',array('snippets'=>$snippets));
 	}
 	
 	public function action_new()
@@ -22,7 +22,7 @@ class Controller_Kohanut_Snippets extends Controller_Kohanut_Admin {
 		$snippet = Kohanut_Element::factory('snippet');
 		
 		$this->view->title = "Editing Snippet";
-		$this->view->body = new View('kohanut/admin/snippets/new',array('snippet'=>$snippet,'errors'=>false));
+		$this->view->body = new View('kohanut/snippets/new',array('snippet'=>$snippet,'errors'=>false));
 		
 		
 		if ($_POST)
@@ -70,7 +70,7 @@ class Controller_Kohanut_Snippets extends Controller_Kohanut_Admin {
 		$snippet->load();
 		
 		$this->view->title = "Editing Snippet";
-		$this->view->body = new View('kohanut/admin/snippets/edit',array('snippet'=>$snippet,'errors'=>false,'success'=>false));
+		$this->view->body = new View('kohanut/snippets/edit',array('snippet'=>$snippet,'errors'=>false,'success'=>false));
 		
 		if ( ! $snippet->loaded())
 		{
@@ -141,7 +141,7 @@ class Controller_Kohanut_Snippets extends Controller_Kohanut_Admin {
 		}
 
 		$this->view->title = "Delete Snippet";
-		$this->view->body = View::factory('kohanut/admin/snippets/delete',array('snippet'=>$snippet));
+		$this->view->body = View::factory('kohanut/snippets/delete',array('snippet'=>$snippet));
 		
 		$this->view->body->snippet = $snippet;
 		$this->view->body->errors = $errors;

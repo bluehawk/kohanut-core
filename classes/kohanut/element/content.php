@@ -52,7 +52,7 @@ class Kohanut_Element_Content extends Kohanut_Element
 	
 	public function action_edit()
 	{
-		$view = View::factory('kohanut/admin/elements/content/edit',array('element'=>$this,'errors'=>false,'success'=>false));
+		$view = View::factory('kohanut/elements/content/edit',array('element'=>$this,'errors'=>false,'success'=>false));
 		
 		if ($_POST)
 		{
@@ -91,7 +91,7 @@ class Kohanut_Element_Content extends Kohanut_Element
 	
 	public function action_add($page,$area)
 	{
-		$view = View::factory('kohanut/admin/elements/content/add',array('element'=>$this,'errors'=>false,'page'=>$page,'area'=>$area));
+		$view = View::factory('kohanut/elements/content/add',array('element'=>$this,'errors'=>false,'page'=>$page,'area'=>$area));
 		
 		if ($_POST)
 		{

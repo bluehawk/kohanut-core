@@ -24,7 +24,7 @@
 					</div>
 					<?php
 					echo
-					html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'redirects','action'=>'edit','params'=>$item->id)),
+					html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'layouts','action'=>'edit','params'=>$item->id)),
 								 '<p>' . $item->name . '<small>' . $item->desc . '</small></p>');
 					?>
 				</li>

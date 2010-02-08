@@ -40,7 +40,7 @@ class Kohanut_Core {
 			return "Kohanut::main_nav failed because page is not loaded";
 		}
 		
-		return self::$page->root()->render_descendants('nav',true,'ASC',$maxdepth);
+		return self::$page->root()->render_descendants('kohanut/nav',true,'ASC',$maxdepth);
 	}
 	
 	/**
@@ -57,7 +57,7 @@ class Kohanut_Core {
 			return "Kohanut::main_nav failed because page is not loaded";
 		}
 		
-		return self::$page->parent()->render_descendants('nav',true,'ASC',$maxdepth);
+		return self::$page->parent()->render_descendants('kohanut/nav',true,'ASC',$maxdepth);
 	} 
 	
 	/**
@@ -183,7 +183,7 @@ class Kohanut_Core {
 	/* CSS control
 	 * add and render stylesheets <link>s to a page
 	 */
-	public static function stylesheet($stylesheets = array())
+	public static function style($stylesheets = array())
 	{
 		if ( ! is_array($stylesheets))
 			$stylesheets = array($stylesheets);
@@ -194,7 +194,7 @@ class Kohanut_Core {
 		}
 	}
 	
-	public static function stylesheet_render()
+	public static function style_render()
 	{
 		$out = "";
 		foreach (self::$_stylesheets as $key => $stylesheet)
@@ -207,7 +207,7 @@ class Kohanut_Core {
 	/* Javascript control
 	 * add, remove, and render <script>s to a page
 	 */
-	public static function javascript($javascripts = array())
+	public static function script($javascripts = array())
 	{
 		if ( ! is_array($javascripts))
 			$javascripts = array($javascripts);
@@ -218,7 +218,7 @@ class Kohanut_Core {
 		}
 	}
 
-	public static function javascript_remove($javascripts = array())
+	public static function script_remove($javascripts = array())
 	{
 		foreach (self::$_javascripts as $key => $javascript)
 		{
@@ -227,7 +227,7 @@ class Kohanut_Core {
 		}
 	}
 
-	public static function javascript_render()
+	public static function script_render()
 	{
 		$out = "";
 		foreach (self::$_javascripts as $key => $javascript)

@@ -43,7 +43,7 @@ abstract class Kohanut_Element extends Sprig
 	 */
 	public function action_add($page,$area)
 	{
-		$view = View::factory('kohanut/admin/elements/add',array('element'=>$this,'page'=>$page,'area'=>$area));
+		$view = View::factory('kohanut/elements/add',array('element'=>$this,'page'=>$page,'area'=>$area));
 		
 		if ($_POST)
 		{
@@ -69,7 +69,7 @@ abstract class Kohanut_Element extends Sprig
 	 */
 	public function action_edit()
 	{
-		$view = View::factory('kohanut/admin/elements/edit',array('element'=>$this));
+		$view = View::factory('kohanut/elements/edit',array('element'=>$this));
 		
 		if ($_POST)
 		{
@@ -95,7 +95,7 @@ abstract class Kohanut_Element extends Sprig
 	 */
 	public function action_delete()
 	{
-		$view = View::factory('kohanut/admin/elements/delete',array('element'=>$this));
+		$view = View::factory('kohanut/elements/delete',array('element'=>$this));
 		
 		if ($_POST)
 		{
@@ -197,7 +197,7 @@ abstract class Kohanut_Element extends Sprig
 		if ($this->block == NULL)
 			return;
 		
-		return new View('kohanut/admin/elements/panel',array('title'=>$this->title(),'block'=>$this->block)); 
+		return new View('kohanut/elements/panel',array('title'=>$this->title(),'block'=>$this->block)); 
 	}
 	
 	/**

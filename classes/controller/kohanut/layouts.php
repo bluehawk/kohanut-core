@@ -11,7 +11,7 @@ class Controller_Kohanut_Layouts extends Controller_Kohanut_Admin {
 
 	public function action_index()
 	{
-		$this->view->body = new View('kohanut/admin/layouts/list');
+		$this->view->body = new View('kohanut/layouts/list');
 		
 		// Get the list of layouts
 		$this->view->body->layouts = Sprig::factory('layout')->load(NULL,FALSE);
@@ -24,7 +24,7 @@ class Controller_Kohanut_Layouts extends Controller_Kohanut_Admin {
 		
 		// Create the view
 		$this->view->title = "Editing Layout";
-		$this->view->body = new View('kohanut/admin/layouts/edit',array('errors'=>false,'success'=>false));
+		$this->view->body = new View('kohanut/layouts/edit',array('errors'=>false,'success'=>false));
 
 		// Find the layout
 		$layout = Model_Layout::find($id);
@@ -69,7 +69,7 @@ class Controller_Kohanut_Layouts extends Controller_Kohanut_Admin {
 	public function action_new()
 	{
 		$this->view->title = "New Layout";
-		$this->view->body = new View('kohanut/admin/layouts/new',array('errors'=>false));
+		$this->view->body = new View('kohanut/layouts/new',array('errors'=>false));
 		
 		$layout = Sprig::factory('layout');
 		
@@ -108,7 +108,7 @@ class Controller_Kohanut_Layouts extends Controller_Kohanut_Admin {
 	public function action_delete($id)
 	{
 		$this->view->title = "Delete Layout";
-		$this->view->body = new View('kohanut/admin/layouts/delete',array('errors'=>false));
+		$this->view->body = new View('kohanut/layouts/delete',array('errors'=>false));
 
 		// Find the layout
 		$layout = Model_Layout::find($id);

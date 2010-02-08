@@ -3,7 +3,7 @@
 		<h1>New <?php echo ucfirst($element->type()) ?></h1>
 		
 			
-		<?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
+		<?php include Kohana::find_file('views', 'kohanut/errors') ?>
 		
 		
 		<?php echo form::open(); ?>

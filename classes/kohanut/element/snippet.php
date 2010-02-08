@@ -57,7 +57,7 @@ class Kohanut_Element_Snippet extends Kohanut_Element
 	// Add the element, this should act very similar to "action_add" in a controller, should return a view.
 	public function action_add($page,$area)
 	{
-		$view = View::factory('kohanut/admin/elements/add_select',array('element'=>$this));
+		$view = View::factory('kohanut/elements/add_select',array('element'=>$this));
 		
 		if ($_POST)
 		{
@@ -83,7 +83,7 @@ class Kohanut_Element_Snippet extends Kohanut_Element
 	// Edit the element, this should act very similar to "action_edit" in a controller, should return a view.
 	public function action_edit()
 	{
-		$view = View::factory('kohanut/admin/elements/edit_select',array('element'=>$this));
+		$view = View::factory('kohanut/elements/edit_select',array('element'=>$this));
 		
 		if ($_POST)
 		{

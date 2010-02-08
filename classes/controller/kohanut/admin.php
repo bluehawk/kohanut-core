@@ -36,7 +36,7 @@ class Controller_Kohanut_Admin extends Controller {
 		}
 		
 		// default view
-		$this->view = New View('kohanut/admin/xhtml');
+		$this->view = New View('kohanut/admin');
 		
 		// check if user is logged in
 		if ($id = Cookie::get('user'))
@@ -83,7 +83,7 @@ class Controller_Kohanut_Admin extends Controller {
 	
 	public function admin_error($message) {
 		$this->before();
-		$this->view->body = new View('kohanut/admin/error');
+		$this->view->body = new View('kohanut/admin-error');
 		$this->view->body->message = $message;
 	}
 
@@ -151,7 +151,7 @@ class Controller_Kohanut_Admin extends Controller {
 		}
 		
 		// overide default view and bind with $user and $errors
-		$this->view = View::factory('kohanut/admin/login')
+		$this->view = View::factory('kohanut/login')
 			->bind('user', $user)
 			->bind('errors', $errors);
 		

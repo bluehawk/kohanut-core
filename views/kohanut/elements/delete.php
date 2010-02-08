@@ -2,7 +2,7 @@
 	<div class="box">
 		<h1>Delete <?php echo ucfirst($element->type()) ?>?</h1>
 		
-		<?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
+		<?php include Kohana::find_file('views', 'kohanut/errors') ?>
 		
 		
 		<?php echo form::open() ?>

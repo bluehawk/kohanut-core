@@ -22,7 +22,7 @@
   
 			<h1><?php echo 'Login' ?></h1>
 			
-			<?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
+			<?php include Kohana::find_file('views', 'kohanut/errors') ?>
 			<?php echo form::open(NULL, array('id' => 'login')) ?>
 			
 			 <p><label><?php echo 'Username:' ?></label> <?php echo form::input('username', $user->username) ?></p>

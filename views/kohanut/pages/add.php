@@ -6,7 +6,7 @@
 		
 		<p>Adding a sub page to &quot;<?php echo $parent->name ?>&quot;</p>
 		
-		<?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
+		<?php include Kohana::find_file('views', 'kohanut/errors') ?>
 		
 		<form method="post">
 			<p>

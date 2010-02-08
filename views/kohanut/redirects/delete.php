@@ -5,7 +5,7 @@
 		
 		<p style="color:red;font-weight:bold;">Are you sure you want to delete the redirect from &quot;<?php echo $redirect->url ?>&quot; to &quot;<?php echo $redirect->newurl ?>&quot;? This cannot be undone.</p>
 			
-		<?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
+		<?php include Kohana::find_file('views', 'kohanut/errors') ?>
 		
 		<?php echo Form::open() ?>
 			<p>

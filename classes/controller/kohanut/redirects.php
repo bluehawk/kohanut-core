@@ -14,7 +14,7 @@ class Controller_Kohanut_Redirects extends Controller_Kohanut_Admin {
 		$redirects = Sprig::factory('redirect')->load(NULL,FALSE);
 		
 		$this->view->title = "Redirects";
-		$this->view->body = View::factory('/kohanut/admin/redirects/list',array('redirects'=>$redirects));
+		$this->view->body = View::factory('/kohanut/redirects/list',array('redirects'=>$redirects));
 	}
 	
 	public function action_new()
@@ -40,7 +40,7 @@ class Controller_Kohanut_Redirects extends Controller_Kohanut_Admin {
 		}
 		
 		$this->view->title = "New Redirect";
-		$this->view->body = View::factory('/kohanut/admin/redirects/new');
+		$this->view->body = View::factory('/kohanut/redirects/new');
 		$this->view->body->redirect = $redirect;
 		$this->view->body->errors = $errors;
 	}
@@ -76,7 +76,7 @@ class Controller_Kohanut_Redirects extends Controller_Kohanut_Admin {
 		}
 		
 		$this->view->title = "Editing Redirect";
-		$this->view->body = new View('kohanut/admin/redirects/edit');
+		$this->view->body = new View('kohanut/redirects/edit');
 	
 		$this->view->body->redirect = $redirect;
 		$this->view->body->errors = $errors;
@@ -114,7 +114,7 @@ class Controller_Kohanut_Redirects extends Controller_Kohanut_Admin {
 		}
 
 		$this->view->title = "Delete Redirect";
-		$this->view->body = View::factory('/kohanut/admin/redirects/delete',array('redirect'=>$redirect));
+		$this->view->body = View::factory('/kohanut/redirects/delete',array('redirect'=>$redirect));
 		
 		$this->view->body->redirect = $redirect;
 		$this->view->body->errors = $errors;

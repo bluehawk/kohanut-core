@@ -20,8 +20,8 @@ class Controller_Kohanut_Install_Install extends Controller {
 			
 		if ( ! $post->check()) {
 		
-			$view = new View('kohanut/admin/install');
-			$view->errors = $post->errors('kohanut/admin/error');
+			$view = new View('kohanut/install');
+			$view->errors = $post->errors('kohanut/error');
 			$this->request->response = $view;
 			return;
 		}
@@ -187,7 +187,7 @@ class Controller_Kohanut_Install_Install extends Controller {
 			DB::query(NULL,$query)->execute();
 		}
 		
-		$this->request->response = new View('kohanut/admin/install-success');
+		$this->request->response = new View('kohanut/install-success');
 		return;
 	
 	}

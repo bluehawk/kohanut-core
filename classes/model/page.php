@@ -9,7 +9,7 @@
  */
 class Model_Page extends Sprig_MPTT {
 
-	protected $_directory = 'kohanut';
+	protected $_directory = '';
 
 	protected function _init()
 	{

@@ -13,7 +13,7 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 	{
 		
 		$this->view->title = "Pages";
-		$this->view->body = new View('kohanut/admin/pages/list');
+		$this->view->body = new View('kohanut/pages/list');
 		
 		// build the page tree
 		
@@ -25,7 +25,7 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 			die ('root node could not be loaded');
 		}
 		
-		$this->view->body->list = $root->render_descendants('admin/pages/mptt',true,'ASC',10);
+		$this->view->body->list = $root->render_descendants('kohanut/pages/mptt',true,'ASC',10);
 		//$this->view->body->list = $root->name;
 		
 	}
@@ -58,7 +58,7 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 		}
 		
 		$this->view->title = "Edit Page";
-		$this->view->body = new View('kohanut/admin/pages/edit');
+		$this->view->body = new View('kohanut/pages/edit');
 		
 		$this->view->body->page = $page;
 		$this->view->body->errors = $errors;
@@ -149,7 +149,7 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 		}
 		
 		$this->view->title="Add Page";
-		$this->view->body = new View('kohanut/admin/pages/add');
+		$this->view->body = new View('kohanut/pages/add');
 		
 		$this->view->body->errors = $errors;
 		$this->view->body->parent = $page;
@@ -195,7 +195,7 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 			
 		}
 		$this->view->title = "Move Page";
-		$this->view->body = new View('kohanut/admin/pages/move');
+		$this->view->body = new View('kohanut/pages/move');
 		
 		$this->view->body->page = $page;
 	}
@@ -220,7 +220,7 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 		}
 		
 		$this->view->title="Delete Page";
-		$this->view->body = new View('kohanut/admin/pages/delete');
+		$this->view->body = new View('kohanut/pages/delete');
 		$this->view->body->page = $page;
 		
 	}

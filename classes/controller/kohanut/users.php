@@ -17,7 +17,7 @@ class Controller_Kohanut_Users extends Controller_Kohanut_Admin {
 	public function action_index()
 	{
 		$users = Sprig::factory('user')->load(NULL,FALSE);
-		$this->view->body = View::factory('kohanut/admin/users/list',array('users'=>$users));
+		$this->view->body = View::factory('kohanut/users/list',array('users'=>$users));
 	}
 	
 	public function action_new()
@@ -42,7 +42,7 @@ class Controller_Kohanut_Users extends Controller_Kohanut_Admin {
 		}
 		
 		$this->view->title = "Create New User";
-		$this->view->body = new View('kohanut/admin/users/new');
+		$this->view->body = new View('kohanut/users/new');
 	
 		$this->view->body->user = $user;
 		$this->view->body->errors = $errors;
@@ -77,7 +77,7 @@ class Controller_Kohanut_Users extends Controller_Kohanut_Admin {
 		}
 		
 		$this->view->title = "Editing User";
-		$this->view->body = new View('kohanut/admin/users/edit');
+		$this->view->body = new View('kohanut/users/edit');
 	
 		$this->view->body->user = $user;
 		$this->view->body->errors = $errors;
@@ -114,7 +114,7 @@ class Controller_Kohanut_Users extends Controller_Kohanut_Admin {
 		}
 		
 		$this->view->title = "Delete User";
-		$this->view->body = new View('kohanut/admin/users/delete');
+		$this->view->body = new View('kohanut/users/delete');
 	
 		$this->view->body->user = $user;
 		$this->view->body->errors = $errors;

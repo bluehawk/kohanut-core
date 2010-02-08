@@ -11,8 +11,8 @@
 <?php endif; ?>
 <?php //	<meta name="generator" content="Kohanut" /> ?>
 <!-- Begin Kohanut includes -->
-<?php echo Kohanut::stylesheet_render(); ?>
-<?php echo Kohanut::javascript_render(); ?>
+<?php echo Kohanut::style_render(); ?>
+<?php echo Kohanut::script_render(); ?>
 <?php echo Kohanut::meta_render(); ?>
 <!-- End Kohanut includes -->
 

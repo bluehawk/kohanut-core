@@ -19,7 +19,7 @@
 			
 			<p>You should have your database settings put into application/config/database.php or this will fail :)</p>
 			
-			<?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
+			<?php include Kohana::find_file('views', 'kohanut/errors') ?>
 			
 			<?php echo form::open(NULL, array('id' => 'login','method'=>'post')) ?>
 			

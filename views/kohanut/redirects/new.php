@@ -3,7 +3,7 @@
 	<div class="box">
 		<h1>Create New Redirect</h1>
 		
-		<?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
+		<?php include Kohana::find_file('views', 'kohanut/errors') ?>
 			
 		<?php echo Form::open() ?>
 		

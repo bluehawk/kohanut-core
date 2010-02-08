@@ -1,9 +1,9 @@
 <div class="grid_12">
 	
 	<div class="box">
-		<h1>Create New Snippet</h1>
+		<h1>Edit Snippet</h1>
 		
-		<?php include Kohana::find_file('views', 'kohanut/admin/errors') ?>
+		<?php include Kohana::find_file('views', 'kohanut/errors') ?>
 			
 			<?php echo Form::open() ?>
 			
@@ -25,7 +25,7 @@
 			</p>
 			
 			<p>
-				<input type="submit" name="submit" value="Create Snippet" class="submit" />
+				<input type="submit" name="submit" value="Save Changes" class="submit" />
 				<?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'snippets')),'cancel'); ?>
 			</p>
 			
