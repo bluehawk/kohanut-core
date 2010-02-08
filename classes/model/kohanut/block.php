@@ -7,7 +7,7 @@
  * @copyright  (c) Michael Peters
  * @license    http://kohanut.com/license
  */
-class Model_Block extends Sprig {
+class Model_Kohanut_Block extends Sprig {
 
 	protected function _init()
 	{
@@ -25,7 +25,7 @@ class Model_Block extends Sprig {
 			'order' => new Sprig_Field_Integer,
 			
 			'elementtype' => new Sprig_Field_BelongsTo(array(
-				'model' => 'Elementtype',
+				'model' => 'kohanut_elementtype',
 				'column' => 'elementtype',
 			)),
 			
@@ -42,12 +42,19 @@ class Model_Block extends Sprig {
 			throw Kohana_Exception('Cannot add a block that already exists');
 		}
 		
-		$this->page = $page;
-		$this->arear = $area;
-		$this->elementtype = $elementtype;
-		$this->element = $element;
+		// Get the highest 'order' from elements in the same page and area
+		$query = DB::select()->order_by('order','DESC');
+		$block = Sprig::factory('kohanut_block',array('page' => (int) $page, 'area' => (int) $area))->load($query);
+		$order = ($block->order) + 1;
 		
-		$this->create();
+		// Create the block
+		$this->values(array(
+			'page'        => $page,
+			'area'        => $area,
+			'order'       => $order,
+			'elementtype' => $elementtype,
+			'element'     => $element,
+		))->create();
 	}
 	
 }

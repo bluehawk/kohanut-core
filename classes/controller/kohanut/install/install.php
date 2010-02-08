@@ -140,7 +140,7 @@ class Controller_Kohanut_Install_Install extends Controller {
 			ENGINE=InnoDB")->execute();
 		
 		// Create the admin user
-		$admin = Sprig::factory('user',array(
+		$admin = Sprig::factory('kohanut_user',array(
 			'username'=>'admin',
 			'password'=>$_POST['password'],
 			'password_confirm'=>$_POST['password']

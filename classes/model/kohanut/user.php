@@ -7,7 +7,7 @@
  * @copyright  (c) Michael Peters
  * @license    http://kohanut.com/license
  */
-class Model_User extends Sprig_Model_User {
+class Model_Kohanut_User extends Sprig_Model_User {
 
 	
 

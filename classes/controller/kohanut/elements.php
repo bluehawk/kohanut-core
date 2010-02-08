@@ -31,13 +31,13 @@ class Controller_Kohanut_Elements extends Controller_Kohanut_Admin {
 		$id = (int) $id;
 		
 		// Load the block and ensure it exists
-		$block = Sprig::factory('block',array('id'=>$id))->load();
+		$block = Sprig::factory('kohanut_block',array('id'=>$id))->load();
 		if ( ! $block->loaded())
 			return $this->admin_error("Couldn't find block with id $id");
 			
 		// Find a block on the same page and area, with a lower order.
 		$query = DB::select()->where('order','<',$block->order)->order_by('order','DESC');
-		$other = Sprig::factory('block',array('area'=>$block->area,'page'=>$block->page))->load($query);
+		$other = Sprig::factory('kohanut_block',array('area'=>$block->area,'page'=>$block->page))->load($query);
 		
 		// If other isn't loaded it means there wasn't an element above this one
 		if ($other->loaded())
@@ -67,13 +67,13 @@ class Controller_Kohanut_Elements extends Controller_Kohanut_Admin {
 		$id = (int) $id;
 		
 		// Load the block and ensure it exists
-		$block = Sprig::factory('block',array('id'=>$id))->load();
+		$block = Sprig::factory('kohanut_block',array('id'=>$id))->load();
 		if ( ! $block->loaded())
 			return $this->admin_error("Couldn't find block with id $id");
 			
 		// Find a block on the same page and area, with a lower order.
 		$query = DB::select()->where('order','>',$block->order)->order_by('order','ASC');
-		$other = Sprig::factory('block',array('area'=>$block->area,'page'=>$block->page))->load($query);
+		$other = Sprig::factory('kohanut_block',array('area'=>$block->area,'page'=>$block->page))->load($query);
 		
 		// If other isn't loaded it means there wasn't an element above this one
 		if ($other->loaded())
@@ -111,7 +111,7 @@ class Controller_Kohanut_Elements extends Controller_Kohanut_Admin {
 		$page = (int) $page;
 		$area = (int) $area;
 		
-		$type = Sprig::factory('elementtype',array('id'=> (int) $type ))->load();
+		$type = Sprig::factory('kohanut_elementtype',array('id'=> (int) $type ))->load();
 		
 		if ( ! $type->loaded())
 			return $this->admin_error("Elementtype " . (int) $type . " could not be loaded");
@@ -135,7 +135,7 @@ class Controller_Kohanut_Elements extends Controller_Kohanut_Admin {
 		$id = (int) $id;
 		
 		// Load the block
-		$block = Sprig::factory('block',array('id'=>$id))->load();
+		$block = Sprig::factory('kohanut_block',array('id'=>$id))->load();
 		
 		if ( ! $block->loaded())
 			return $this->admin_error("Could not find block with id " . $id );
@@ -171,7 +171,7 @@ class Controller_Kohanut_Elements extends Controller_Kohanut_Admin {
 		$id = (int) $id;
 		
 		// Load the block
-		$block = Sprig::factory('block',array('id'=>$id))->load();
+		$block = Sprig::factory('kohanut_block',array('id'=>$id))->load();
 		
 		if ( ! $block->loaded())
 			return $this->admin_error("Could not find block with id " . $id );

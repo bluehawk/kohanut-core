@@ -11,7 +11,7 @@ class Controller_Kohanut_Redirects extends Controller_Kohanut_Admin {
 
 	public function action_index()
 	{
-		$redirects = Sprig::factory('redirect')->load(NULL,FALSE);
+		$redirects = Sprig::factory('kohanut_redirect')->load(NULL,FALSE);
 		
 		$this->view->title = "Redirects";
 		$this->view->body = View::factory('/kohanut/redirects/list',array('redirects'=>$redirects));
@@ -20,7 +20,7 @@ class Controller_Kohanut_Redirects extends Controller_Kohanut_Admin {
 	public function action_new()
 	{
 		
-		$redirect = Sprig::factory('redirect');
+		$redirect = Sprig::factory('kohanut_redirect');
 		
 		$errors = false;
 		
@@ -51,7 +51,7 @@ class Controller_Kohanut_Redirects extends Controller_Kohanut_Admin {
 		$id = (int) $id;
 		
 		// Find the redirect
-		$redirect = Sprig::factory('redirect',array('id'=>$id))->load();
+		$redirect = Sprig::factory('kohanut_redirect',array('id'=>$id))->load();
 		
 		if ( ! $redirect->loaded())
 		{
@@ -90,7 +90,7 @@ class Controller_Kohanut_Redirects extends Controller_Kohanut_Admin {
 		$id = (int) $id;
 		
 		// Find the redirect
-		$redirect = Sprig::factory('redirect',array('id'=>$id))->load();
+		$redirect = Sprig::factory('kohanut_redirect',array('id'=>$id))->load();
 		
 		if ( ! $redirect->loaded())
 		{

@@ -114,7 +114,7 @@ class Kohanut_Core {
 		*/
 		$query = DB::select()->order_by('order','ASC');
 		
-		$elements = Sprig::factory('block',array(
+		$elements = Sprig::factory('kohanut_block',array(
 			'page' => self::$page->id,
 			'area' => $id,
 		))->load($query,FALSE);
@@ -289,11 +289,11 @@ class Kohanut_Core {
 	public static function override($layoutname, $pageurl, $content)
 	{
 		// Find the layout
-		$layout = Sprig::factory('layout',array('name'=>$layoutname))->load();
+		$layout = Sprig::factory('kohanut_layout',array('name'=>$layoutname))->load();
 		if ( ! $layout->loaded())
 			throw new Kohanut_Exception("Kohanut::override() failed because the layout with name '$layoutname' could not be found");
 		// Find the Page
-		$page = Sprig::factory('page',array('url'=>$pageurl))->load();
+		$page = Sprig::factory('kohanut_page',array('url'=>$pageurl))->load();
 		if ( ! $page->loaded())
 			throw new Kohanut_Exception("Kohanut::override() failed because the page with url '$pageurl' could not be found.");
 		// Set the required Kohanut variables, and render the page.

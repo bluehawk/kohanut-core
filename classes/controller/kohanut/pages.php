@@ -17,7 +17,7 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 		
 		// build the page tree
 		
-		$root = Sprig_Mptt::factory('page');
+		$root = Sprig_Mptt::factory('kohanut_page');
 		$root->lft = 1;
 		$root->load(); //->root();
 		if ( ! $root->loaded())
@@ -33,9 +33,9 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 	public function action_meta($id)
 	{
 		// Find the page
-		$page = Model_Page::find($id);
+		$page = Sprig::factory('kohanut_page',array('id'=>$id))->load();
 
-		if ( ! $page)
+		if ( ! $page->loaded())
 		{
 			return $this->admin_error("Could not find page with id <strong>" . (int) $id . "</strong>");
 		}
@@ -68,9 +68,9 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 	public function action_edit($id)
 	{
 		// Find the page
-		$page = Model_Page::find($id);
+		$page = Sprig::factory('kohanut_page',array('id'=>$id))->load();
 
-		if ( ! $page)
+		if ( ! $page->loaded())
 		{
 			return $this->admin_error("Could not find page with id <strong>" . (int) $id . "</strong>");
 		}
@@ -90,7 +90,7 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 		
 		// Make it so the admin pane for pages is shown
 		Kohanut::$adminmode = true;
-		Kohanut::stylesheet( Route::get('kohanut-media')->uri(array('file'=>'css/page.css')));
+		Kohanut::style( Route::get('kohanut-media')->uri(array('file'=>'css/page.css')));
 		
 		// Render the page
 		$this->request->response = $page->render();
@@ -100,14 +100,14 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 	public function action_add($id)
 	{
 		// Find the page
-		$page = Model_Page::find($id);
-		
-		if ( ! $page)
+		$page = Sprig::factory('kohanut_page',array('id'=>$id))->load();
+
+		if ( ! $page->loaded())
 		{
 			return $this->admin_error("Could not find page with id <strong>" . (int) $id . "</strong>");
 		}
 		
-		$newpage = Sprig::factory('page');
+		$newpage = Sprig::factory('kohanut_page');
 		
 		$errors = false;
 		
@@ -130,7 +130,7 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 				}
 				else
 				{
-					$target = Sprig::factory('page',array('id'=> (int) $location))->load();
+					$target = Sprig::factory('kohanut_page',array('id'=> (int) $location))->load();
 					if ( ! $target->loaded())
 					{
 						return $this->admin_error("Could not find target for insert_as_next_sibling id: " . (int) $location);
@@ -160,9 +160,9 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 	public function action_move($id)
 	{
 		// Find the page
-		$page = Model_Page::find($id);
-		
-		if ( ! $page)
+		$page = Sprig::factory('kohanut_page',array('id'=>$id))->load();
+
+		if ( ! $page->loaded())
 		{
 			return $this->admin_error("Could not find page with id <strong>" . (int) $id . "</strong>");
 		}
@@ -170,7 +170,7 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 		if ($_POST)
 		{
 			// Find the target
-			$target = Sprig::factory('page',array('id'=> (int) $_POST['target'] ))->load();
+			$target = Sprig::factory('kohanut_page',array('id'=> (int) $_POST['target'] ))->load();
 			
 			// Make sure it exists
 			if ( !$target->loaded())
@@ -203,9 +203,9 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 	public function action_delete($id)
 	{
 		// Find the page
-		$page = Model_Page::find($id);
-		
-		if ( ! $page)
+		$page = Sprig::factory('kohanut_page',array('id'=>$id))->load();
+
+		if ( ! $page->loaded())
 		{
 			return $this->admin_error("Could not find page with id <strong>" . (int) $id . "</strong>");
 		}

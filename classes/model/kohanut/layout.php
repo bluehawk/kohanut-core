@@ -7,7 +7,7 @@
  * @copyright  (c) Michael Peters
  * @license    http://kohanut.com/license
  */
-class Model_Layout extends Sprig {
+class Model_Kohanut_Layout extends Sprig {
 
 	protected function _init()
 	{
@@ -35,7 +35,7 @@ class Model_Layout extends Sprig {
 	{
 		// Cast to int for safety
 		$id = (int) $id;
-		$layout = Sprig::factory('layout',array('id'=>$id))->load();
+		$layout = Sprig::factory('kohanut_layout',array('id'=>$id))->load();
 		
 		
 		if ( ! $layout->loaded())

@@ -12,7 +12,7 @@ class Kohanut_Element_Snippet extends Kohanut_Element
 	protected $_unique = FALSE;
 	
 	// Sprig Init
-	protected $_table = 'element_snippet';
+	protected $_table = 'kohanut_element_snippet';
 	
 	protected function _init()
 	{

@@ -14,7 +14,7 @@ class Controller_Kohanut_Layouts extends Controller_Kohanut_Admin {
 		$this->view->body = new View('kohanut/layouts/list');
 		
 		// Get the list of layouts
-		$this->view->body->layouts = Sprig::factory('layout')->load(NULL,FALSE);
+		$this->view->body->layouts = Sprig::factory('kohanut_layout')->load(NULL,FALSE);
 	}
 	
 	public function action_edit($id)
@@ -27,14 +27,14 @@ class Controller_Kohanut_Layouts extends Controller_Kohanut_Admin {
 		$this->view->body = new View('kohanut/layouts/edit',array('errors'=>false,'success'=>false));
 
 		// Find the layout
-		$layout = Model_Layout::find($id);
+		$layout = Sprig::factory('kohanut_layout',array('id'=>$id))->load();
 		
-		$this->view->body->layout = $layout;
-		
-		if ( ! $layout)
+		if ( ! $layout->loaded())
 		{
 			return $this->admin_error("Could not find layout with id <strong>" . (int) $id . "</strong>");
 		}
+		
+		$this->view->body->layout = $layout;
 		
 		if ($_POST)
 		{
@@ -71,7 +71,7 @@ class Controller_Kohanut_Layouts extends Controller_Kohanut_Admin {
 		$this->view->title = "New Layout";
 		$this->view->body = new View('kohanut/layouts/new',array('errors'=>false));
 		
-		$layout = Sprig::factory('layout');
+		$layout = Sprig::factory('kohanut_layout');
 		
 		$this->view->body->layout = $layout;
 		
@@ -111,13 +111,14 @@ class Controller_Kohanut_Layouts extends Controller_Kohanut_Admin {
 		$this->view->body = new View('kohanut/layouts/delete',array('errors'=>false));
 
 		// Find the layout
-		$layout = Model_Layout::find($id);
-		$this->view->body->layout = $layout;
+		$layout = Sprig::factory('kohanut_layout',array('id'=>$id))->load();
 		
-		if ( ! $layout)
+		if ( ! $layout->loaded())
 		{
 			return $this->admin_error("Could not find layout with id <strong>" . (int) $id . "</strong>");
 		}
+		
+		$this->view->body->layout = $layout;
 		
 		// If the form was submitted, delete the layout.
 		if ($_POST)

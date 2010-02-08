@@ -13,7 +13,7 @@ if (Kohanut::$adminmode)
 	<?php echo form::hidden('area',$id); ?>
 	<select name="type" style="float:left;margin-right:5px;">
 		<?php
-		$elements = Sprig::factory('elementtype')->load(NULL,FALSE);
+		$elements = Sprig::factory('kohanut_elementtype')->load(NULL,FALSE);
 		foreach ($elements as $e)
 		{
 			echo "<option value='{$e->id}'>" . ucfirst($e->name) . "</option>";

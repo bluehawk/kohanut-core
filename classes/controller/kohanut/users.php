@@ -16,13 +16,13 @@ class Controller_Kohanut_Users extends Controller_Kohanut_Admin {
 
 	public function action_index()
 	{
-		$users = Sprig::factory('user')->load(NULL,FALSE);
+		$users = Sprig::factory('kohanut_user')->load(NULL,FALSE);
 		$this->view->body = View::factory('kohanut/users/list',array('users'=>$users));
 	}
 	
 	public function action_new()
 	{
-		$user = Sprig::factory('user');
+		$user = Sprig::factory('kohanut_user');
 		
 		$errors = false;
 		
@@ -54,7 +54,7 @@ class Controller_Kohanut_Users extends Controller_Kohanut_Admin {
 		$id = (int) $id;
 		
 		// Find the layout
-		$user = Sprig::factory('user',array('id'=>$id))->load();
+		$user = Sprig::factory('kohanut_user',array('id'=>$id))->load();
 		
 		if ( ! $user->loaded())
 			return $this->admin_error("Could not find user with id <strong>$id</strong>");
@@ -90,7 +90,7 @@ class Controller_Kohanut_Users extends Controller_Kohanut_Admin {
 		$id = (int) $id;
 		
 		// Find the user
-		$user = Sprig::factory('user',array('id'=>$id))->load();
+		$user = Sprig::factory('kohanut_user',array('id'=>$id))->load();
 		
 		if ( ! $user->loaded())
 			return $this->admin_error("Could not find user with id <strong>$id</strong>");

@@ -10,7 +10,7 @@
 class Kohanut_Element_Content extends Kohanut_Element
 {
 	// Sprig init
-	protected $_table = 'element_content';
+	protected $_table = 'kohanut_element_content';
 
 	protected function _init()
 	{

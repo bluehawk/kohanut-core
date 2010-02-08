@@ -41,7 +41,7 @@ class Controller_Kohanut_Admin extends Controller {
 		// check if user is logged in
 		if ($id = Cookie::get('user'))
 		{
-			$user = Sprig::factory('user')
+			$user = Sprig::factory('kohanut_user')
 				->values(array('id'=>$id))
 				->load();
 			
@@ -158,7 +158,7 @@ class Controller_Kohanut_Admin extends Controller {
 		$this->view->title = "Login";
 		
   		// Load an empty user
-  		$user = Sprig::factory('user');
+  		$user = Sprig::factory('kohanut_user');
   
         // Load rules defined in sprig model into validation factory    
   		$post = Validate::factory($_POST)

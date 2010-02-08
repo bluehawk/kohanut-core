@@ -7,7 +7,7 @@
  * @copyright  (c) Michael Peters
  * @license    http://kohanut.com/license
  */
-class Model_Redirect extends Sprig {
+class Model_Kohanut_Redirect extends Sprig {
 
 	protected function _init()
 	{

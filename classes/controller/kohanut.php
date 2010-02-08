@@ -67,10 +67,10 @@ class Controller_Kohanut extends Controller
 			}
 			
 			// Check for a redirect on this url
-			Sprig::factory('redirect',array('url',$url))->go();
+			Sprig::factory('kohanut_redirect',array('url',$url))->go();
 			
 			// Find the page that matches this url, and isn't an external link
-			$page = Sprig::factory('page',array('url'=>$url,'islink'=>0))
+			$page = Sprig::factory('kohanut_page',array('url'=>$url,'islink'=>0))
 				->load();
 			
 			if ( ! $page->loaded())
@@ -90,7 +90,7 @@ class Controller_Kohanut extends Controller
 		catch (Kohanut_Exception $e)
 		{
 			// Find the error page
-			$error = Sprig::factory('page',array('url'=>'error'))->load();
+			$error = Sprig::factory('kohanut_page',array('url'=>'error'))->load();
 			
 			// If i couldn't find the error page, just give a generic message
 			if ( ! $error->loaded())

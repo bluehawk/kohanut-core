@@ -7,7 +7,7 @@
  * @copyright  (c) Michael Peters
  * @license    http://kohanut.com/license
  */
-class Model_Page extends Sprig_MPTT {
+class Model_Kohanut_Page extends Sprig_MPTT {
 
 	protected $_directory = '';
 
@@ -26,7 +26,7 @@ class Model_Page extends Sprig_MPTT {
 			
 			//layout
 			'layout'  => new Sprig_Field_BelongsTo(array(
-				'model' => 'Layout',
+				'model' => 'kohanut_layout',
 				'column' => 'layout',
 			)),
 			
@@ -60,7 +60,7 @@ class Model_Page extends Sprig_MPTT {
 	{
 		// Cast to int for safety
 		$id = (int) $id;
-		$page = Sprig::factory('page',array('id'=>$id))->load();
+		$page = Sprig::factory('kohanut_page',array('id'=>$id))->load();
 		
 		
 		if ( ! $page->loaded())

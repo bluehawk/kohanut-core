@@ -9,7 +9,7 @@
  */
 class Kohanut_Element_Request extends Kohanut_Element
 {
-	protected $_table = 'element_request';
+	protected $_table = 'kohanut_element_request';
 
 	protected function _init()
 	{

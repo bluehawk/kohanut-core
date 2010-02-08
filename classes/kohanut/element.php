@@ -214,24 +214,7 @@ abstract class Kohanut_Element extends Sprig
 		if ( ! $this->loaded())
 			throw new Kohanut_Exception("Attempting to create a block for an element that does not exist, or has not been created yet.");
 			
-		// Get the highest 'order' from elements in the same page and area
-		$query = DB::select()->order_by('order','DESC');
-		$block = Sprig::factory('block',array('page' => (int) $page, 'area' => (int) $area))->load($query);
-		$order = ($block->order) + 1;
-		
-		// Get the id of this elementtype
-		$elementtype = Sprig::factory('elementtype',array('name'=>$this->type()))->load();
-		if ( ! $elementtype->loaded())
-			throw new Kohanut_Exception("Attempt to create a block for an element failed, could not find elementtype :type",array('type'=>$this->type()));
-		
-		// Create the block
-		$new = Sprig::factory('block',array(
-			'page'        => (int) $page,
-			'area'        => (int) $area,
-			'order'       => $order,
-			'elementtype' => $elementtype->id,
-			'element'     => $this->id,
-		))->create();
+		Sprig::factory('kohanut_block')->add($page,$area,$this->type->id,$this->id);
 	
 	}
 	
