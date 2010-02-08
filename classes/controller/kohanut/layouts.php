@@ -7,7 +7,7 @@
  * @copyright  (c) Michael Peters
  * @license    http://kohanut.com/license
  */
-class Controller_Kohanut_Admin_Layouts extends Controller_Kohanut_Admin {
+class Controller_Kohanut_Layouts extends Controller_Kohanut_Admin {
 
 	public function action_index()
 	{
@@ -96,7 +96,7 @@ class Controller_Kohanut_Admin_Layouts extends Controller_Kohanut_Admin {
 			{
 				$layout->create();
 				
-				$this->request->redirect('/admin/layouts/');
+				$this->request->redirect(Route::get('kohanut-admin')->uri(array('controller'=>'layouts')));
 			}
 			catch (Validate_Exception $e)
 			{
@@ -125,7 +125,7 @@ class Controller_Kohanut_Admin_Layouts extends Controller_Kohanut_Admin {
 			try
 			{
 				$layout->delete();
-				$this->request->redirect('/admin/layouts/');
+				$this->request->redirect(Route::get('kohanut-admin')->uri(array('controller'=>'layouts')));
 			}
 			catch (Exception $e)
 			{

@@ -7,7 +7,7 @@
  * @copyright  (c) Michael Peters
  * @license    http://kohanut.com/license
  */
-class Controller_Kohanut_Admin_Elements extends Controller_Kohanut_Admin {
+class Controller_Kohanut_Elements extends Controller_Kohanut_Admin {
 
 	/**
 	 * This class doesn't need an index

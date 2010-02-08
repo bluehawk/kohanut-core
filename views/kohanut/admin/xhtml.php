@@ -13,7 +13,6 @@
 	<?php echo html::script(Route::get('kohanut-media')->uri(array('file'=>'jquery/jquery-1.3.2.min.js')) ). "\n"; ?>
 	<?php echo html::script(Route::get('kohanut-media')->uri(array('file'=>'jquery/jquery.treeview.js')) ). "\n"; ?>
 	<?php echo html::script(Route::get('kohanut-media')->uri(array('file'=>'jquery/jquery.cookie.js')) ). "\n"; ?>
-
 </head>
 <body>
 
@@ -23,7 +22,7 @@
 	
 		<p class="info">
 			Logged in as <?php echo $user; ?> | 
-			<a href="/">Visit Site</a> | <?php echo html::anchor( Route::get('kohanut-admin')->uri(array('controller'=>'user','action'=>'logout')) , "Logout" ) ?>
+			<?php echo html::anchor('/','Visit Site'); ?> | <?php echo html::anchor( Route::get('kohanut-login')->uri(array('action'=>'logout')) , "Logout" ) ?>
 		</p>
 	</div>
 	
@@ -38,8 +37,6 @@
 	<div id="content" class="container_16 clearfix">
 		<?php echo $body ?>
 	</div>
-	
-	<?php // echo View::factory('profiler/stats'); ?>
 	
 </body>
 </html>

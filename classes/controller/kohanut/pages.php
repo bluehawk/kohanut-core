@@ -7,7 +7,7 @@
  * @copyright  (c) Michael Peters
  * @license    http://kohanut.com/license
  */
-class Controller_Kohanut_Admin_Pages extends Controller_Kohanut_Admin {
+class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 	
 	public function action_index()
 	{
@@ -77,12 +77,12 @@ class Controller_Kohanut_Admin_Pages extends Controller_Kohanut_Admin {
 		
 		// If this page is an external link, redirect to meta
 		if ($page->islink)
-			$this->request->redirect('/admin/pages/meta/' . $id);
+			$this->request->redirect(Route::get('kohanut-admin')->uri(array('controller'=>'pages','action'=>'meta','params'=>$id)));
 			
 		if ($_POST)
 		{
 			// redirect to adding a new element
-			$this->request->redirect('admin/elements/add/' . Arr::get($_POST,'type',NULL) .'/'. $id .'/' . Arr::get($_POST,'area',NULL) );
+			$this->request->redirect(Route::get('kohanut-admin')->uri(array('controller'=>'elements','action'=>'add','params'=>Arr::get($_POST,'type',NULL) .'/'. $id .'/' . Arr::get($_POST,'area',NULL))));
 		}
 		
 		// Make it so the usual admin stuff is not shown (as in the header and main nav)
@@ -90,7 +90,7 @@ class Controller_Kohanut_Admin_Pages extends Controller_Kohanut_Admin {
 		
 		// Make it so the admin pane for pages is shown
 		Kohanut::$adminmode = true;
-		Kohanut::stylesheet('kohanutres/css/page.css');
+		Kohanut::stylesheet( Route::get('kohanut-media')->uri(array('file'=>'css/page.css')));
 		
 		// Render the page
 		$this->request->response = $page->render();
@@ -139,7 +139,7 @@ class Controller_Kohanut_Admin_Pages extends Controller_Kohanut_Admin {
 				}
 				
 				// page created successfully, redirect to edit
-				$this->request->redirect('admin/pages/edit/' . $newpage->id);
+				$this->request->redirect(Route::get('kohanut-admin')->uri(array('controller'=>'pages','action'=>'edit','params'=>$newpage->id)));
 				
 			}
 			catch (Validate_Exception $e)
@@ -178,7 +178,6 @@ class Controller_Kohanut_Admin_Pages extends Controller_Kohanut_Admin {
 				return $this->admin_error("Could not find target page id " . (int) $_POST['target']);
 			}
 			
-			
 			$action = $_POST['action'];
 			
 			if ($action == 'before')
@@ -192,7 +191,7 @@ class Controller_Kohanut_Admin_Pages extends Controller_Kohanut_Admin {
 			else
 				return $this->admin_error("move action was unknown. switch statement failed.");
 				
-			$this->request->redirect('admin/pages');
+			$this->request->redirect(Route::get('kohanut-admin')->uri(array('controller'=>'pages')));
 			
 		}
 		$this->view->title = "Move Page";
@@ -216,7 +215,7 @@ class Controller_Kohanut_Admin_Pages extends Controller_Kohanut_Admin {
 			if (Arr::get($_POST,'submit',FALSE))
 			{
 				$page->delete();
-				$this->request->redirect('/admin/pages');
+				$this->request->redirect(Route::get('kohanut-admin')->uri(array('controller'=>'pages','action'=>'edit')));
 			}
 		}
 		
@@ -226,8 +225,4 @@ class Controller_Kohanut_Admin_Pages extends Controller_Kohanut_Admin {
 		
 	}
 	
-	public function after()
-	{
-		return parent::after();
-	}
 }

@@ -7,14 +7,14 @@
  * @copyright  (c) Michael Peters
  * @license    http://kohanut.com/license
  */
-class Controller_Kohanut_Admin_Snippets extends Controller_Kohanut_Admin {
+class Controller_Kohanut_Snippets extends Controller_Kohanut_Admin {
 
 	public function action_index()
 	{
 		$snippets = Kohanut_Element::factory('snippet')->load(NULL,FALSE);
 		
 		$this->view->title = "Snippets";
-		$this->view->body = View::factory('/kohanut/admin/snippets/list',array('snippets'=>$snippets));
+		$this->view->body = View::factory('kohanut/admin/snippets/list',array('snippets'=>$snippets));
 	}
 	
 	public function action_new()
@@ -50,7 +50,7 @@ class Controller_Kohanut_Admin_Snippets extends Controller_Kohanut_Admin {
 			{
 				$snippet->create();
 				
-				$this->request->redirect('/admin/snippets/');
+				$this->request->redirect(Route::get('kohanut-admin')->uri(array('controller'=>'snippets')));
 			}
 			catch (Validate_Exception $e)
 			{
@@ -131,7 +131,7 @@ class Controller_Kohanut_Admin_Snippets extends Controller_Kohanut_Admin {
 			try
 			{
 				$snippet->delete();
-				$this->request->redirect('/admin/snippets/');
+				$this->request->redirect(Route::get('kohanut-admin')->uri(array('controller'=>'snippets')));
 			}
 			catch (Validate_Exception $e)
 			{
@@ -141,7 +141,7 @@ class Controller_Kohanut_Admin_Snippets extends Controller_Kohanut_Admin {
 		}
 
 		$this->view->title = "Delete Snippet";
-		$this->view->body = View::factory('/kohanut/admin/snippets/delete',array('snippet'=>$snippet));
+		$this->view->body = View::factory('kohanut/admin/snippets/delete',array('snippet'=>$snippet));
 		
 		$this->view->body->snippet = $snippet;
 		$this->view->body->errors = $errors;

@@ -21,10 +21,16 @@ Route::set('kohanut-media','admin/media(/<file>)', array('file' => '.+'))
 		'file'       => NULL,
 	));
 
+Route::set('kohanut-login','admin/<action>',array('action'=>'login|logout'))
+	->defaults(array(
+		'controller' => 'admin',
+		'directory'  => 'kohanut',
+	));
+
 // Set the kohanut admin route
 Route::set('kohanut-admin','admin(/<controller>(/<action>(/<params>)))',array('params'=>'.*'))
 	->defaults(array(
 		'controller' => 'pages',
-		'action'     => 'index',
-		'directory'  => 'kohanut/admin'
+		'action'     => '',
+		'directory'  => 'kohanut'
 	));

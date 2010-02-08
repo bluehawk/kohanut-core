@@ -32,28 +32,41 @@ foreach ($nodes as $node)
 		
 	<li <?php if ($node->lvl == 0) echo "class='open'" ?>>
 		<div class="pageinfo">
-		<?php if ($node->islink) echo '<div class="link"></div>'; ?>
-		<div style="float:left">
-			<p class='pagename'><?php echo $node->name ?></p>
-			<?php
-			// echo <p class="pageurl[ islink]">
-			echo "<p class='pageurl" . ($node->islink ?' islink':'') . "'>";
-			// if the link does not have :// in it, echo the url base (like http://example.com/ ) in a span, so its gray
-			echo ( strpos($node->url, '://') === FALSE ? "<span>" . URL::base(FALSE,TRUE) . "</span>" : '' );
-			// echo the url, and if its a link, put (Link) after it
-			echo $node->url . ($node->islink?'  (Link) ':'');
-			// close pageurl
-			echo "</p>";
-			?>
-		</div>
-		<div class='actions'>
-			<a href="<?php echo $node->url ?>" title="Click to view"><img src="/kohanutres/img/fam/page_world.png" alt="View" /><br/><span>view</span></a>
-			<a href="/admin/pages/edit/<?php echo $node->id ?>" title="Click to edit"><img src="/kohanutres/img/fam/page_edit.png" alt="Edit" /><br/><span>edit</span></a>
-			<a href="/admin/pages/move/<?php echo $node->id ?>" title="Click to move"><img src="/kohanutres/img/fam/page_go.png" alt="Move" /><br/><span>move</span></a>
-			<a href="/admin/pages/add/<?php echo $node->id ?>" title="Click to add sub-page"><img src="/kohanutres/img/fam/page_add.png" alt="Add sub-page" /><br/><span>add</span></a>
-			<a href="/admin/pages/delete/<?php echo $node->id ?>" title="Click to delete"><img src="/kohanutres/img/fam/page_delete.png" alt="delete" /><br/><span>delete</span></a>
-		</div>
-		<div class="clear"></div>
+			<?php if ($node->islink) echo '<div class="link"></div>'; ?>
+			<div style="float:left">
+				<p class='pagename'><?php echo $node->name ?></p>
+				<?php
+				// echo <p class="pageurl[ islink]">
+				echo "<p class='pageurl" . ($node->islink ?' islink':'') . "'>";
+				// if the link does not have :// in it, echo the url base (like http://example.com/ ) in a span, so its gray
+				echo ( strpos($node->url, '://') === FALSE ? "<span>" . URL::base(FALSE,TRUE) . "</span>" : '' );
+				// echo the url, and if its a link, put (Link) after it
+				echo $node->url . ($node->islink?'  (Link) ':'');
+				// close pageurl
+				echo "</p>";
+				?>
+			</div>
+			<div class='actions'>
+				<?php
+				echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'pages','action'=>'view','params'=>$node->id)),
+					 html::image( Route::get('kohanut-media')->uri(array('file'=>'img/fam/page_world.png')) ) . 
+					 "<br/><span>view</span>",array('title'=>'Click to view'));
+				echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'pages','action'=>'edit','params'=>$node->id)),
+					 html::image( Route::get('kohanut-media')->uri(array('file'=>'img/fam/page_edit.png')) ) . 
+					 "<br/><span>edit</span>",array('title'=>'Click to edit'));
+				echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'pages','action'=>'move','params'=>$node->id)),
+					 html::image( Route::get('kohanut-media')->uri(array('file'=>'img/fam/page_go.png')) ) . 
+					 "<br/><span>move</span>",array('title'=>'Click to move'));
+				echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'pages','action'=>'add','params'=>$node->id)),
+					 html::image( Route::get('kohanut-media')->uri(array('file'=>'img/fam/page_add.png')) ) . 
+					 "<br/><span>add</span>",array('title'=>'Click to add sub-page'));
+				echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'pages','action'=>'delete','params'=>$node->id)),
+					 html::image( Route::get('kohanut-media')->uri(array('file'=>'img/fam/page_delete.png')) ) . 
+					 "<br/><span>delete</span>",array('title'=>'Click to delete'));
+				?>
+				
+			</div>
+			<div class="clear"></div>
 		</div>
 		<div class="clear"></div>
 		
@@ -77,8 +90,6 @@ $(document).ready(function(){
 		persist: "cookie"
 	});
 	
-	//$("#pagetree").animate({height:"show"},"slow");
-	//$("#pagetree").show();
 	$("#pagetreeloading").hide();
 
 });
