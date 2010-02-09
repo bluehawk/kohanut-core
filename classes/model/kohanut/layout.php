@@ -25,24 +25,34 @@ class Model_Kohanut_Layout extends Sprig {
 		);
 	}
 	
-	/**
-	 * Find a layout with the specified id, returns that layout, or false if not found
-	 *
-	 * @param   int  id of layout to find
-	 * @return  layout or false
-	 */
-	public static function find($id)
+	public function create()
 	{
-		// Cast to int for safety
-		$id = (int) $id;
-		$layout = Sprig::factory('kohanut_layout',array('id'=>$id))->load();
-		
-		
-		if ( ! $layout->loaded())
+		// Make sure there are no twig syntax errors
+		try
 		{
-			return false;
+			$test = Kohanut_Twig::render($_POST['code']);
 		}
-		return $layout;
+		catch (Twig_SyntaxError $e)
+		{
+			$e->setFilename('code');
+			throw new Kohanut_Exception("There was a Twig Syntax error: " . $e->getMessage());
+		}
+		parent::create();
+	}
+	
+	public function update()
+	{
+		// Make sure there are no twig syntax errors
+		try
+		{
+			$test = Kohanut_Twig::render($_POST['code']);
+		}
+		catch (Twig_SyntaxError $e)
+		{
+			$e->setFilename('code');
+			throw new Kohanut_Exception("There was a Twig Syntax error: " . $e->getMessage());
+		}
+		parent::update();
 	}
 	
 	public function render()

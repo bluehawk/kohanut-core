@@ -22,23 +22,22 @@ class Controller_Kohanut_Admin extends Controller {
 	
 	public function before()
 	{
-		
+		// Do not template media files
 		if ($this->request->action === 'media')
 		{
-			// Do not template media files
 			$this->auto_render = FALSE;
 		}
 		
+		// Do not require login for media or login/logout
 		if ($this->request->action === 'media' OR $this->request->action === 'login' OR $this->request->action === 'logout')
 		{
-			// Do not require login
 			$this->requires_login = FALSE;
 		}
 		
-		// default view
+		// Set the default view
 		$this->view = New View('kohanut/admin');
 		
-		// check if user is logged in
+		// Check if user is logged in
 		if ($id = Cookie::get('user'))
 		{
 			$user = Sprig::factory('kohanut_user')
@@ -54,21 +53,20 @@ class Controller_Kohanut_Admin extends Controller {
 			}
 		}
 		
-		// couldn't find a user, redirect if the page requires login
+		// If they aren't logged in, and the page requires login, redirect to login screen
 		if ( ! $this->user AND $this->requires_login)
 		{
 			$this->request->redirect(Route::get('kohanut-login')->uri(array('action'=>'login')));
 		}
 		
+		// Include Twig if it hasn't been yet
 		if ( ! class_exists('Twig_Autoloader'))
 		{
-			// Load the Twig class autoloader
 			require Kohana::find_file('vendor', 'Twig/lib/Twig/Autoloader');
-			// Register the Twig class autoloader
 			Twig_Autoloader::register();
 		}
 		
-		// Include Markdown Extra
+		// Include Markdown Extra, if it hasn't been yet
 		if ( ! function_exists('Markdown'))
 		{
 			require Kohana::find_file('vendor','Markdown/markdown');
@@ -76,12 +74,14 @@ class Controller_Kohanut_Admin extends Controller {
 		
 	}
 	
-	public function __call($method,$args) {
+	public function __call($method,$args)
+	{
 		$this->admin_error("Could not find the url you requested.");
 	}
 	
 	
-	public function admin_error($message) {
+	public function admin_error($message)
+	{
 		$this->before();
 		$this->view->body = new View('kohanut/admin-error');
 		$this->view->body->message = $message;
@@ -89,18 +89,15 @@ class Controller_Kohanut_Admin extends Controller {
 
 	public function after()
 	{
-		
+		// If auto_render is true, send the response
 		if ($this->auto_render)
 		{
-			// Send the response
 			$this->request->response = $this->view;
 		}
-
 	}
 	
 	public function action_media()
 	{
-		
 		// Get the file path from the request
 		$file = $this->request->param('file');
 		
@@ -138,19 +135,17 @@ class Controller_Kohanut_Admin extends Controller {
 		$this->request->headers['Cache-Control'] = 'max-age='.$cachefor.', must-revalidate, public';
 		$this->request->headers['Expires'] = gmdate('D, d M Y H:i:s',time() + $cachefor).'GMT';
 		$this->request->headers['Last-Modified'] = gmdate('D, d M Y H:i:s',filemtime($file)).' GMT';
-		
 	}
 	
 	public function action_login()
 	{
-		
-		// if user is set, then send them to pages
+		// If the user is logged in, redirect them
 		if ($this->user)
 		{
 			$this->request->redirect('admin/pages');
 		}
 		
-		// overide default view and bind with $user and $errors
+		// Overide default view and bind with $user and $errors
 		$this->view = View::factory('kohanut/login')
 			->bind('user', $user)
 			->bind('errors', $errors);
@@ -195,7 +190,5 @@ class Controller_Kohanut_Admin extends Controller {
 			
   		// Redirect to the login
   		$this->request->redirect(Route::get('kohanut-login')->uri(array('action'=>'login')));
-  		
   	}
-
 }

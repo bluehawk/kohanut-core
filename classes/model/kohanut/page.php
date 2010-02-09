@@ -51,23 +51,96 @@ class Model_Kohanut_Page extends Sprig_MPTT {
 	}
 	
 	/**
-	 * Find a page with the specified id, returns that page, or false if not found
+	 * Create a new page in the tree as a child of $parent
 	 *
-	 * @param   int  id of page to find
-	 * @return  page or false
+	 *    if $location is "first" or "last" the page will be the first or last child
+	 *    if $location is an int, the page will be the next sibling of page with id $location
+	 * @param  Kohanut_Page  the parent
+	 * @param  string/int    the location
+	 * @return void
 	 */
-	public static function find($id)
+	public function create_at($parent, $location = 'last')
 	{
-		// Cast to int for safety
-		$id = (int) $id;
-		$page = Sprig::factory('kohanut_page',array('id'=>$id))->load();
-		
-		
-		if ( ! $page->loaded())
+		// Make sure a layout is set if this isn't an external link
+		if ( ! $this->islink AND empty($this->layout->id))
 		{
-			return false;
+			throw new Kohanut_Exception("You must select a layout for a page that is not an external link.");
 		}
-		return $page;
+		
+		// Create the page as first child, last child, or as next sibling based on location
+		if ($location == 'first')
+		{
+			$this->insert_as_first_child($parent);
+		}
+		else if ($location == 'last')
+		{
+			$this->insert_as_last_child($parent);
+		}
+		else
+		{
+			$target = Sprig::factory('kohanut_page',array('id'=> (int) $location))->load();
+			if ( ! $target->loaded())
+			{
+				throw new Kohanut_Exception("Could not create page, could not find target for insert_as_next_sibling id: " . (int) $location);
+			}
+			$this->insert_as_next_sibling($target);
+		}
+	}
+	
+	public function move_to($action,$target)
+	{
+		// Find the target
+		$target = Sprig::factory('kohanut_page',array('id'=>$target))->load();
+		
+		// Make sure it exists
+		if ( !$target->loaded())
+		{
+			throw new Kohanut_Exception("Could not move page, target page did not exist." . (int) $target->id );
+		}
+		
+		if ($action == 'before')
+			$this->move_to_prev_sibling($target);
+		elseif ($action == 'after')
+			$this->move_to_next_sibling($target);
+		elseif ($action == 'first')
+			$this->move_to_first_child($target);
+		elseif ($action == 'last')
+			$this->move_to_last_child($target);
+		else
+			throw new Kohanut_Exception("Could not move page, action should be 'before', 'after', 'first' or 'last'.");
+	}
+	
+	/**
+	 * On update, make sure layout is set if its not an external link
+	 */
+	public function update()
+	{
+		// Make sure a layout is set if this isn't an external link
+		if ( ! $this->islink AND empty($this->layout->id))
+		{
+			throw new Kohanut_Exception("You must select a layout for a page that is not an external link.");
+		}
+		parent::update();
+	}
+	
+	/**
+	 * Renders the page
+	 *
+	 * @returns a view file
+	 */
+	public function render()
+	{
+		
+		if ( ! $this->loaded())
+		{
+			throw new Kohanut_Exception("Page render failed because page was not loaded.",array(),404);
+		}
+		
+		Kohanut::$page = $this;
+		
+		// Build the view
+		return new View('kohanut/xhtml', array('layoutcode' => $this->layout->load()->render()));
+		
 	}
 	
 	/** overload values to fix checkboxes
@@ -90,30 +163,4 @@ class Model_Kohanut_Page extends Sprig_MPTT {
 			return parent::values($values);
 		}
 	}
-	
-	
-	/**
-	 * Renders the page
-	 *
-	 * @returns a view file
-	 */
-	public function render()
-	{
-		
-		if ( ! $this->loaded())
-		{
-			throw new Kohanut_Exception("Page render failed because page was not loaded.",array(),404);
-		}
-		
-		Kohanut::$page = $this;
-		
-		// Build the view
-		return new View('kohanut/xhtml', array('layoutcode' => $this->layout->load()->render()));
-		
-	}
-	
-	/**
-	 *
-	 */
-
 }
