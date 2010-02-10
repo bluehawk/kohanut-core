@@ -20,18 +20,42 @@ class Kohanut_Nav {
 	// Pointer to parent node
 	protected $parent = NULL;
 	
+	// Above is the element thats one higher than the highest shown, its the header above secondary navs
+	protected $above = NULL;
+	
 	// What type of node is this? used for rendering nav menus
     public $isfirst = false;
     public $islast = false;
     public $iscurrent = false;
 	
 	// Constructor, only used when creating the root, or by addchild() below
-	public function __construct($id,$name,$url)
+	public function __construct($id,$name,$url,$above = NULL)
 	{
 		$this->id = $id;
 		$this->name = $name;
 		$this->url = $url;
+		$this->above = $above;
 	}
+	
+	public static $defaults = array(
+			
+		// Options for the header before the nav
+		'header'       => true,
+		'header_elem'  => 'h3',
+		'header_class' => '',
+		'header_id'    => '',
+		
+		// Options for the list itself
+		'class'   => '',
+		'id'      => '',
+		'depth'   => 2,
+		
+		// Options for items
+		'current_class' => 'current',
+		'first_class' => 'first',
+		'last_class'  => 'last',
+
+	);
 
 	/**
 	 * Parent
@@ -69,18 +93,57 @@ class Kohanut_Nav {
 	 * 
 	 * @return	the html of the menu
 	 */
-	public function render() {
+	public function render($options = array())
+	{
+		$defaults = array(
+			
+			// Options for the header before the nav
+			'header'       => false,
+			'header_elem'  => 'h3',
+			'header_class' => '',
+			'header_id'    => '',
+			
+			// Options for the list itself
+			'class'   => '',
+			'id'      => '',
+			'depth'   => 2,
+			
+			// Options for items
+			'current_class' => 'current',
+			'first_class' => 'first',
+			'last_class'  => 'last',
+
+		);
+		
+		$options = array_merge($defaults,$options);
+		
+		// Start the out
+		$out = "";
+		
+		// Add the header
+		if ($options['header'])
+		{
+			$out .= "<" . $options['header_elem'] .
+			        ($options['header_class'] != '' ? " class='{$options['header_class']}'":'') .
+					($options['header_id'] != '' ? " id='{$options['header_id']}'":'') . ">" .
+					html::anchor($this->above->url,$this->above->name) .
+					"</" . $options['header_elem'] . ">";
+		}
 		
 		// Open the ul
-		$out = "<ul>";
+		$out .= "<ul" . ($options['class'] != '' ? " class='{$options['class']}'":'') .
+					   ($options['id'] != '' ? " id='{$options['id']}'":'') . ">";
 		
-		// Mark first and last
-		$this->children[0]->isfirst = true;
-		end($this->children)->islast = true;
-		
-		// Render children
-		foreach($this->children as $child) {
-			$out .= $child->_render();
+		if (count($this->children))
+		{
+			// Mark first and last
+			$this->children[0]->isfirst = true;
+			end($this->children)->islast = true;
+			
+			// Render children
+			foreach($this->children as $child) {
+				$out .= $child->_render();
+			}
 		}
 		
 		// Close the ul, return the output
@@ -110,8 +173,8 @@ class Kohanut_Nav {
 		$out .= html::anchor($this->url,$this->name);
 		
 		// Do we have children?
-		if (count($this->children)) {
-			
+		if (count($this->children))
+		{
 			// Mark first and last
 			$this->children[0]->isfirst = true;
 			end($this->children)->islast = true;

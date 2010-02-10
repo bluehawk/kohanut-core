@@ -26,13 +26,46 @@ class Kohanut_Core {
 	protected static $_stylesheets = array();
 	protected static $_metas = array();
 
+
+	/**
+	 * Return the current page nav name
+	 *
+	 * @return  string
+	 */
+	public static function page_name()
+	{
+		// Make sure $page is set and loaded
+		if (!is_object(self::$page) || !self::$page->loaded())
+		{
+			return "No page loaded.";
+		}
+		
+		return self::$page->name;
+	}
+	
+	/**
+	 * Return the current page url
+	 *
+	 * @return  string
+	 */
+	public static function page_url()
+	{
+		// Make sure $page is set and loaded
+		if (!is_object(self::$page) || !self::$page->loaded())
+		{
+			return "No page loaded.";
+		}
+		
+		return self::$page->url;
+	}
+	
 	/**
 	 * Draws the main nav.
 	 *
-	 * @param   int   Max depth to traverse
+	 * @param   string   string of parameters
 	 * @return  string
 	 */
-	public static function main_nav($maxdepth=2)
+	public static function main_nav($params = null)
 	{
 		// Make sure $page is set and loaded
 		if (!is_object(self::$page) || !self::$page->loaded())
@@ -40,26 +73,71 @@ class Kohanut_Core {
 			return "Kohanut::main_nav failed because page is not loaded";
 		}
 		
-		return self::$page->root()->render_descendants('kohanut/nav',true,'ASC',$maxdepth);
+		$defaults = array('header'=>false);
+		
+		$options = array_merge($defaults, $params == null ? array() : self::params($params));
+		
+		return self::$page->root()->render_descendants('kohanut/nav',true,'ASC')->bind('options',$options);
 	}
 	
 	/**
 	 * Draws the secondary (side) nav.
 	 *
-	 * @param   int   Max depth to traverse
+	 * @param   string   string of parameters
 	 * @return  string
 	 */
-	public static function secondary_nav($maxdepth=2)
+	public static function nav($params = null)
 	{
 		// Make sure $page is set and loaded
 		if (!is_object(self::$page) || !self::$page->loaded())
 		{
-			return "Kohanut::main_nav failed because page is not loaded";
+			return "Kohanut::secondary_nav failed because page is not loaded";
 		}
 		
-		return self::$page->parent()->render_descendants('kohanut/nav',true,'ASC',$maxdepth);
-	} 
+		$options = $params == null ? array() : self::params($params);
+		
+		if (self::$page->has_children())
+		{
+			return self::$page->render_descendants('kohanut/nav',true,'ASC')->bind('options',$options);
+		}
+		else
+		{
+			return self::$page->parent()->render_descendants('kohanut/nav',true,'ASC')->bind('options',$options);
+		}
+	}
 	
+	/**
+	 * parses a string of params into an array, and changes numbers to ints
+	 *
+	 *    params('depth=2,something=test')
+	 *
+	 *    becomes
+	 *
+	 *    array(2) (
+     *       "depth" => integer 2
+     *       "something" => string(4) "test"
+     *    )
+     *
+     * @param  string  the params to parse
+     * @return array   the resulting array
+	 */
+	private static function params($var)
+	{
+		$var = explode(',',$var);
+		
+		$new = array();
+		
+		foreach ($var as $i)
+		{
+			$i = explode('=',trim($i));
+			$new[$i[0]] = Arr::get($i,1,null);
+			
+			if (is_numeric($new[$i[0]]))
+				$new[$i[0]] = (int) $new[$i[0]];
+		}
+		
+		return $new;
+	}
 	/**
 	 * Draws a breadcrumbs trail
 	 *
@@ -313,5 +391,5 @@ class Kohanut_Core {
 		$request = Request::instance();
 		$request->status = $id;
 	}
-
+	
 }

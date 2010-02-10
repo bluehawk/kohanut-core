@@ -1,12 +1,18 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-// mainnav -  The root node, it is not displayed on the nav and represents "/" or home, and has a parent of null.
-$root = New Kohanut_Nav($nodes->current()->id,$nodes->current()->name,$nodes->current()->url);
-// pointer - Always points to the element created in the previous loop iteration
+// The root node, it is not displayed on the main_nav, and optionally is the header on sub navs
+$root = New Kohanut_Nav($nodes->current()->id,$nodes->current()->name,$nodes->current()->url,$nodes->current());
+
+// Max levels of nav to show
+$maxlevel = $nodes->current()->{$level_column} + (isset($options['depth']) ? $options['depth'] : Kohanut_Nav::$defaults['depth']);
+
+// This always points to the element created in the previous loop iteration
 $pointer = &$root;
-// new - The element we created THIS loop, becomes pointer at end of loop
+
+// This is the element we created during the currentloop iteration.
 $new = "";
-// level - level of the node that was created LAST loop (pointer)
+
+// Level of the node that was created last loop. ($pointer->lvl)
 $lastlevel = $nodes->current()->{$level_column};
 
 /*
@@ -27,6 +33,12 @@ while($nodes->next() && $nodes->valid())
 	// If show in nav is false, skip this item
 	if ( ! $nodes->current()->shownav)
 		continue;
+	
+	// If level is more than depth levels deeper than $rootlevel, skip this item
+	if ($nodes->current()->{$level_column} > $maxlevel )
+		continue;
+
+
 	if ($nodes->current()->{$level_column} > $lastlevel)
 	{
 		
@@ -79,5 +91,11 @@ while($nodes->next() && $nodes->valid())
 	$lastlevel = $nodes->current()->{$level_column};
 }
 
+
+
+
 // Finally, render the whole thing
-echo $root->render();
+if (isset($options))
+	echo $root->render($options);
+else
+	echo $root->render();

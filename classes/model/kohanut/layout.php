@@ -37,6 +37,10 @@ class Model_Kohanut_Layout extends Sprig {
 			$e->setFilename('code');
 			throw new Kohanut_Exception("There was a Twig Syntax error: " . $e->getMessage());
 		}
+		catch (Exception $e)
+		{
+			throw new Kohanut_Exception("There was an error: " . $e->getMessage() . " on line " . $e->getLine());
+		}
 		parent::create();
 	}
 	
@@ -51,6 +55,10 @@ class Model_Kohanut_Layout extends Sprig {
 		{
 			$e->setFilename('code');
 			throw new Kohanut_Exception("There was a Twig Syntax error: " . $e->getMessage());
+		}
+		catch (Exception $e)
+		{
+			throw new Kohanut_Exception("There was an error: " . $e->getMessage() . " on line " . $e->getLine());
 		}
 		parent::update();
 	}

@@ -16,7 +16,7 @@ class Model_Kohanut_Block extends Sprig {
 			'id' => new Sprig_Field_Auto,
 			
 			'page' => new Sprig_Field_BelongsTo(array(
-				'model' => 'Page',
+				'model' => 'kohanut_page',
 				'column' => 'page',
 			)),
 			
