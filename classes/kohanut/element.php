@@ -214,7 +214,7 @@ abstract class Kohanut_Element extends Sprig
 		if ( ! $this->loaded())
 			throw new Kohanut_Exception("Attempting to create a block for an element that does not exist, or has not been created yet.");
 			
-		Sprig::factory('kohanut_block')->add($page,$area,$this->type->id,$this->id);
+		Sprig::factory('kohanut_block')->add($page,$area,$this->type(),$this->id);
 	
 	}
 	

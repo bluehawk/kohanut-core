@@ -39,7 +39,14 @@ class Model_Kohanut_Block extends Sprig {
 	{
 		if ($this->loaded())
 		{
-			throw Kohana_Exception('Cannot add a block that already exists');
+			throw Kohanut_Exception('Cannot add a block that already exists');
+		}
+		
+		$elementtype = Sprig::factory('kohanut_elementtype',array('name'=>$elementtype))->load();
+		
+		if ( ! $elementtype->loaded())
+		{
+			throw Kohanut_Exception('Could not find elementtype ' . $elementtype);
 		}
 		
 		// Get the highest 'order' from elements in the same page and area
@@ -52,7 +59,7 @@ class Model_Kohanut_Block extends Sprig {
 			'page'        => $page,
 			'area'        => $area,
 			'order'       => $order,
-			'elementtype' => $elementtype,
+			'elementtype' => $elementtype->id,
 			'element'     => $element,
 		))->create();
 	}

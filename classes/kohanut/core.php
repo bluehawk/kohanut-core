@@ -26,7 +26,6 @@ class Kohanut_Core {
 	protected static $_stylesheets = array();
 	protected static $_metas = array();
 
-
 	/**
 	 * Return the current page nav name
 	 *
@@ -107,38 +106,6 @@ class Kohanut_Core {
 	}
 	
 	/**
-	 * parses a string of params into an array, and changes numbers to ints
-	 *
-	 *    params('depth=2,something=test')
-	 *
-	 *    becomes
-	 *
-	 *    array(2) (
-     *       "depth" => integer 2
-     *       "something" => string(4) "test"
-     *    )
-     *
-     * @param  string  the params to parse
-     * @return array   the resulting array
-	 */
-	private static function params($var)
-	{
-		$var = explode(',',$var);
-		
-		$new = array();
-		
-		foreach ($var as $i)
-		{
-			$i = explode('=',trim($i));
-			$new[$i[0]] = Arr::get($i,1,null);
-			
-			if (is_numeric($new[$i[0]]))
-				$new[$i[0]] = (int) $new[$i[0]];
-		}
-		
-		return $new;
-	}
-	/**
 	 * Draws a breadcrumbs trail
 	 *
 	 * @return string
@@ -151,9 +118,24 @@ class Kohanut_Core {
 		}
 		
 		$parents = self::$page->parents(); //->render_descendants('mainnav',true,'ASC',$maxdepth);
-	
+		
 		return View::factory('kohanut/breadcrumbs')->set('nodes',$parents)->set('page',self::$page->name)->render();
-
+	}
+	
+	/**
+	 * Draw a site map
+	 *
+	 * @return string
+	 */
+	public static function site_map()
+	{
+		// Make sure $page is set and loaded
+		if (!is_object(self::$page) || !self::$page->loaded())
+		{
+			return "Kohanut::site_map failed because page is not loaded.";
+		}
+		
+		return self::$page->root()->render_descendants('kohanut/sitemap',false,'ASC');
 	}
 	
 	/**
@@ -181,15 +163,6 @@ class Kohanut_Core {
 			));
 		}
 		
-		// Find all the blocks for this area
-		
-		// attempting to use less queries... didn't really work so commenting out
-		/*$query = DB::select()
-			->join('elementtypes')
-			->on('blocks.elementtype','=','elementtypes.id')
-			->order_by('blocks.area','ASC')
-			->order_by('blocks.order','ASC');
-		*/
 		$query = DB::select()->order_by('order','ASC');
 		
 		$elements = Sprig::factory('kohanut_block',array(
@@ -233,7 +206,6 @@ class Kohanut_Core {
 	 */
 	public static function element($type,$name)
 	{
-		
 		// Create an instance of the element
 		try
 		{
@@ -255,7 +227,6 @@ class Kohanut_Core {
 		{
 			return "Could not render $type '$name', I could not find a $type with the name '$name'.";
 		}
-		
 	}
 	
 	/* CSS control
@@ -392,4 +363,36 @@ class Kohanut_Core {
 		$request->status = $id;
 	}
 	
+	/**
+	 * parses a string of params into an array, and changes numbers to ints
+	 *
+	 *    params('depth=2,something=test')
+	 *
+	 *    becomes
+	 *
+	 *    array(2) (
+     *       "depth" => integer 2
+     *       "something" => string(4) "test"
+     *    )
+     *
+     * @param  string  the params to parse
+     * @return array   the resulting array
+	 */
+	private static function params($var)
+	{
+		$var = explode(',',$var);
+		
+		$new = array();
+		
+		foreach ($var as $i)
+		{
+			$i = explode('=',trim($i));
+			$new[$i[0]] = Arr::get($i,1,null);
+			
+			if (is_numeric($new[$i[0]]))
+				$new[$i[0]] = (int) $new[$i[0]];
+		}
+		
+		return $new;
+	}
 }
