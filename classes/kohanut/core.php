@@ -64,19 +64,38 @@ class Kohanut_Core {
 	 * @param   string   string of parameters
 	 * @return  string
 	 */
-	public static function main_nav($params = null)
+	public static function main_nav($params = "")
 	{
+		if (Kohana::$profiling === TRUE)
+		{
+			// Start a new benchmark
+			$benchmark = Profiler::start('Kohanut', __FUNCTION__);
+		}
+		
 		// Make sure $page is set and loaded
 		if (!is_object(self::$page) || !self::$page->loaded())
 		{
 			return "Kohanut::main_nav failed because page is not loaded";
 		}
 		
-		$defaults = array('header'=>false);
+		// Main nav defaults
+		$defaults = array('header'=>false,'depth'=>2);
 		
-		$options = array_merge($defaults, $params == null ? array() : self::params($params));
+		// Create options array
+		$options = array_merge($defaults,self::params($params));
 		
-		return self::$page->root()->render_descendants('kohanut/nav',true,'ASC')->bind('options',$options);
+		// Get nav nodes
+		$descendants = self::$page->root()->nav_nodes($options['depth']);
+		
+		$out = View::factory('kohanut/nav',array('nodes'=>$descendants,'level_column'=>'lvl','options'=>$options))->render();
+		
+		if (isset($benchmark))
+		{
+			// Stop the benchmark
+			Profiler::stop($benchmark);
+		}
+		
+		return $out;
 	}
 	
 	/**
@@ -85,24 +104,39 @@ class Kohanut_Core {
 	 * @param   string   string of parameters
 	 * @return  string
 	 */
-	public static function nav($params = null)
+	public static function nav($params = "")
 	{
+		if (Kohana::$profiling === TRUE)
+		{
+			// Start a new benchmark
+			$benchmark = Profiler::start('Kohanut', __FUNCTION__);
+		}
+		
 		// Make sure $page is set and loaded
 		if (!is_object(self::$page) || !self::$page->loaded())
 		{
 			return "Kohanut::secondary_nav failed because page is not loaded";
 		}
 		
-		$options = $params == null ? array() : self::params($params);
+		$options = self::params($params);
 		
 		if (self::$page->has_children())
-		{
-			return self::$page->render_descendants('kohanut/nav',true,'ASC')->bind('options',$options);
-		}
+			$page = self::$page;
 		else
+			$page = self::$page->parent();
+		
+		// Get nav nodes
+		$descendants = $page->nav_nodes($options['depth']);
+		
+		$out = View::factory('kohanut/nav',array('nodes'=>$descendants,'level_column'=>'lvl','options'=>$options))->render();
+		
+		if (isset($benchmark))
 		{
-			return self::$page->parent()->render_descendants('kohanut/nav',true,'ASC')->bind('options',$options);
+			// Stop the benchmark
+			Profiler::stop($benchmark);
 		}
+		
+		return $out;
 	}
 	
 	/**
@@ -112,6 +146,12 @@ class Kohanut_Core {
 	 */
 	public static function bread_crumbs()
 	{
+		if (Kohana::$profiling === TRUE)
+		{
+			// Start a new benchmark
+			$benchmark = Profiler::start('Kohanut', __FUNCTION__);
+		}
+		
 		// Make sure $page is set and loaded
 		if (!is_object(self::$page) || !self::$page->loaded()) {
 			return "Kohanut::bread_crumbs failed because page is not loaded";
@@ -119,7 +159,15 @@ class Kohanut_Core {
 		
 		$parents = self::$page->parents(); //->render_descendants('mainnav',true,'ASC',$maxdepth);
 		
-		return View::factory('kohanut/breadcrumbs')->set('nodes',$parents)->set('page',self::$page->name)->render();
+		$out = View::factory('kohanut/breadcrumbs')->set('nodes',$parents)->set('page',self::$page->name)->render();
+		
+		if (isset($benchmark))
+		{
+			// Stop the benchmark
+			Profiler::stop($benchmark);
+		}
+		
+		return $out;
 	}
 	
 	/**
@@ -129,37 +177,56 @@ class Kohanut_Core {
 	 */
 	public static function site_map()
 	{
+		if (Kohana::$profiling === TRUE)
+		{
+			// Start a new benchmark
+			$benchmark = Profiler::start('Kohanut', __FUNCTION__);
+		}
+		
 		// Make sure $page is set and loaded
 		if (!is_object(self::$page) || !self::$page->loaded())
 		{
 			return "Kohanut::site_map failed because page is not loaded.";
 		}
 		
-		return self::$page->root()->render_descendants('kohanut/sitemap',false,'ASC');
+		$out = self::$page->root()->render_descendants('kohanut/sitemap',false,'ASC')->render();
+		
+		if (isset($benchmark))
+		{
+			// Stop the benchmark
+			Profiler::stop($benchmark);
+		}
+		
+		return $out;
 	}
 	
 	/**
-	 * Draws the content in a content area, assemlbing it from the blocks table, unless Kohanut::$_content is set
+	 * Draws the elements in an element area, assembling it from the blocks table, unless Kohanut::$_content is set, which means override was called
 	 *
 	 * @param   int     The id of the area
 	 * @param   string  The name of the area (for admin)
 	 * @return  boolean
 	 */
-	public static function content_area($id,$name)
+	public static function element_area($id,$name)
 	{
 		// Ensure that Kohanut::page has been set and loaded a real page
 		if (!is_object(self::$page) || !self::$page->loaded()) {
-			return "Kohanut Error: content_area($id) failed. (Kohanut::page was not set)";
+			return "Kohanut Error: element_area($id) failed. (Kohanut::page was not set)";
+		}
+		
+		if (Kohana::$profiling === TRUE)
+		{
+			// Start a new benchmark
+			$benchmark = Profiler::start('Kohanut', __FUNCTION__);
 		}
 		
 		// If Kohanut::$_content is set, we are overriding the render
 		if (self::$_content !== NULL)
 		{
-			$temp = self::$_content;
-			return new View('kohanut/contentarea',array(
+			return new View('kohanut/elementarea',array(
 				'id' => $id,
 				'name' => $name,
-				'content' => Arr::get($temp,$id-1,'')
+				'content' => Arr::get(self::$_content,$id-1,'')
 			));
 		}
 		
@@ -187,11 +254,19 @@ class Kohanut_Core {
 			}
 		}
 		
-		return new View('kohanut/contentarea',array(
+		$out = View::factory('kohanut/elementarea',array(
 			'id' => $id,
 			'name' => $name,
 			'content' => $content
-		));
+		))->render();
+		
+		if (isset($benchmark))
+		{
+			// Stop the benchmark
+			Profiler::stop($benchmark);
+		}
+		
+		return $out;
 	}
 	
 	/**
@@ -206,6 +281,12 @@ class Kohanut_Core {
 	 */
 	public static function element($type,$name)
 	{
+		if (Kohana::$profiling === TRUE)
+		{
+			// Start a new benchmark
+			$benchmark = Profiler::start('Kohanut', __FUNCTION__);
+		}
+		
 		// Create an instance of the element
 		try
 		{
@@ -221,12 +302,20 @@ class Kohanut_Core {
 		// If its loaded, render it, otherwise display an error.
 		if ($element->loaded())
 		{
-			return $element->render();
+			$out = $element->render();
 		}
 		else
 		{
-			return "Could not render $type '$name', I could not find a $type with the name '$name'.";
+			$out = "Could not render $type '$name', I could not find a $type with the name '$name'.";
 		}
+		
+		if (isset($benchmark))
+		{
+			// Stop the benchmark
+			Profiler::stop($benchmark);
+		}
+		
+		return $out;
 	}
 	
 	/* CSS control
@@ -337,17 +426,35 @@ class Kohanut_Core {
 	 */
 	public static function override($layoutname, $pageurl, $content)
 	{
+		// Be sure Twig has been included
+		if ( ! class_exists('Twig_Autoloader'))
+		{
+			// Load the Twig class autoloader
+			require Kohana::find_file('vendor', 'Twig/lib/Twig/Autoloader');
+			// Register the Twig class autoloader
+			Twig_Autoloader::register();
+		}
+		
+		// Include Markdown Extra
+		if ( ! function_exists('Markdown'))
+		{
+			require Kohana::find_file('vendor','Markdown/markdown');
+		}
+		
 		// Find the layout
 		$layout = Sprig::factory('kohanut_layout',array('name'=>$layoutname))->load();
 		if ( ! $layout->loaded())
 			throw new Kohanut_Exception("Kohanut::override() failed because the layout with name '$layoutname' could not be found");
+			
 		// Find the Page
 		$page = Sprig::factory('kohanut_page',array('url'=>$pageurl))->load();
 		if ( ! $page->loaded())
 			throw new Kohanut_Exception("Kohanut::override() failed because the page with url '$pageurl' could not be found.");
+			
 		// Set the required Kohanut variables, and render the page.
 		self::$page = $page;
 		self::$_content = $content;
+		
 		return new View('kohanut/xhtml', array('layoutcode' => $layout->render()));
 	}
 	

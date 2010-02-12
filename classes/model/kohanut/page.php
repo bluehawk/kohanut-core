@@ -143,6 +143,20 @@ class Model_Kohanut_Page extends Sprig_MPTT {
 		
 	}
 	
+	public function nav_nodes($depth)
+	{
+		$query = DB::select()
+			->where($this->left_column, '>=', $this->{$this->left_column})
+			->where($this->right_column, '<=', $this->{$this->right_column})
+			->where($this->scope_column, '=', $this->{$this->scope_column})
+			->where($this->level_column, '<=',$this->{$this->level_column} + $depth)
+			->where('shownav','=',true)
+			->order_by($this->left_column, 'ASC');
+		
+		return Sprig_MPTT::factory($this->_model)->load($query,FALSE);
+	}
+	
+	
 	/** overload values to fix checkboxes
 	 *
 	 * @param array values

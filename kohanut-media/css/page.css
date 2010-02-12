@@ -9,21 +9,44 @@
 		color:white;
 	}
 	
-.kohanut_element_ctl * {
+#kohanut_admin .kohanut_element_ctl * {
 	text-decoration:none;
 	text-transform:none;
 	padding:0;
 	margin:0;
 }
 
-.kohanut_element_ctl {
+#kohanut_admin .kohanut_area {
+	outline:2px dashed #158C15;
+	clear:left;
+	margin:-5px;
+	padding:5px;
+}
+
+#kohanut_admin .kohanut_area_title {
+	margin:0;
+	padding:4px 6px;
+	background:#158C15;
+	color:white;
+	font-weight:bold;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size:12px;
+	width:auto;
+	float:left;
+	-moz-border-radius-topright:5px;
+	-moz-border-radius-topleft:5px;
+	-webkit-border-top-right-radius:5px;
+	-webkit-border-top-left-radius:5px;
+}
+
+#kohanut_admin .kohanut_element_ctl {
 
 	font-size:12px;
-	background:#666666 url('../img/contentbar.png') 0 0px repeat-x scroll;
+	background:#158C15;
 	padding:5px;
 	color:white;
 	font-family:Arial,Helvetica,sans serif;
-	
+	background:#666666 url('../img/contentbar.png') 0 0px repeat-x scroll;
 	-moz-border-radius-bottomright:5px;
 	-moz-border-radius-topleft:5px;
 	-webkit-border-bottom-right-radius:5px;
@@ -33,55 +56,61 @@
 	
 }
 
-	.kohanut_element_ctl p.title {
+	#kohanut_admin .kohanut_element_ctl p.title {
 		padding:.2em;
 		margin:0;
 		font-size:1.2em;
 		font-weight:bold;
 		color:white;
 		text-transform:none;
-	}
-	
-	.kohanut_element_ctl p {
 		line-height:1em;
 	}
 	
-	.kohanut_element_ctl ul.kohanut_element_actions {
-		display:none;
-		list-style-type:none;
+	#kohanut_admin .kohanut_element_ctl p.title img {
+		float:left;
+		position:relative;
+		top:-2px;
 	}
 	
-	.kohanut_element_ctl:hover ul.kohanut_element_actions {
+	#kohanut_admin .kohanut_element_ctl ul.kohanut_element_actions {
+		display:none;
+		
+	}
+	
+	#kohanut_admin .kohanut_element_ctl:hover ul.kohanut_element_actions {
 		display:block;
 		position:absolute;
 		background:#666666;
 		z-index:1;
 		left:0;
 		top:2.4em;
-		
+		list-style:none;
 		-moz-border-radius-bottomright:5px;
 		-webkit-border-bottom-right-radius:5px;
 
 	}
 	
-	.kohanut_element_ctl ul.kohanut_element_actions li {
-		width:100%;;
+	#kohanut_admin .kohanut_element_ctl ul.kohanut_element_actions li {
+		width:100%;
+		list-style:none;
+		padding:0;
+		margin:0;
 	}
 	
-		.kohanut_element_ctl ul.kohanut_element_actions li:hover {
+		#kohanut_admin .kohanut_element_ctl ul.kohanut_element_actions li:hover {
 			
 		}
 		
-		.kohanut_element_ctl ul.kohanut_element_actions li img {
+		#kohanut_admin .kohanut_element_ctl ul.kohanut_element_actions li img {
 			position:relative;
 			top:3px;
 			padding-right:4px;
 		}
 		
-		.kohanut_element_ctl ul.kohanut_element_actions li a {
+		#kohanut_admin .kohanut_element_ctl ul.kohanut_element_actions li a {
 			color:white;
 			font-weight:bold;
-			padding:1px 10px 1px 5px;
+			padding:3px 10px 4px 5px;
 			display:block;
 			
 			-moz-border-radius-bottomright:5px;
@@ -90,11 +119,15 @@
 			-webkit-border-top-left-radius:5px;
 		}
 		
-		.kohanut_element_ctl ul.kohanut_element_actions li a:hover {
+		#kohanut_admin .kohanut_element_ctl ul.kohanut_element_actions li a:hover {
 			background:#22AA22;
 		}
 	
-	.kohanut_element_ctl input, .kohanut_element_ctl select  {
+	#kohanut_admin .kohanut_element_ctl form {
+		padding-top:5px;
+	}
+	
+	#kohanut_admin .kohanut_element_ctl input, .kohanut_element_ctl select  {
 		-moz-border-radius-bottomright:5px;
 		-moz-border-radius-topleft:5px;
 		-webkit-border-bottom-right-radius:5px;
@@ -105,23 +138,23 @@
 		padding:2px;
 	}
 	
-	.kohanut_element_ctl input.submit {
+	#kohanut_admin .kohanut_element_ctl input.submit {
 		color:#fff;
 		padding:4px 5px
 	}
 	
-	.kohanut_element_ctl input.submit  {
+	#kohanut_admin .kohanut_element_ctl input.submit  {
 		border:none;
 		background:#1F7F1F url('../img/button.png') 0 -10px repeat-x scroll;
 		text-decoration:none;
 		font-weight:bold;
 	}
 	
-	.kohanut_element_ctl input.submit:hover {
+	#kohanut_admin .kohanut_element_ctl input.submit:hover {
 		border:none;
 		background:#1F7F1F url('../img/button.png') 0 -5px repeat-x scroll;
 	}
 	
-	.kohanut_element_ctl input.submit:active  {
+	#kohanut_admin .kohanut_element_ctl input.submit:active  {
 		background:#1F7F1F url('../img/button-hover.png') bottom left repeat-x scroll;
 	}

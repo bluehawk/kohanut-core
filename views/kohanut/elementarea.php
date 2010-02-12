@@ -1,6 +1,15 @@
 <?php
 
-echo "\n<!-- Content Area  $id ($name) -->\n";
+echo "\n<!-- Element Area  $id ($name) -->\n";
+
+if (Kohanut::$adminmode) {
+?>
+
+<p class='kohanut_area_title'>Element Area #<?php echo $id ?> - <?php echo $name ?></p>
+<div class='kohanut_area'>
+	
+<?php
+}
 
 echo $content;
 
@@ -23,6 +32,8 @@ if (Kohanut::$adminmode)
 	<?php echo form::submit('add','Add Element',array('class'=>'submit')); ?>
 	</form>
 	<div style="clear:left;"></div>
+</div>
+
 </div>
 <?php
 }

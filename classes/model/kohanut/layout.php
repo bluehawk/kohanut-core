@@ -71,7 +71,20 @@ class Model_Kohanut_Layout extends Sprig {
 			return "Layout Failed to render because it wasn't loaded.";
 		}
 		
-		return Kohanut_Twig::render($this->code);
+		if (Kohana::$profiling === TRUE)
+		{
+			// Start a new benchmark
+			$benchmark = Profiler::start('Kohanut', 'Render Layout');
+		}
+		
+		$out = Kohanut_Twig::render($this->code);
+		
+		if (isset($benchmark))
+		{
+			// Stop the benchmark
+			Profiler::stop($benchmark);
+		}
+		return $out;
 	}
 
 }

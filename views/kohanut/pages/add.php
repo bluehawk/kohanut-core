@@ -12,6 +12,7 @@
 			<p>
 				<label>Location<small>Where in the list of siblings this page will appear</small></label>
 				<select name="location">
+					<option value="first">First Child</option>
 					<?php foreach ( $parent->children() as $child): ?>
 					<option value="<?php echo $child->id ?>">After <?php echo $child->name ?></option>
 					<?php endforeach; ?>

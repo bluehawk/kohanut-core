@@ -9,6 +9,8 @@
  */
 class Kohanut_Twig {
 	
+	static private $twig = null;
+	
 	/**
 	 * Render a twig template.
 	 * 
@@ -17,14 +19,32 @@ class Kohanut_Twig {
 	 */
 	public static function render($code)
 	{
-		// Make the twig loader, environment and template and pass the layout code.
-		$loader = new Twig_Loader_String();
-		$twig = new Twig_Environment($loader, array(
-			'cache' => APPPATH.'cache/twig',
-		));
-	
-		$template = $twig->loadTemplate($code);
-		return $template->render(array('Kohanut'=>new Kohanut));
+		if (Kohana::$profiling === TRUE)
+		{
+			// Start a new benchmark
+			$benchmark = Profiler::start('Kohanut', 'Twig Render');
+		}
+		
+		if (self::$twig === null)
+		{
+			// Make the twig loader, environment and template and pass the layout code.
+			$loader = new Twig_Loader_String();
+			self::$twig = new Twig_Environment($loader, array(
+				'cache' => APPPATH.'cache/twig',
+			));
+			self::$twig->addExtension(new Kohanut_Twig_Extension());
+		}
+		
+		$template = self::$twig->loadTemplate($code);
+		
+		$out = $template->render(array('Kohanut'=>new Kohanut));
+		
+		if (isset($benchmark))
+		{
+			// Stop the benchmark
+			Profiler::stop($benchmark);
+		}
+		
+		return $out;
 	}
-	
 }

@@ -37,26 +37,29 @@ class Controller_Kohanut_Admin extends Controller {
 		// Set the default view
 		$this->view = New View('kohanut/admin');
 		
-		// Check if user is logged in
-		if ($id = Cookie::get('user'))
+		if ($this->requires_login)
 		{
-			$user = Sprig::factory('kohanut_user')
-				->values(array('id'=>$id))
-				->load();
-			
-			if ($user->loaded())
+			// Check if user is logged in
+			if ($id = Cookie::get('user'))
 			{
-				// user is logged in
-				$this->user = $user;
-				// bind username to view so we can say hello
-				$this->view->user = $user->username;
+				$user = Sprig::factory('kohanut_user')
+					->values(array('id'=>$id))
+					->load();
+				
+				if ($user->loaded())
+				{
+					// user is logged in
+					$this->user = $user;
+					// bind username to view so we can say hello
+					$this->view->user = $user->username;
+				}
 			}
-		}
-		
-		// If they aren't logged in, and the page requires login, redirect to login screen
-		if ( ! $this->user AND $this->requires_login)
-		{
-			$this->request->redirect(Route::get('kohanut-login')->uri(array('action'=>'login')));
+			
+			// If they aren't logged in, and the page requires login, redirect to login screen
+			if ( ! $this->user )
+			{
+				$this->request->redirect(Route::get('kohanut-login')->uri(array('action'=>'login')));
+			}
 		}
 		
 		// Include Twig if it hasn't been yet

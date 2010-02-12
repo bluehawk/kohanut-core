@@ -41,6 +41,12 @@ class Controller_Kohanut extends Controller
 	public function action_view($url=NULL)
 	{
 
+		if (Kohana::$profiling === TRUE)
+		{
+			// Start a new benchmark
+			$benchmark = Profiler::start('Kohanut', 'Kohanut Controller');
+		}
+		
 		// If no $url is passed, default to the server request uri
 		if ($url === NULL)
 		{
@@ -56,6 +62,9 @@ class Controller_Kohanut extends Controller
 		// Ensure no leading slash
 		$url = preg_replace('/^\//','',$url);
 		
+		// Remove anything ofter a ? or #
+		$url = preg_replace('/[\?#].+/','',$url);
+		
 		// Try to find what to do on this url
 		try
 		{
@@ -70,8 +79,8 @@ class Controller_Kohanut extends Controller
 			Sprig::factory('kohanut_redirect',array('url',$url))->go();
 			
 			// Find the page that matches this url, and isn't an external link
-			$page = Sprig::factory('kohanut_page',array('url'=>$url,'islink'=>0))
-				->load();
+			$query = DB::select()->where('url','=',$url)->where('islink','=',0);
+			$page = Sprig::factory('kohanut_page')->load($query);
 			
 			if ( ! $page->loaded())
 			{
@@ -83,9 +92,7 @@ class Controller_Kohanut extends Controller
 			// Set the status to 200, rather than 404, which was set by the router with the reflectionexception
 			Kohanut::status(200);
 			
-			// Set the response
-			$this->request->response = $page->render();
-			
+			$out = $page->render();
 		}
 		catch (Kohanut_Exception $e)
 		{
@@ -101,7 +108,17 @@ class Controller_Kohanut extends Controller
 			}
 			
 			// Set the response
-			$this->request->response = $error->render();
+			$out = $error->render();
 		}
+		
+		
+		if (isset($benchmark))
+		{
+			// Stop the benchmark
+			Profiler::stop($benchmark);
+		}
+		
+		// Set the response
+		$this->request->response = $out;
 	}
 }

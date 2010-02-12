@@ -1,4 +1,125 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
+/*
+
+   If I had my way, I would use this commented out code, rather than the
+   Kohanut_Nav object pointer tree hodge podge that is in use. The pointer tree
+   is almost 5 times slower than this commented loop, but I can't figure out how
+   to make "last" and "current" work CORRECTLY in the loop.  Proper caching
+   should help mitigate this slowness.
+ 
+ 
+if (Kohana::$profiling === TRUE)
+{
+	// Start a new benchmark
+	$benchmark = Profiler::start('Kohanut', 'MPTT crawl');
+}
+// Change nodes into an array
+$nodes = $nodes->as_array();
+
+// Set the defaults
+$defaults = array(
+			
+	// Options for the header before the nav
+	'header'       => false,
+	'header_elem'  => 'h3',
+	'header_class' => '',
+	'header_id'    => '',
+	
+	// Options for the list itself
+	'class'   => '',
+	'id'      => '',
+	'depth'   => 2,
+	
+	// Options for items
+	'current_class' => 'current',
+	'first_class' => 'first',
+	'last_class'  => 'last',
+
+);
+
+// Merge to create the options
+$options = array_merge($defaults,$options);
+
+// Add the header
+if ($options['header'])
+{
+	echo "<" . $options['header_elem'] .
+	     ($options['header_class'] != '' ? " class='{$options['header_class']}'":'') .
+		 ($options['header_id'] != '' ? " id='{$options['header_id']}'":'') . ">" .
+		 html::anchor($nodes[0]->url,$nodes[0]->name) .
+		 "</" . $options['header_elem'] . ">";
+}
+
+// Open the ul
+echo "\n<ul" . ($options['class'] != '' ? " class='{$options['class']}'":'') .
+			 ($options['id'] != '' ? " id='{$options['id']}'":'') . ">\n";
+
+$rootlevel = $nodes[1]->{$level_column};
+$level = $nodes[1]->{$level_column};
+$first = true;
+$classes = array('first');
+
+$count=count($nodes);
+for( $i=1 ; $i<$count ; $i++ )
+{
+	$next = Arr::get($nodes,$i+1,false);
+	$curr = Arr::get($nodes,$i);
+	
+	if ($curr->{$level_column} > $level)
+	{
+		echo "<ul>\n";
+		$classes[] = $options['first_class'];
+	}
+	else if ($curr->{$level_column} < $level)
+	{
+		for( $j=0 ; $j < ($level - $curr->{$level_column}) ; $j++ )
+		{
+			echo "</li></ul></li>\n";
+		}
+	}
+	else if ( ! $first)
+	{
+		echo "</li>\n";
+	}
+	
+	for ( $j=0 ; $j < ($curr->{$level_column}) ; $j++ )
+	{
+		echo "\t";
+	}
+	
+	if (!empty($classes))
+		$classes = array('class'=>implode(' ',$classes));
+	//echo kohana::debug($classes);
+	echo "<li" . html::attributes($classes). ">" . html::anchor($curr->url,$curr->name);
+	
+	$level = $curr->{$level_column};
+	$classes = array();
+	$first = FALSE;
+}
+
+for( $j=0 ; $j < ($curr->{$level_column}) - $rootlevel ; $j++ )
+{
+	echo "</li></ul>";
+}
+
+echo "</li>\n</ul>";
+
+if (isset($benchmark))
+{
+	// Stop the benchmark
+	Profiler::stop($benchmark);
+}
+
+
+return;
+*/
+
+
+if (Kohana::$profiling === TRUE)
+{
+	// Start a new benchmark
+	$benchmark = Profiler::start('Kohanut', 'MPTT crawl');
+}
 
 // The root node, it is not displayed on the main_nav, and optionally is the header on sub navs
 $root = New Kohanut_Nav($nodes->current()->id,$nodes->current()->name,$nodes->current()->url,$nodes->current());
@@ -30,25 +151,14 @@ else  (currentlevel == $last level)
 */
 while($nodes->next() && $nodes->valid())
 {
-	// If show in nav is false, skip this item
-	if ( ! $nodes->current()->shownav)
-		continue;
-	
-	// If level is more than depth levels deeper than $rootlevel, skip this item
-	if ($nodes->current()->{$level_column} > $maxlevel )
-		continue;
-
 
 	if ($nodes->current()->{$level_column} > $lastlevel)
 	{
-		
 		// Current is a child of the last node
 		$new =& $pointer->addchild($nodes->current()->id,$nodes->current()->name,$nodes->current()->url);
-		
 	}
 	else if ($nodes->current()->{$level_column} < $lastlevel)
 	{
-		
 		// We have gone up, but by how many generations?  theres gotta be a better way than this...
 		for( $i=0 ; $i < ($lastlevel - $nodes->current()->{$level_column}) ; $i++ )
 		{
@@ -64,10 +174,8 @@ while($nodes->next() && $nodes->valid())
 	}
 	else // ($nodes->current()->{$level_column} == $lastlevel)
 	{
-		
 		// Current is a sibling to pointer
 		$new =& $pointer->parent()->addchild($nodes->current()->id,$nodes->current()->name,$nodes->current()->url);
-		
 	}
 	
 	// If this items url matches the current pages url, mark it as current
@@ -92,10 +200,14 @@ while($nodes->next() && $nodes->valid())
 }
 
 
-
-
 // Finally, render the whole thing
 if (isset($options))
 	echo $root->render($options);
 else
 	echo $root->render();
+
+if (isset($benchmark))
+{
+	// Stop the benchmark
+	Profiler::stop($benchmark);
+}

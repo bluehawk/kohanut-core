@@ -17,7 +17,7 @@
 <!-- End Kohanut includes -->
 
 </head>
-<body>
+<body<?php if (Kohanut::$adminmode) echo " id='kohanut_admin'"; ?>>
 <?php if (Kohanut::$adminmode): ?>
 <!-- Admin mode header -->
 <div id="kohanut_header">
@@ -30,7 +30,11 @@
 <!-- End Admin mode header -->
 <?php endif; ?>
 <!-- Begin Page Layout Code -->
+
 <?php echo $layoutcode ?>
 <!-- End Page Layout Code -->
+<div id="kohana-profiler">
+<?php //echo View::factory('profiler/stats') ?>
+</div>
 </body>
 </html>
