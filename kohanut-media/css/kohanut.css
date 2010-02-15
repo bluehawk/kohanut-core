@@ -78,8 +78,8 @@
 			padding:0px 0 3px 24px;
 		}
 		
-		#pagetree li>.pageinfo { background:transparent url('../img/fam/page.png') 2px 6px no-repeat scroll;}
-		#pagetree li .link  {background:transparent url('../img/link.png') 1px 2px no-repeat scroll; position:absolute;top:0;left:0;width:16px;height:16px;}
+		#pagetree li>.pageinfo { background:transparent url('../img/page.png') 2px 6px no-repeat scroll;}
+		#pagetree li .fam-arrow  {position:absolute;top:0;left:0;}
 		#pagetree li.expandable>.pageinfo{ background:transparent url('../img/folder.png') 3px 5px no-repeat scroll; }
 		#pagetree li.collapsable>.pageinfo{ background:transparent url('../img/folder-open.png') 3px 5px no-repeat scroll; }
 	
@@ -131,6 +131,10 @@
 				float:left;
 				color:#003300;
 				padding:0px 4px;
+			}
+			
+			#pagetree .pageinfo .actions div {
+				margin:0 auto 1px;
 			}
 			
 			#pagetree .pageinfo .actions a:hover span {
@@ -189,8 +193,11 @@ ul.standardlist {
 			color:#003300;
 			padding:2px 3px;
 		}
+		ul.standardlist div.actions a div {
+			margin:0 auto 1px;
+		}
 		ul.standardlist div.actions a:hover span {
-			color:#009900;/
+			color:#009900;
 			text-decoration:underline;
 		}
 		
@@ -207,3 +214,113 @@ ul.standardlist {
 		font-family:Consolas, Lucida Console, monospace;
 		height:300px;
 	}
+	
+	
+.inline-sprite {
+	float:left;
+	width:16px;height:16px;
+	display:block;
+}
+	
+.fam-accept,
+.fam-add,
+.fam-delete,
+.fam-edit,
+.fam-go,
+.fam-error,
+.fam-world,
+.fam-up,
+.fam-down,
+.fam-check,
+.fam-arrow,
+.fam-page,
+.fam-page-add,
+.fam-page-delete,
+.fam-page-edit,
+.fam-page-go,
+.fam-page-world,
+.fam-layout,
+.fam-layout-add,
+.fam-layout-delete,
+.fam-layout-edit,
+.fam-layout-go,
+.fam-note,
+.fam-note-add,
+.fam-note-delete,
+.fam-note-edit,
+.fam-note-go,
+.fam-user,
+.fam-user-add,
+.fam-user-delete,
+.fam-user-edit,
+.fam-plugin,
+.fam-plugin-add,
+.fam-plugin-delete,
+.fam-plugin-edit,
+.fam-plugin-go,
+.fam-plugin-error,
+.fam-plugin-disabled,
+.fam-link,
+.fam-link-add,
+.fam-link-delete,
+.fam-link-edit,
+.fam-link-go,
+.fam-pilcrow {
+	background:url('../img/fam-sprite.png');
+	display:block;
+	width:16px; height:16px;
+	padding:0; margin:0;
+}
+
+.fam-accept {background-position:0px 0px}
+.fam-add {background-position:-25px 0px}
+.fam-delete {background-position:-50px 0px}
+.fam-edit {background-position:-75px 0px}
+.fam-go {background-position:-100px 0px}
+.fam-error {background-position:-125px 0px}
+.fam-world {background-position:-150px 0px}
+
+.fam-up {background-position:0px -25px}
+.fam-down {background-position:-25px -25px}
+.fam-check {background-position:-50px -25px}
+.fam-arrow {background-position:-75px -25px}
+
+.fam-page {background-position:0px -50px}
+.fam-page-add {background-position:-25px -50px}
+.fam-page-delete {background-position:-50px -50px}
+.fam-page-edit {background-position:-75px -50px}
+.fam-page-go {background-position:-100px -50px}
+.fam-page-world {background-position:-150px -50px}
+
+.fam-layout {background-position:0px -75px}
+.fam-layout-add {background-position:-25px -75px}
+.fam-layout-delete {background-position:-50px -75px}
+.fam-layout-edit {background-position:-75px -75px}
+.fam-layout-go {background-position:-100px -75px}
+
+.fam-note {background-position:0px -100px}
+.fam-note-add {background-position:-25px -100px}
+.fam-note-delete {background-position:-50px -100px}
+.fam-note-edit {background-position:-75px -100px}
+.fam-note-go {background-position:-100px -100px}
+
+.fam-user {background-position:0px -125px}
+.fam-user-add {background-position:-25px -125px}
+.fam-user-delete {background-position:-50px -125px}
+.fam-user-edit {background-position:-75px -125px}
+
+.fam-plugin {background-position:0px -150px}
+.fam-plugin-add {background-position:-25px -150px}
+.fam-plugin-delete {background-position:-50px -150px}
+.fam-plugin-edit {background-position:-75px -150px}
+.fam-plugin-go {background-position:-100px -150px}
+.fam-plugin-error {background-position:-125px -150px}
+.fam-plugin-disabled {background-position:-150px -150px}
+
+.fam-link {background-position:0px -175px}
+.fam-link-add {background-position:-25px -175px}
+.fam-link-delete {background-position:-50px -175px}
+.fam-link-edit {background-position:-75px -175px}
+.fam-link-go {background-position:-100px -175px}
+
+.fam-pilcrow {background-position:0px -200px}

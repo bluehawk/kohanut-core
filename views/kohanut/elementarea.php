@@ -5,7 +5,7 @@ echo "\n<!-- Element Area  $id ($name) -->\n";
 if (Kohanut::$adminmode) {
 ?>
 
-<p class='kohanut_area_title'>Element Area #<?php echo $id ?> - <?php echo $name ?></p>
+<p class='kohanut_area_title'><?php echo __('Element Area #:num - :name',array(':num'=>$id,':name'=>$name)) ?></p>
 <div class='kohanut_area'>
 	
 <?php
@@ -17,7 +17,7 @@ if (Kohanut::$adminmode)
 {
 ?>
 <div class="kohanut_element_ctl">
-	<p class="title"><?php echo html::image(Route::get('kohanut-media')->uri(array('file'=>'img/fam/add.png'))); ?> Add New Element</p>
+	<p class="title"><span class="fam-add inline-sprite"></span><?php echo __('Add New Element') ?></p>
 	<?php echo form::open() ?>
 	<?php echo form::hidden('area',$id); ?>
 	<select name="type" style="float:left;margin-right:5px;">
@@ -29,7 +29,7 @@ if (Kohanut::$adminmode)
 		}
 		?>
 	</select>
-	<?php echo form::submit('add','Add Element',array('class'=>'submit')); ?>
+	<?php echo form::submit('add',__('Add Element'),array('class'=>'submit')); ?>
 	</form>
 	<div style="clear:left;"></div>
 </div>

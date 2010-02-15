@@ -11,6 +11,7 @@ class Controller_Kohanut_Layouts extends Controller_Kohanut_Admin {
 
 	public function action_index()
 	{
+		$this->view->title = __('Layouts');
 		$this->view->body = new View('kohanut/layouts/list');
 		
 		// Get the list of layouts
@@ -24,11 +25,11 @@ class Controller_Kohanut_Layouts extends Controller_Kohanut_Admin {
 		
 		if ( ! $layout->loaded())
 		{
-			return $this->admin_error("Could not find layout with id <strong>" . (int) $id . "</strong>");
+			return $this->admin_error(__('Could not find layout with ID :id.',array(':id'=>$id)));
 		}
 		
 		// Create the view
-		$this->view->title = "Editing Layout";
+		$this->view->title = __('Edit Layout');
 		$this->view->body = new View('kohanut/layouts/edit',array('layout'=>$layout,'errors'=>false,'success'=>false));
 
 		if ($_POST)
@@ -39,7 +40,7 @@ class Controller_Kohanut_Layouts extends Controller_Kohanut_Admin {
 			try
 			{
 				$layout->update();
-				$this->view->body->success = "Updated Successfully";
+				$this->view->body->success = __('Updated Successfully');
 			}
 			catch (Validate_Exception $e)
 			{
@@ -88,7 +89,7 @@ class Controller_Kohanut_Layouts extends Controller_Kohanut_Admin {
 		
 		if ( ! $layout->loaded())
 		{
-			return $this->admin_error("Could not find layout with id <strong>" . (int) $id . "</strong>");
+			return $this->admin_error(__('Could not find layout with ID :id.',array(':id'=>$id)));
 		}
 		
 		// Create the view
@@ -104,7 +105,7 @@ class Controller_Kohanut_Layouts extends Controller_Kohanut_Admin {
 			}
 			catch (Exception $e)
 			{
-				$this->view->body->errors = array('submit'=>"Delete failed! This is most likely caused because this template is still being used by one or more pages. Here is the error message: <br />" . $e->getMessage());
+				$this->view->body->errors = array('submit'=>__('Delete failed! This is most likely caused because this template is still being used by one or more pages.'));
 			}
 		}
 	}

@@ -3,7 +3,7 @@
 
 $level = $nodes->current()->lvl;
 $first = TRUE;
-echo "<div id='pagetreeloading'>" . html::image(Route::get('kohanut-media')->uri(array('file'=>'img/loading.gif')),array('alt'=>'loading')) . "Loading... </div>";
+echo "<div id='pagetreeloading'>" . html::image(Route::get('kohanut-media')->uri(array('file'=>'img/loading.gif')),array('alt'=>'loading')) . __('Loading...') . '</div>';
 echo "<ul id='pagetree'><div class='clear'></div>";
 foreach ($nodes as $node)
 {
@@ -32,7 +32,7 @@ foreach ($nodes as $node)
 		
 	<li <?php if ($node->lvl == 0) echo "class='open'" ?>>
 		<div class="pageinfo">
-			<?php if ($node->islink) echo '<div class="link"></div>'; ?>
+			<?php if ($node->islink) echo '<div class="fam-arrow"></div>'; ?>
 			<div style="float:left">
 				<p class='pagename'><?php echo $node->name ?></p>
 				<?php
@@ -41,7 +41,7 @@ foreach ($nodes as $node)
 				// if the link does not have :// in it, echo the url base (like http://example.com/ ) in a span, so its gray
 				echo ( strpos($node->url, '://') === FALSE ? "<span>" . URL::base(FALSE,TRUE) . "</span>" : '' );
 				// echo the url, and if its a link, put (Link) after it
-				echo $node->url . ($node->islink?'  (Link) ':'');
+				echo $node->url . ($node->islink? ' ' . __('(Link)'):'');
 				// close pageurl
 				echo "</p>";
 				?>
@@ -49,20 +49,15 @@ foreach ($nodes as $node)
 			<div class='actions'>
 				<?php
 				echo html::anchor($node->url,
-					 html::image( Route::get('kohanut-media')->uri(array('file'=>'img/fam/page_world.png')) ) . 
-					 "<br/><span>view</span>",array('title'=>'Click to view'));
+					 '<div class="fam-page-world"></div><span>'.__('view').'</span>',array('title'=>__('Click to view page')));
 				echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'pages','action'=>'edit','params'=>$node->id)),
-					 html::image( Route::get('kohanut-media')->uri(array('file'=>'img/fam/page_edit.png')) ) . 
-					 "<br/><span>edit</span>",array('title'=>'Click to edit'));
+					 '<div class="fam-page-edit"></div><span>'.__('edit').'</span>',array('title'=>__('Click to edit page')));
 				echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'pages','action'=>'move','params'=>$node->id)),
-					 html::image( Route::get('kohanut-media')->uri(array('file'=>'img/fam/page_go.png')) ) . 
-					 "<br/><span>move</span>",array('title'=>'Click to move'));
+					 '<div class="fam-page-go"></div><span>'.__('move').'</span>',array('title'=>__('Click to move page')));
 				echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'pages','action'=>'add','params'=>$node->id)),
-					 html::image( Route::get('kohanut-media')->uri(array('file'=>'img/fam/page_add.png')) ) . 
-					 "<br/><span>add</span>",array('title'=>'Click to add sub-page'));
+					 '<div class="fam-page-add"></div><span>'.__('add').'</span>',array('title'=>__('Click to add sub-page')));
 				echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'pages','action'=>'delete','params'=>$node->id)),
-					 html::image( Route::get('kohanut-media')->uri(array('file'=>'img/fam/page_delete.png')) ) . 
-					 "<br/><span>delete</span>",array('title'=>'Click to delete'));
+					 '<div class="fam-page-delete"></div><span>'.__('delete').'</span>',array('title'=>__('Click to delete page')));
 				?>
 				
 			</div>

@@ -101,16 +101,10 @@
 			
 		}
 		
-		#kohanut_admin .kohanut_element_ctl ul.kohanut_element_actions li img {
-			position:relative;
-			top:3px;
-			padding-right:4px;
-		}
-		
 		#kohanut_admin .kohanut_element_ctl ul.kohanut_element_actions li a {
 			color:white;
 			font-weight:bold;
-			padding:3px 10px 4px 5px;
+			padding:6px 10px 5px 5px;
 			display:block;
 			
 			-moz-border-radius-bottomright:5px;
@@ -127,7 +121,7 @@
 		padding-top:5px;
 	}
 	
-	#kohanut_admin .kohanut_element_ctl input, .kohanut_element_ctl select  {
+	#kohanut_admin .kohanut_element_ctl input, #kohanut_admin .kohanut_element_ctl select  {
 		-moz-border-radius-bottomright:5px;
 		-moz-border-radius-topleft:5px;
 		-webkit-border-bottom-right-radius:5px;
@@ -158,3 +152,27 @@
 	#kohanut_admin .kohanut_element_ctl input.submit:active  {
 		background:#1F7F1F url('../img/button-hover.png') bottom left repeat-x scroll;
 	}
+	
+#kohanut_admin .fam-edit,
+#kohanut_admin .fam-delete,
+#kohanut_admin .fam-up,
+#kohanut_admin .fam-down,
+#kohanut_admin .fam-add
+{
+	background:url('../img/fam-sprite.png');
+	display:block;
+	width:16px; height:16px;
+	padding:0; margin:0;
+}
+
+#kohanut_admin .fam-delete {background-position:-50px 0px}
+#kohanut_admin .fam-edit {background-position:-75px 0px}
+#kohanut_admin .fam-up {background-position:0px -25px}
+#kohanut_admin .fam-down {background-position:-25px -25px}
+#kohanut_admin .fam-add {background-position:-25px 0px}
+
+#kohanut_admin .inline-sprite {
+	float:left;
+	margin-right:4px;
+	display:block;
+}

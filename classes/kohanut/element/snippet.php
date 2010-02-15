@@ -18,12 +18,8 @@ class Kohanut_Element_Snippet extends Kohanut_Element
 	{
 		$this->_fields += array(
 			'id' => new Sprig_Field_Auto,
-			'name' => new Sprig_Field_Char(array(
-				'label' => 'Name',
-			)),
-			'code' => new Sprig_Field_Text(array(
-				'label' => 'Content',
-			)),
+			'name' => new Sprig_Field_Char,
+			'code' => new Sprig_Field_Text,
 			'markdown' => new Sprig_Field_Boolean(array('append_label'=>false,'default'=>true)),
 			
 			'twig' => new Sprig_Field_Boolean(array('append_label'=>false,'default'=>false)),

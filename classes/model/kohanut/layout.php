@@ -30,7 +30,7 @@ class Model_Kohanut_Layout extends Sprig {
 		// Make sure there are no twig syntax errors
 		try
 		{
-			$test = Kohanut_Twig::render($_POST['code']);
+			$test = Kohanut_Twig::render($this->code);
 		}
 		catch (Twig_SyntaxError $e)
 		{
@@ -49,7 +49,7 @@ class Model_Kohanut_Layout extends Sprig {
 		// Make sure there are no twig syntax errors
 		try
 		{
-			$test = Kohanut_Twig::render($_POST['code']);
+			$test = Kohanut_Twig::render($this->code);
 		}
 		catch (Twig_SyntaxError $e)
 		{

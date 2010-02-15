@@ -12,7 +12,7 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 	public function action_index()
 	{
 		// Create the view
-		$this->view->title = "Pages";
+		$this->view->title = __('Pages');
 		$this->view->body = new View('kohanut/pages/list');
 		
 		// Build the page tree
@@ -34,11 +34,11 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 
 		if ( ! $page->loaded())
 		{
-			return $this->admin_error("Could not find page with id <strong>" . (int) $id . "</strong>");
+			return $this->admin_error(__('Could not find page with ID :id.',array(':id'=>$id)));
 		}
 		
 		// Create the view
-		$this->view->title = "Edit Page";
+		$this->view->title = __('Editing Page');
 		$this->view->body = new View('kohanut/pages/edit',array('success'=>false,'errors'=>false,'page'=>$page));
 		
 		if ($_POST)
@@ -46,7 +46,7 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 			try
 			{
 				$page->values($_POST)->update();
-				$this->view->body->success = "Updated successfully";
+				$this->view->body->success = __('Updated successfully');
 			}
 			catch (Validate_Exception $e)
 			{
@@ -66,7 +66,7 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 
 		if ( ! $page->loaded())
 		{
-			return $this->admin_error("Could not find page with id <strong>" . (int) $id . "</strong>");
+			return $this->admin_error(__('Could not find page with ID :id.',array(':id'=>$id)));
 		}
 		
 		// If this page is an external link, there is no content to edit, redirect to edit meta
@@ -99,14 +99,14 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 
 		if ( ! $parent->loaded())
 		{
-			return $this->admin_error("Could not find page with id <strong>" . (int) $id . "</strong>");
+			return $this->admin_error(__('Could not find page with ID :id.',array(':id'=>$id)));
 		}
 		
 		// Create the new page object
 		$page = Sprig::factory('kohanut_page');
 		
 		// Create the view
-		$this->view->title="Add Page";
+		$this->view->title=__('Adding New Page');
 		$this->view->body = new View('kohanut/pages/add',array('errors'=>false,'success'=>false,'parent'=>$parent,'page'=>$page));
 		
 		if ($_POST)
@@ -137,11 +137,11 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 
 		if ( ! $page->loaded())
 		{
-			return $this->admin_error("Could not find page with id <strong>" . (int) $id . "</strong>");
+			return $this->admin_error(__('Could not find page with ID :id.',array(':id'=>$id)));
 		}
 		
 		// Create the view
-		$this->view->title = "Move Page";
+		$this->view->title = __('Move Page');
 		$this->view->body = new View('kohanut/pages/move',array('page'=>$page,'errors'=>false));
 		
 		if ($_POST)
@@ -165,11 +165,11 @@ class Controller_Kohanut_Pages extends Controller_Kohanut_Admin {
 
 		if ( ! $page->loaded())
 		{
-			return $this->admin_error("Could not find page with id <strong>" . (int) $id . "</strong>");
+			return $this->admin_error(__('Could not find page with ID :id.',array(':id'=>$id)));
 		}
 		
 		// Build the view
-		$this->view->title="Delete Page";
+		$this->view->title=__('Delete Page');
 		$this->view->body = new View('kohanut/pages/delete',array('page'=>$page));
 		
 		if ($_POST)

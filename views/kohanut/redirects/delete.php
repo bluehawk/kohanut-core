@@ -3,14 +3,14 @@
 	<div class="box">
 		<h1>Delete Redirect</h1>
 		
-		<p style="color:red;font-weight:bold;">Are you sure you want to delete the redirect from &quot;<?php echo $redirect->url ?>&quot; to &quot;<?php echo $redirect->newurl ?>&quot;? This cannot be undone.</p>
+		<p><strong><?php echo __('Are you sure you want to delete the redirect from ":url" to ":newurl"?',array(':url'=>$redirect->url,':newurl'=>$redirect->newurl)) ?> <span style="color:red;"><?php echo __('This is not reversible!') ?></p>
 			
 		<?php include Kohana::find_file('views', 'kohanut/errors') ?>
 		
 		<?php echo Form::open() ?>
 			<p>
-				<input type="submit" name="submit" value="Yes, delete it." class="submit" />
-				<?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'redirects')),'cancel'); ?>
+				<?php echo form::submit('submit',__('Yes, delete it.'),array('class'=>'submit')) ?>
+				<?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'redirects')),__('cancel')); ?>
 			</p>
 		</form>
 		

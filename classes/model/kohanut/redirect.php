@@ -14,16 +14,14 @@ class Model_Kohanut_Redirect extends Sprig {
 		$this->_fields += array(
 			'id' => new Sprig_Field_Auto,
 			'url' => new Sprig_Field_Char(array(
-				'label' => 'Old URL',
 				'empty' => TRUE,
 				'default' => NULL,
 			)),
 			'newurl' => new Sprig_Field_Char(array(
-				'label' => 'New URL',
+				
 			)),
 			'type' => new Sprig_Field_Enum(array(
-				'choices' => array('301'=>'301 (Permanent)','302'=>'302 (Temporary)'),
-				'label' => 'Type',
+				'choices' => array('301'=> '301 ('.__('permanent').')' ,'302'=> '302 ('.__('temporary').')' ),
 			)),
 		);
 	}

@@ -22,7 +22,7 @@ Route::set('kohanut-media','admin/media(/<file>)', array('file' => '.+'))
 	));
 
 // Kohanut login route
-Route::set('kohanut-login','admin/<action>',array('action'=>'login|logout'))
+Route::set('kohanut-login','admin/<action>',array('action'=>'login|logout|lang'))
 	->defaults(array(
 		'controller' => 'admin',
 		'directory'  => 'kohanut',

@@ -1,32 +1,32 @@
 <div class="grid_12">
 	
 	<div class="box">
-		<h1>Edit Snippet</h1>
+		<h1><?php echo __('Edit Snippet') ?></h1>
 		
 		<?php include Kohana::find_file('views', 'kohanut/errors') ?>
 			
 			<?php echo Form::open() ?>
 			
 			<p>
-				<label><?php echo $snippet->label('name') ?></label>
+				<label><?php echo __('Name') ?></label>
 				<?php echo $snippet->input('name') ?>
 			</p>
 			
 			<p>
-				<label><?php echo $snippet->label('code') ?></label>
+				<label><?php echo __('Content') ?></label>
 				<?php echo $snippet->input('code') ?>
 			</p>
 			
 			<p>
 				<?php echo $snippet->input('markdown',array('class'=>'check')) ?>
-				Enable Markdown
+				<?php echo __('Enable :Markdown',array(':Markdown'=>html::anchor('http://kohanut.com/docs/using.markdown','Markdown',array('target'=>'_blank')))) ?>
 				<?php echo $snippet->input('twig',array('class'=>'check')) ?>
-				Enable Twig
+				<?php echo __('Enable :Twig',array(':Twig'=>html::anchor('http://kohanut.com/docs/using.kohanut','Twig',array('target'=>'_blank')))) ?>
 			</p>
 			
 			<p>
-				<input type="submit" name="submit" value="Save Changes" class="submit" />
-				<?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'snippets')),'cancel'); ?>
+				<?php echo form::submit('submit',__('Save Changes'),array('class'=>'submit')) ?>
+				<?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'snippets')),__('cancel')); ?>
 			</p>
 			
 			<?php echo Form::close();  ?>
@@ -37,7 +37,7 @@
 
 <div class="grid_4">
 	<div class="box">
-		<h1>Help</h1>
+		<h1><?php echo __('Help') ?></h1>
 		<p>Help goes here</p>
 	</div>
 </div>

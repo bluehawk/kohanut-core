@@ -1,16 +1,16 @@
 <div class="grid_16">
 	
 	<div class="box">
-		<h1>Delete Layout</h1>
+		<h1><?php echo __('Delete Layout') ?></h1>
 		
-		<p style="color:red;font-weight:bold;">Are you sure you want to delete the layout &quot;<?php echo  $layout->name ?>&quot;? This cannot be undone.</p>
+		<p><strong><?php echo __('Are you sure you want to delete the layout ":name"?',array(':name'=>$layout->name))?> <span style="color:red;"><?php echo __('This is not reversible!') ?></span></strong></p>
 			
 		<?php include Kohana::find_file('views', 'kohanut/errors') ?>
 		
 		<?php echo Form::open() ?>
 			<p>
-				<input type="submit" name="submit" value="Yes, delete it." class="submit" />
-				<?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'layouts')),'cancel'); ?>
+				<?php echo form::submit('submit',__('Yes, delete it.'),array('class'=>'submit')) ?>
+				<?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'layouts')),__('cancel')); ?>
 			</p>
 		</form>
 		

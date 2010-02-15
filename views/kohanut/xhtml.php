@@ -22,9 +22,9 @@
 <!-- Admin mode header -->
 <div id="kohanut_header">
 	<p>
-		<?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'pages')),"&laquo; Back") ?> | 
-		You are editing <strong><?php echo Kohanut::$page->name ?></strong> |
-		<?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'pages','action'=>'meta','params'=>Kohanut::$page->id)),"Edit meta data") ?>
+		<?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'pages')),'&laquo; ' . __('Back')) ?> | 
+		<?php echo __('You are editing :page',array(':page'=>'<strong>'.Kohanut::$page->name.'</strong>')) ?> |
+		<?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'pages','action'=>'meta','params'=>Kohanut::$page->id)),__('Edit meta data')) ?>
 	</p>
 </div>
 <!-- End Admin mode header -->

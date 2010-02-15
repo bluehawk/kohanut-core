@@ -1,24 +1,24 @@
 <div class="grid_12">
 	
 	<div class="box">
-		<h1>Move Page</h1>
+		<h1><?php echo __('Move Page') ?></h1>
 		
 		<?php echo Form::open(); ?>
-			<p><label>Move "<?php echo $page->name ?>" to </label>
+			<p><label><?php echo __('Move ":page" to',array(':page'=>$page->name)) ?></label>
 				<?php
 				echo Form::select('action',array(
-					'before'=>'before',
-					'after'=>'after',
-					'first'=>'first child of',
-					'last'=>'last child of',
+					'before'=>__('before'),
+					'after'=>__('after'),
+					'first'=>__('first child of'),
+					'last'=>__('last child of'),
 				));
 				echo Form::select('target',$page->select_list('id','name','&nbsp;&nbsp;&nbsp;'));
 				?>
 			</p>
 			
 			<p>
-				<?php echo Form::submit('submit','Move Page',array('class'=>'submit')); ?>
-				<?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'pages')),'cancel'); ?>
+				<?php echo Form::submit('submit',__('Move Page'),array('class'=>'submit')); ?>
+				<?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'pages')),__('cancel')); ?>
 			</p>
 			
 			<div class="clear"></div>
@@ -31,14 +31,10 @@
 <div class="grid_4">
 	
 	<div class="box">
-		<h1>Help</h1>
+		<h1><?php echo __('Help') ?></h1>
 		<div class="content">
 			
-			<p>To move this page to a new location, use the drop downs to choose the new location for the page.</p>
-			
-			<p><strong>Note:</strong> This will move the page, and all of its children to the new location.</p>
-			
-			<p>Example, If you selected &quot;before&quot; and &quot;Products&quot; the page would be moved to before Products.</p>
+			<p><?php echo __('To move this page to a new location, use the drop downs to choose the new location for the page.<br/><br/>This will move the page, and all of its children to the new location.<br/><br/>Example: If you selected "before" and "Products" the page would be moved to before Products.') ?></p>
 			
 		</div>
 	</div>

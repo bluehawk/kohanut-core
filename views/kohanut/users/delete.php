@@ -1,16 +1,16 @@
 <div class="grid_16">
 	
 	<div class="box">
-		<h1>Delete User</h1>
+		<h1><?php echo __('Delete User') ?></h1>
 		
-		<p style="color:red;font-weight:bold;">Are you sure you want to delete the user &quot;<?php echo  $user->username ?>&quot;? This cannot be undone.</p>
+		<p><strong><?php echo __('Are you sure you want to delete the user ":name"?',array(':name'=>$user->username)) ?> <span style="color:red;"><?php echo __('This is not reversible!') ?></span></p>
 			
 		<?php include Kohana::find_file('views', 'kohanut/errors') ?>
 		
 		<?php echo Form::open() ?>
 			<p>
-				<input type="submit" name="submit" value="Yes, delete." class="submit" />
-				<?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'users')),'cancel'); ?>
+				<?php echo form::submit('submit',__('Yes, delete it.'),array('class'=>'submit')) ?>
+				<?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'users')),__('cancel')); ?>
 			</p>
 		</form>
 		

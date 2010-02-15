@@ -33,7 +33,7 @@ class Controller_Kohanut_Elements extends Controller_Kohanut_Admin {
 		// Load the block and ensure it exists
 		$block = Sprig::factory('kohanut_block',array('id'=>$id))->load();
 		if ( ! $block->loaded())
-			return $this->admin_error("Couldn't find block with id $id");
+			return $this->admin_error(__('Couldn\'t find block ID :id.',array(':id'=>$id)));
 			
 		// Find a block on the same page and area, with a lower order.
 		$query = DB::select()->where('order','<',$block->order)->order_by('order','DESC');
@@ -69,7 +69,7 @@ class Controller_Kohanut_Elements extends Controller_Kohanut_Admin {
 		// Load the block and ensure it exists
 		$block = Sprig::factory('kohanut_block',array('id'=>$id))->load();
 		if ( ! $block->loaded())
-			return $this->admin_error("Couldn't find block with id $id");
+			return $this->admin_error(__('Couldn\'t find block ID :id.',array(':id'=>$id)));
 			
 		// Find a block on the same page and area, with a lower order.
 		$query = DB::select()->where('order','>',$block->order)->order_by('order','ASC');
@@ -105,7 +105,7 @@ class Controller_Kohanut_Elements extends Controller_Kohanut_Admin {
 		$area = Arr::get($params,2,NULL);
 		
 		if ($page == NULL OR $type == NULL OR $area == NULL)
-			return $this->admin_error("Add requires 3 parameters, type, page and area.");
+			return $this->admin_error(__('Add requires 3 parameters, type, page and area.'));
 		
 		$type = (int) $type;
 		$page = (int) $page;
@@ -114,11 +114,11 @@ class Controller_Kohanut_Elements extends Controller_Kohanut_Admin {
 		$type = Sprig::factory('kohanut_elementtype',array('id'=> (int) $type ))->load();
 		
 		if ( ! $type->loaded())
-			return $this->admin_error("Elementtype " . (int) $type . " could not be loaded");
+			return $this->admin_error(__('Elementtype :type could not be loaded.',array(':type'=> (int) $block->elementtype->id)));
 		
 		$class = Kohanut_Element::factory($type->name);
 		
-		$this->view->title = "Add Element";
+		$this->view->title = __('Add Element');
 		$this->view->body = $class->action_add((int) $page, (int) $area);
 		$this->view->body->page = $page;
 	}
@@ -138,13 +138,13 @@ class Controller_Kohanut_Elements extends Controller_Kohanut_Admin {
 		$block = Sprig::factory('kohanut_block',array('id'=>$id))->load();
 		
 		if ( ! $block->loaded())
-			return $this->admin_error("Could not find block with id " . $id );
+			return $this->admin_error(__('Couldn\'t find block ID :id.',array(':id'=>$id)));
 			
 		// Load the type
 		$type = $block->elementtype->load();
 		
 		if ( ! $type->loaded())
-			return $this->admin_error("Elementtype " . (int) $block->elementtype->id . " could not be loaded");
+			return $this->admin_error(__('Elementtype :type could not be loaded.',array(':type'=> (int) $block->elementtype->id)));
 		
 		$class = Kohanut_Element::factory($type->name);
 		$class->id = (int) $block->element;
@@ -152,9 +152,9 @@ class Controller_Kohanut_Elements extends Controller_Kohanut_Admin {
 		$class->block = $block;
 		
 		if ( ! $class->loaded())
-			return $this->admin_error("Elementtype " . $type->name . " with id " . (int) $block->element . " could not be loaded");
+			return $this->admin_error(__(':type with ID :id could not be found.',array(':type'=>$type->name,':id'=>(int)$block->element)));
 		
-		$this->view->title = "Edit Element";
+		$this->view->title = __('Editing :element',array(':element'=>__(ucfirst($type->name))));
 		$this->view->body = $class->action_edit();
 		$this->view->body->page = $block->page->id;
 	}
@@ -174,20 +174,23 @@ class Controller_Kohanut_Elements extends Controller_Kohanut_Admin {
 		$block = Sprig::factory('kohanut_block',array('id'=>$id))->load();
 		
 		if ( ! $block->loaded())
-			return $this->admin_error("Could not find block with id " . $id );
+			return $this->admin_error(__('Couldn\'t find block ID :id.',array(':id'=>$id)));
 		
 		// Load the type
 		$type = $block->elementtype->load();
 		
 		if ( ! $type->loaded())
-			return $this->admin_error("Elementtype " . (int) $block->elementtype->id . " could not be loaded");
+			return $this->admin_error(__('Elementtype :type could not be loaded.',array(':type'=> (int) $block->elementtype->id)));
 			
 		$class = Kohanut_Element::factory($type->name);
 		$class->id = $block->element;
 		$class->block = $block;
 		$class->load();
 		
-		$this->view->title = "Delete Element";
+		if ( ! $class->loaded())
+			return $this->admin_error(__(':type with ID :id could not be found.',array(':type'=>$type->name,':id'=>(int)$block->element)));
+		
+		$this->view->title = __('Delete :element',array(':element'=>__(ucfirst($type->name))));
 		$this->view->body = $class->action_delete();
 		
 	}

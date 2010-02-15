@@ -1,7 +1,7 @@
 <div class="grid_12">
 	
 	<div class="box">
-		<h1>Layouts</h1>
+		<h1><?php echo __('Layouts') ?></h1>
 		
 		<ul id="layoutlist" class="standardlist">
 		<?php
@@ -11,15 +11,13 @@
 			foreach($layouts as $item)
 			{
 			?>
-				<li <?php if ($zebra) echo "class='z' " ?> title="Click to edit" >
+				<li <?php echo text::alternate('class="z"','')?> title="<?php echo __('Click to edit')?>" >
 					<div class='actions'>
 						<?php
 						echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'layouts','action'=>'edit','params'=>$item->id)),
-							 html::image( Route::get('kohanut-media')->uri(array('file'=>'img/fam/layout_edit.png')) ) . 
-							 "<br/><span>edit</span>",array('title'=>'Click to edit'));
+							 '<div class="fam-layout-edit"></div><span>'.__('edit').'</span>',array('title'=>__('Click to edit')));
 						echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'layouts','action'=>'delete','params'=>$item->id)),
-							 html::image( Route::get('kohanut-media')->uri(array('file'=>'img/fam/layout_delete.png')) ) . 
-							 "<br/><span>delete</span>",array('title'=>'Click to delete'));
+							 '<div class="fam-layout-delete"></div><span>'.__('delete').'</span>',array('title'=>__('Click to delete')));
 						?>
 					</div>
 					<?php
@@ -36,7 +34,7 @@
 		}
 		else
 		{
-			echo "<li>No layouts found</li>";
+			echo '<li>'.__('No layouts found').'</li>';
 		}
 		?>
 		</ul>
@@ -48,8 +46,8 @@
 
 <div class="grid_4">
 	<div class="box">
-		<h1>Help</h1>
-		<p><?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'layouts','action'=>'new')),"Create a new Layout",array('class'=>'button')); ?></p>
+		<h1><?php echo __('Help') ?></h1>
+		<p><?php echo html::anchor(Route::get('kohanut-admin')->uri(array('controller'=>'layouts','action'=>'new')),__('Create a New Layout'),array('class'=>'button')); ?></p>
 		<p>Help goes here</p>
 	</div>
 </div>

@@ -62,6 +62,27 @@ class Controller_Kohanut_Admin extends Controller {
 			}
 		}
 		
+		// Check for language change
+		if (isset($_GET['lang']))
+		{
+			$lang = $_GET['lang'];
+
+			// Load the accepted language list
+			$translations = array_keys(Kohana::message('kohanut', 'translations'));
+
+			if (in_array($lang, $translations))
+			{
+				// Set the language cookie
+				Cookie::set('kohanut_language', $lang, Date::YEAR);
+			}
+
+			// Reload the page
+			$this->request->redirect(Route::get('kohanut-admin')->uri(array('controller'=>'pages')));
+		}
+		
+		// Set the translation language
+		I18n::$lang = Cookie::get('kohanut_language', Kohana::config('kohanut')->lang);
+		
 		// Include Twig if it hasn't been yet
 		if ( ! class_exists('Twig_Autoloader'))
 		{
@@ -194,4 +215,9 @@ class Controller_Kohanut_Admin extends Controller {
   		// Redirect to the login
   		$this->request->redirect(Route::get('kohanut-login')->uri(array('action'=>'login')));
   	}
+	
+	public function action_lang()
+	{
+		$this->view->body = View::factory('kohanut/lang',array('translations'=>Kohana::message('kohanut', 'translations')));
+	}
 }
