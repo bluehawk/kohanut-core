@@ -10,7 +10,7 @@
 class Kohanut_Core {
 
 	// Kohanut version
-	const VERSION = "0.5.0";
+	const VERSION = "0.6.1";
 	
 	// Page that is selected. used when editing and viewing a page
 	public static $page = null;

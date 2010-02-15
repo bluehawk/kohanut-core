@@ -32,7 +32,6 @@ class Kohanut_Twig {
 			self::$twig = new Twig_Environment($loader, array(
 				'cache' => APPPATH.'cache/twig',
 			));
-			self::$twig->addExtension(new Kohanut_Twig_Extension());
 		}
 		
 		$template = self::$twig->loadTemplate($code);
