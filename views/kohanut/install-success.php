@@ -15,9 +15,9 @@
 	<div class="grid_6" style="width:350px;margin:100px auto;display:block;float:none;" >
 		<div class="box">
 			
-			<h1><?php __('Success') ?></h1>
+			<h1><?php echo __('Success') ?></h1>
 
-			<p><?php __('Installed successfully! Be sure to delete or rename the folder :installer',array('installer'=>'<strong>modules/kohanut/classes/kohanut/install</strong>')) ?></p>
+			<p><?php echo __('Installed successfully! Be sure to delete or rename the folder :installer',array('installer'=>'<strong>modules/kohanut/classes/kohanut/install</strong>')) ?></p>
 			
 			<p><?php echo html::anchor(Route::get('kohanut-login')->uri(array('action'=>'login')),__('Login'),array('class'=>'button')) ?></p>
 
