@@ -190,7 +190,21 @@ return array
 	'Delete Redirect' => 'Eliminar Redirecciones',
 	'Are you sure you want to delete the redirect from ":url" to ":newurl"?' => '¿Estás seguro de que desea eliminar la redirección de ":url" a ":newurl"?',
 
-
+	// Validate errors
+	':field must not be empty' => ':field no debe estar vacía',
+	':field must be the same as :param1' => ':field debe ser el mismo que :param1',
+	':field does not match the required format' => ':field no coincide con el formato exigido',
+	':field must be exactly :param1 characters long' => ':field debe ser exactamente :param1 caracteres de longitud',
+	':field must be at least :param1 characters long' => ':field debe ser al menos :param1 caracteres de longitud',
+	':field must be less than :param1 characters long' => ':field debe ser inferior a :param1 caracteres de longitud',
+	':field must be one of the available options' => ':field debe ser una de las opciones disponibles',
+	':field must be a digit' => ':field debe ser un dígito',
+	':field must be a decimal with :param1 places' => ':field debe ser un decimal con :param1 lugares',
+	':field must be within the range of :param1 to :param2' => ':field debe estar dentro del rango de :param1 a :param2',
+	
+	// Kohanut specific errors (found in modules/kohanut/messages/kohanut.php)
+	'The username or password you entered is incorrect.' => 'El nombre de usuario o contraseña que ha introducido es incorrecta.',
+	
 	// Errors
 	'Couldn\'t find block ID :id.' => 'No se pudo encontrar bloque ID :id.',
 	'Elementtype :type could not be loaded.' => 'Tipo de elemento :type no se encontró.',
@@ -198,20 +212,4 @@ return array
 	'Could not find layout with ID :id.' => 'No se pudo encontrar el diseño con ID :id.',
 	'Delete failed! This is most likely caused because this template is still being used by one or more pages.' => 'Eliminar failed! Esto es muy probablemente causado porque esta plantilla todavía está siendo utilizado por una o más páginas.',
 	'Could not find page with ID :id.' => 'No se pudo encontrar la página con el ID :id.',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-	'' => '',
-
 );

@@ -40,25 +40,25 @@ class Controller_Kohanut_Install_Install extends Controller {
 		DB::query(NULL,"
 			CREATE TABLE `kohanut_layouts` (
 				`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-				`name` varchar(50) CHARACTER SET latin1 NOT NULL,
-				`desc` varchar(256) CHARACTER SET latin1 DEFAULT NULL,
-				`code` text CHARACTER SET latin1,
+				`name` varchar(50) NOT NULL,
+				`desc` varchar(256) DEFAULT NULL,
+				`code` text,
 				PRIMARY KEY (`id`),
 				UNIQUE KEY `name` (`name`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8;")->execute();
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;")->execute();
 		
 		DB::query(NULL,"
 			CREATE TABLE `kohanut_pages` (
 				`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-				`url` varchar(256) CHARACTER SET latin1 DEFAULT NULL,
-				`name` varchar(128) CHARACTER SET latin1 NOT NULL,
+				`url` varchar(256) DEFAULT NULL,
+				`name` varchar(128) NOT NULL,
 				`layout` int(10) unsigned DEFAULT '0',
 				`islink` tinyint(1) unsigned DEFAULT '0',
 				`showmap` tinyint(3) unsigned DEFAULT '1',
 				`shownav` tinyint(3) unsigned DEFAULT '1',
-				`title` varchar(256) CHARACTER SET latin1 DEFAULT NULL,
-				`metadesc` text CHARACTER SET latin1,
-				`metakw` text CHARACTER SET latin1,
+				`title` varchar(256) DEFAULT NULL,
+				`metadesc` text,
+				`metakw` text,
 				`lft` int(10) unsigned DEFAULT NULL,
 				`rgt` int(10) unsigned DEFAULT NULL,
 				`lvl` int(10) unsigned DEFAULT NULL,
@@ -66,25 +66,25 @@ class Controller_Kohanut_Install_Install extends Controller {
 				PRIMARY KEY (`id`),
 				KEY `Page-Layout` (`layout`),
 				CONSTRAINT `Page-Layout` FOREIGN KEY (`layout`) REFERENCES `kohanut_layouts` (`id`) ON UPDATE NO ACTION
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8;")->execute();
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;")->execute();
 			
 		DB::query(NULL,"
 			CREATE TABLE `kohanut_redirects` (
 				`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-				`url` varchar(255) CHARACTER SET latin1 NOT NULL,
-				`newurl` varchar(255) CHARACTER SET latin1 NOT NULL,
-				`type` enum('301','302') CHARACTER SET latin1 NOT NULL DEFAULT '302',
+				`url` varchar(255) NOT NULL,
+				`newurl` varchar(255) NOT NULL,
+				`type` enum('301','302') NOT NULL DEFAULT '302',
 				PRIMARY KEY (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8;")->execute();
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;")->execute();
 		
 		DB::query(NULL,"
 			CREATE TABLE `kohanut_users` (
 				`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-				`username` varchar(30) CHARACTER SET latin1 NOT NULL,
-				`password` varchar(40) CHARACTER SET latin1 DEFAULT NULL,
+				`username` varchar(30) NOT NULL,
+				`password` varchar(40) DEFAULT NULL,
 				`last_login` datetime DEFAULT NULL,
 				PRIMARY KEY (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8;")->execute();
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;")->execute();
 		
 		DB::query(NULL,"
 			CREATE TABLE `kohanut_blocks` (
@@ -95,40 +95,40 @@ class Controller_Kohanut_Install_Install extends Controller {
 				`elementtype` int(11) NOT NULL,
 				`element` int(11) NOT NULL,
 				PRIMARY KEY (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8;")->execute();
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;")->execute();
 		
 		DB::query(NULL,"
 			CREATE TABLE `kohanut_element_content` (
 				`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-				`code` text CHARACTER SET latin1 NOT NULL,
+				`code` text NOT NULL,
 				`markdown` int(1) unsigned NOT NULL DEFAULT '1',
 				`twig` int(1) unsigned NOT NULL DEFAULT '1',
 				PRIMARY KEY (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8;")->execute();
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;")->execute();
 				
 		DB::query(NULL,"
 			CREATE TABLE `kohanut_element_snippet` (
 				`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-				`code` text CHARACTER SET latin1 NOT NULL,
-				`name` varchar(127) CHARACTER SET latin1 NOT NULL,
+				`code` text NOT NULL,
+				`name` varchar(127) NOT NULL,
 				`markdown` tinyint(1) unsigned NOT NULL DEFAULT '1',
 				`twig` tinyint(1) unsigned NOT NULL DEFAULT '1',
 				PRIMARY KEY (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8;")->execute();
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;")->execute();
 				
 		DB::query(NULL,"
 			CREATE TABLE `kohanut_element_request` (
 				`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-				`url` text CHARACTER SET latin1 NOT NULL,
+				`url` text NOT NULL,
 				PRIMARY KEY (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8;")->execute();
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;")->execute();
 		
 		DB::query(NULL,"
 			CREATE TABLE `kohanut_elementtypes` (
 				`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-				`name` varchar(127) CHARACTER SET latin1 NOT NULL,
+				`name` varchar(127) NOT NULL,
 				PRIMARY KEY (`id`)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8;")->execute();
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;")->execute();
 		
 		// Create the admin user
 		$admin = Sprig::factory('kohanut_user',array(
