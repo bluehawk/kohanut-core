@@ -64,7 +64,7 @@ class Kohanut_Core {
 	 * @param   string   string of parameters
 	 * @return  string
 	 */
-	public static function main_nav($params = "")
+	public static function main_nav($params = NULL)
 	{
 		if (Kohana::$profiling === TRUE)
 		{
@@ -78,16 +78,22 @@ class Kohanut_Core {
 			return "Kohanut::main_nav failed because page is not loaded";
 		}
 		
-		// Main nav defaults
-		$defaults = array('header'=>false,'depth'=>2);
-		
-		// Create options array
+		// Create the options
+		$defaults = array('header'=>0,'depth'=>2);
 		$options = array_merge($defaults,self::params($params));
+		
+		// If caching is on, and this nav is cached, return it
+		if ( Kohana::config('kohanut')->cache == true AND $cache = Kohana::cache('page_'.self::$page->id.'_nav_'.self::_implode($options), NULL, Kohana::config('kohanut')->cachelength))
+			return $cache;
 		
 		// Get nav nodes
 		$descendants = self::$page->root()->nav_nodes($options['depth']);
 		
 		$out = View::factory('kohanut/nav',array('nodes'=>$descendants,'level_column'=>'lvl','options'=>$options))->render();
+		
+		// If caching is on, save the nav
+		if (Kohana::config('kohanut')->cache == true)
+			Kohana::cache('page_'.self::$page->id.'_nav_'.self::_implode($options),$out);
 		
 		if (isset($benchmark))
 		{
@@ -104,7 +110,7 @@ class Kohanut_Core {
 	 * @param   string   string of parameters
 	 * @return  string
 	 */
-	public static function nav($params = "")
+	public static function nav($options = NULL)
 	{
 		if (Kohana::$profiling === TRUE)
 		{
@@ -118,24 +124,32 @@ class Kohanut_Core {
 			return "Kohanut::secondary_nav failed because page is not loaded";
 		}
 		
-		$options = self::params($params);
+		$options = self::params($options);
 		
-		if (self::$page->has_children())
-			$page = self::$page;
-		else
+		// If caching is on, and this nav is cached, return it
+		if ( Kohana::config('kohanut')->cache == true AND $cache = Kohana::cache('page_'.self::$page->id.'_nav_'.self::_implode($options), NULL, Kohana::config('kohanut')->cachelength))
+			return $cache;
+		
+		if ( ! self::$page->has_children())
 			$page = self::$page->parent();
+		else
+			$page = self::$page;
 		
 		// Get nav nodes
-		$descendants = $page->nav_nodes($options['depth']);
+		$descendants = $page->nav_nodes(Arr::get($options,'depth',2));
 		
 		$out = View::factory('kohanut/nav',array('nodes'=>$descendants,'level_column'=>'lvl','options'=>$options))->render();
+		
+		// If caching is on, save the nav
+		if (Kohana::config('kohanut')->cache == true)
+			Kohana::cache('page_'.self::$page->id.'_nav_'.self::_implode($options),$out);
 		
 		if (isset($benchmark))
 		{
 			// Stop the benchmark
 			Profiler::stop($benchmark);
 		}
-		
+			
 		return $out;
 	}
 	
@@ -487,6 +501,9 @@ class Kohanut_Core {
 	 */
 	private static function params($var)
 	{
+		if ($var === NULL)
+			return array();
+		
 		$var = explode(',',$var);
 		
 		$new = array();
@@ -501,5 +518,15 @@ class Kohanut_Core {
 		}
 		
 		return $new;
+	}
+	
+	private static function _implode($var)
+	{
+		$out = array();
+		foreach ($var as $key => $value)
+		{
+			$out[] = $key."=".$value;
+		}
+		return implode(',',$out);
 	}
 }

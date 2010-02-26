@@ -191,5 +191,4 @@ class Kohanut_Nav {
 		$out .= '</li>';
 		return $out;
 	}
-	
 }

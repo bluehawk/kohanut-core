@@ -33,8 +33,6 @@
 
 <?php echo $layoutcode ?>
 <!-- End Page Layout Code -->
-<div id="kohana-profiler">
-<?php //echo View::factory('profiler/stats') ?>
-</div>
+<?php if ( ! IN_PRODUCTION) echo View::factory('profiler/stats') ?>
 </body>
 </html>
