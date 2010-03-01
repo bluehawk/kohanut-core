@@ -64,7 +64,7 @@ class Kohanut_Core {
 	 * @param   string   string of parameters
 	 * @return  string
 	 */
-	public static function main_nav($params = NULL)
+	public static function main_nav($params = "")
 	{
 		if (Kohana::$profiling === TRUE)
 		{
@@ -78,22 +78,16 @@ class Kohanut_Core {
 			return "Kohanut::main_nav failed because page is not loaded";
 		}
 		
-		// Create the options
-		$defaults = array('header'=>0,'depth'=>2);
-		$options = array_merge($defaults,self::params($params));
+		// Main nav defaults
+		$defaults = array('header'=>false,'depth'=>2);
 		
-		// If caching is on, and this nav is cached, return it
-		if ( Kohana::config('kohanut')->cache == true AND $cache = Kohana::cache('page_'.self::$page->id.'_nav_'.self::_implode($options), NULL, Kohana::config('kohanut')->cachelength))
-			return $cache;
+		// Create options array
+		$options = array_merge($defaults,self::params($params));
 		
 		// Get nav nodes
 		$descendants = self::$page->root()->nav_nodes($options['depth']);
 		
 		$out = View::factory('kohanut/nav',array('nodes'=>$descendants,'level_column'=>'lvl','options'=>$options))->render();
-		
-		// If caching is on, save the nav
-		if (Kohana::config('kohanut')->cache == true)
-			Kohana::cache('page_'.self::$page->id.'_nav_'.self::_implode($options),$out);
 		
 		if (isset($benchmark))
 		{
@@ -110,7 +104,7 @@ class Kohanut_Core {
 	 * @param   string   string of parameters
 	 * @return  string
 	 */
-	public static function nav($options = NULL)
+	public static function nav($params = "")
 	{
 		if (Kohana::$profiling === TRUE)
 		{
@@ -124,32 +118,24 @@ class Kohanut_Core {
 			return "Kohanut::secondary_nav failed because page is not loaded";
 		}
 		
-		$options = self::params($options);
+		$options = self::params($params);
 		
-		// If caching is on, and this nav is cached, return it
-		if ( Kohana::config('kohanut')->cache == true AND $cache = Kohana::cache('page_'.self::$page->id.'_nav_'.self::_implode($options), NULL, Kohana::config('kohanut')->cachelength))
-			return $cache;
-		
-		if ( ! self::$page->has_children())
-			$page = self::$page->parent();
-		else
+		if (self::$page->has_children())
 			$page = self::$page;
+		else
+			$page = self::$page->parent();
 		
 		// Get nav nodes
-		$descendants = $page->nav_nodes(Arr::get($options,'depth',2));
+		$descendants = $page->nav_nodes($options['depth']);
 		
 		$out = View::factory('kohanut/nav',array('nodes'=>$descendants,'level_column'=>'lvl','options'=>$options))->render();
-		
-		// If caching is on, save the nav
-		if (Kohana::config('kohanut')->cache == true)
-			Kohana::cache('page_'.self::$page->id.'_nav_'.self::_implode($options),$out);
 		
 		if (isset($benchmark))
 		{
 			// Stop the benchmark
 			Profiler::stop($benchmark);
 		}
-			
+		
 		return $out;
 	}
 	
@@ -335,23 +321,20 @@ class Kohanut_Core {
 	/* CSS control
 	 * add and render stylesheets <link>s to a page
 	 */
-	public static function style($stylesheets = array())
+	public static function style($stylesheet,$media=NULL)
 	{
-		if ( ! is_array($stylesheets))
-			$stylesheets = array($stylesheets);
-		
-		foreach ($stylesheets as $key => $stylesheet)
-		{
-			self::$_stylesheets[] = $stylesheet;
-		}
+		self::$_stylesheets[$stylesheet] = $media;
 	}
 	
 	public static function style_render()
 	{
 		$out = "";
-		foreach (self::$_stylesheets as $key => $stylesheet)
+		foreach (self::$_stylesheets as $stylesheet => $media)
 		{
-			$out .= "\t" . html::style($stylesheet) . "\n";
+			if ($media != NULL)
+				$out .= "\t" . html::style($stylesheet,array('media'=>$media)) . "\n";
+			else
+				$out .= "\t" . html::style($stylesheet) . "\n";
 		}
 		return $out;
 	}
@@ -501,9 +484,6 @@ class Kohanut_Core {
 	 */
 	private static function params($var)
 	{
-		if ($var === NULL)
-			return array();
-		
 		$var = explode(',',$var);
 		
 		$new = array();
@@ -518,15 +498,5 @@ class Kohanut_Core {
 		}
 		
 		return $new;
-	}
-	
-	private static function _implode($var)
-	{
-		$out = array();
-		foreach ($var as $key => $value)
-		{
-			$out[] = $key."=".$value;
-		}
-		return implode(',',$out);
 	}
 }
