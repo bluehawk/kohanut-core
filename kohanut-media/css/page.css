@@ -1,19 +1,44 @@
 #kohanut_header {
 	background:#089708 url('../img/header-bg.gif') bottom left repeat-x scroll;
-	padding:5px 15px;
+	padding:8px 15px;
+	margin:0;
 	color:white;
-	height:30px;
+	height:24px;
+	text-align:left;
 }
-
+	#kohanut_header p {
+		margin:0;
+		padding:0;
+	}
 	#kohanut_header a {
 		color:white;
+		background:transparent;
+		padding:0;
+		margin:0;
+		text-decoration:underline;
+		font-size:14px;
+		font-family: Times New Roman, Times, serif;
+	}
+	#kohanut_header a:hover {
+		text-decoration:none;
 	}
 	
+
+#kohanut_admin .kohanut_area,
+#kohanut_admin .kohanut_area_title,
+#kohanut_admin .kohanut_element_ctl, 
 #kohanut_admin .kohanut_element_ctl * {
 	text-decoration:none;
 	text-transform:none;
 	padding:0;
 	margin:0;
+	background:none;
+	color:black;
+	text-align:left;
+	text-transform:none;
+	text-decoration:none;
+	font-weight:normal;
+	font-family: Arial,Helvetica,sans-serif;
 }
 
 #kohanut_admin .kohanut_area {
@@ -25,11 +50,10 @@
 
 #kohanut_admin .kohanut_area_title {
 	margin:0;
-	padding:4px 6px;
+	padding:4px 8px;
 	background:#158C15;
 	color:white;
 	font-weight:bold;
-	font-family: Arial,Helvetica,sans-serif;
 	font-size:12px;
 	width:auto;
 	float:left;
@@ -74,11 +98,6 @@
 	
 	#kohanut_admin .kohanut_element_ctl ul.kohanut_element_actions {
 		display:none;
-		
-	}
-	
-	#kohanut_admin .kohanut_element_ctl:hover ul.kohanut_element_actions {
-		display:block;
 		position:absolute;
 		background:#666666;
 		z-index:1;
@@ -87,7 +106,10 @@
 		list-style:none;
 		-moz-border-radius-bottomright:5px;
 		-webkit-border-bottom-right-radius:5px;
-
+	}
+	
+	#kohanut_admin .kohanut_element_ctl:hover ul.kohanut_element_actions {
+		display:block;
 	}
 	
 	#kohanut_admin .kohanut_element_ctl ul.kohanut_element_actions li {
