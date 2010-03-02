@@ -23,11 +23,12 @@
 		text-decoration:none;
 	}
 	
-
-#kohanut_admin .kohanut_area,
 #kohanut_admin .kohanut_area_title,
-#kohanut_admin .kohanut_element_ctl, 
-#kohanut_admin .kohanut_element_ctl * {
+#kohanut_admin .kohanut_element_ctl,
+#kohanut_admin .kohanut_element_ctl>p.title,
+#kohanut_admin .kohanut_element_ctl ul.kohanut_element_actions,
+#kohanut_admin .kohanut_element_ctl ul.kohanut_element_actions li,
+#kohanut_admin .kohanut_element_ctl ul.kohanut_element_actions a {
 	text-decoration:none;
 	text-transform:none;
 	padding:0;
